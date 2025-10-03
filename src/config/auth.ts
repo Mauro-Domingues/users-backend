@@ -2,6 +2,7 @@ import { Joi } from 'celebrate';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { passportJwtSecret } from 'jwks-rsa';
+import { StrategyOptions as GoogleStrategyOptions } from 'passport-google-oauth20';
 import {
   ExtractJwt,
   StrategyOptionsWithoutRequest as JwtStrategyOptions,
@@ -11,6 +12,7 @@ import { appConfig } from './app';
 interface IAuthConfigDTO {
   readonly config: {
     readonly jwt: JwtStrategyOptions;
+    readonly google: GoogleStrategyOptions;
   };
 }
 
@@ -49,6 +51,11 @@ const authValidator = Joi.object<IAuthConfigDTO>({
         otherwise: Joi.forbidden(),
       }),
     }).required(),
+    google: Joi.object<IAuthConfigDTO['config']['google']>({
+      clientID: Joi.string().allow('').required(),
+      clientSecret: Joi.string().allow('').required(),
+      callbackURL: Joi.string().valid('callback'),
+    }).required(),
   }).required(),
 });
 
@@ -73,6 +80,11 @@ export const authConfig = Object.freeze<IAuthConfigDTO>({
       })(),
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       algorithms: ['RS256'],
+    },
+    google: {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
+      callbackURL: 'callback',
     },
   },
 });

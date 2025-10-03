@@ -17,6 +17,8 @@ declare namespace NodeJS {
     readonly REDIS_PREFIX: string;
     readonly CRYPTO_SECRET_KEY: string;
     readonly JWT_LIFETIME: import('@dtos/IIntervalDTO').IIntervalDTO;
+    readonly GOOGLE_CLIENT_ID: string;
+    readonly GOOGLE_SECRET: string;
     readonly HASH_SECRET_KEY: number;
     readonly STORAGE_DRIVER: 'disk' | 's3';
     readonly S3_BUCKET: string;

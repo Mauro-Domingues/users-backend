@@ -3,8 +3,10 @@ import { unless } from 'express-unless';
 import { Request, Response, NextFunction } from 'express';
 import { authConfig } from '@config/auth';
 import { jwtStrategy } from './strategies/jwtStrategy';
+import { googleStrategy } from './strategies/googleStrategy';
 
 jwtStrategy();
+googleStrategy();
 
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user: Express.User, done) => done(null, user));
