@@ -1,0 +1,5 @@
+import { IParseMailTemplateDTO } from '../dtos/IParseMailTemplateDTO';
+
+export interface IMailTemplateProvider {
+  compile(data: IParseMailTemplateDTO): string;
+}

@@ -11,6 +11,34 @@ const paths: Array<IExceptionDTO> = [
     url: '/health',
     methods: ['GET'],
   },
+  {
+    url: '/generate-keys',
+    methods: ['GET'],
+  },
+  {
+    url: '/login',
+    methods: ['POST'],
+  },
+  {
+    url: '/forgot-password',
+    methods: ['POST'],
+  },
+  {
+    url: '/check-token',
+    methods: ['POST'],
+  },
+  {
+    url: '/register',
+    methods: ['POST'],
+  },
+  {
+    url: '/auth/callback',
+    methods: ['GET'],
+  },
+  {
+    url: '/auth/google',
+    methods: ['GET'],
+  },
 ];
 
 guardRouter.use(passport.initialize());

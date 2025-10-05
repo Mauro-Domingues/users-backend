@@ -1,0 +1,50 @@
+<div id="footer" style="
+  width: 100%;
+  text-align: center;
+  padding: 0px 0px 10px 0px;
+">
+  {{#if buttonUrl}}
+  {{#if buttonText}}
+  <a href="{{buttonUrl}}" style="
+    text-decoration: none;
+    cursor: pointer;
+  ">
+    <button style="
+      margin-bottom: 40px;
+      border-radius: 16px;
+      background: {{styles.button.primaryColor}};
+      color: {{styles.font.primaryColor}};
+      height: 48px;
+      width: 352px;
+      border: none;
+      font-family: 'Lato', sans-serif;
+      box-shadow: 0px 0px 5px #00000026;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 26px;
+      letter-spacing: 0px;
+      text-align: center;
+      cursor: pointer;
+    ">
+      {{buttonText}}
+    </button>
+  </a>
+  {{/if}}
+  {{/if}}
+  {{#if anchorUrl}}
+  {{#if anchorText}}
+  <p>
+    <a href="{{anchorUrl}}" style="
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 25.6px;
+      text-decoration: none;
+      color: {{styles.font.secondaryColor}};
+    ">
+      {{anchorText}}
+    </a>
+  </p>
+  {{/if}}
+  {{/if}}
+</div>

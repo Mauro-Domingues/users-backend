@@ -1,4 +1,6 @@
 import {
+  And,
+  Between,
   DeleteResult,
   EntityTarget,
   FindManyOptions,
@@ -9,6 +11,7 @@ import {
   QueryRunner,
 } from 'typeorm';
 import { AppError } from '@shared/errors/AppError';
+import { slugify } from '@utils/slugify';
 import { IBaseRepository } from './IBaseRepository';
 
 export abstract class BaseRepository<Entity extends ObjectLiteral>
@@ -30,6 +33,36 @@ export abstract class BaseRepository<Entity extends ObjectLiteral>
         'INVALID_CLAUSE',
         'At least one valid condition must be provided.',
       );
+    }
+  }
+
+  protected setPeriodFilter<T extends ObjectLiteral>(
+    filters: FindOptionsWhere<T & { from: Date; to: Date }>,
+    key: keyof T,
+  ): void {
+    Object.assign(filters, {
+      [key]: Between(
+        filters.from ?? new Date(0),
+        (filters.to as Date) ?? new Date(),
+      ),
+    });
+
+    delete filters.from;
+    delete filters.to;
+  }
+
+  protected setSearchFilter<T extends ObjectLiteral>(
+    filters: FindOptionsWhere<T & { keywords: string }>,
+    key: keyof T,
+  ): void {
+    const words = filters.keywords?.split(' ').map(slugify);
+
+    if (words?.length) {
+      Object.assign(filters, {
+        [key]: And(...words.map((word: string) => Like(`%${word}%`))),
+      });
+
+      delete filters.keywords;
     }
   }
 

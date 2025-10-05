@@ -1,0 +1,42 @@
+<div id="header" style="
+  width: 100%;
+  text-align: left;
+  padding: 10px 0px 65px 0px;
+  border-bottom: 1px solid {{styles.layout.lineColor}};
+">
+  <table style="
+    width: 100%;
+    display: inline-block;
+  ">
+    <th>
+      <td rowspan="2" style="
+        white-space: nowrap;
+        text-align: left;
+      ">
+        <img src="{{#if styles.logo.url}}{{styles.logo.url}}{{else}}{{placeholder}}{{/if}}"
+          alt="logo da empresa" style="
+          width: 96px;
+          height: 96px;
+          border: 0.2px solid {{styles.logo.borderColor}};
+          border-radius: 50%;
+          margin-right: 40px;
+          padding: 2px;
+          display: inline-block;
+        ">
+      </td>
+      {{#if message}}
+      <td rowspan="2" style="
+        white-space: nowrap;
+        text-align: left;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 44.8px;
+        color: {{styles.font.primaryColor}};
+      ">
+        {{message}}
+      </td>
+      {{/if}}
+    </th>
+  </table>
+</div>

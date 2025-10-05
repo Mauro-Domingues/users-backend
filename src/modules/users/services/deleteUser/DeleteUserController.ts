@@ -1,0 +1,20 @@
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+import { IResponseDTO } from '@dtos/IResponseDTO';
+import { IUserDTO } from '@modules/users/dtos/IUserDTO';
+import { DeleteUserService } from './DeleteUserService';
+
+export class DeleteUserController {
+  public async handle(
+    request: Request<Required<IUserDTO>>,
+    response: Response<IResponseDTO<null>>,
+  ): Promise<void> {
+    const deleteUser = container.resolve(DeleteUserService);
+
+    const { id } = request.params;
+
+    const user = await deleteUser.execute(id);
+
+    response.send(user);
+  }
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <title>{{subject}}</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    a {
+      color: #800080;
+    }
+
+    #multi-info:last-child {
+      margin-bottom: 0px !important;
+    }
+  </style>
+</head>
+
+<body style="
+    background-color: {{styles.layout.backgroundColor}};
+    color: {{styles.font.secondaryColor}};
+    font-family: Arial, sans-serif;
+    padding: 50px;
+    width: 800px;
+    margin: auto;
+  ">
+  <div style="
+    margin-bottom: 12px;
+    width: 100%;
+  ">
+    {{> header}}
+  </div>
+  <br style="
+    display: none;
+  ">
+  <div style="
+    margin-bottom: 40px;
+    width: 100%;
+  ">
+    {{> greetings}}
+  </div>
+  <br style="
+    display: none;
+  ">
+  <div style="
+    margin-bottom: 40px;
+    width: 100%;
+  ">
+    {{> multiInfo}}
+  </div>
+  <br style="
+    display: none;
+  ">
+  <div>{{> footer}}</div>
+</body>
+
+</html>
