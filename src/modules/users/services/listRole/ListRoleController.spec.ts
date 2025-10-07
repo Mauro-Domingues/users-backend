@@ -2,6 +2,7 @@ import request from 'supertest';
 import { Connection, IConnection } from '@shared/typeorm';
 import { app } from '@shared/app';
 import { v4 as uuid } from 'uuid';
+import { Role } from '@modules/users/entities/Role';
 
 let connection: IConnection;
 
@@ -11,10 +12,16 @@ describe('ListRoleController', (): void => {
     await connection.connect();
     await connection.mysql.runMigrations();
 
-    return connection.mysql.query(
-      'INSERT INTO roles (id, name, description) VALUES (?, ?, ?);',
-      [uuid(), 'role', 'This is a role'],
-    );
+    await connection.mysql
+      .createQueryBuilder()
+      .insert()
+      .into(Role)
+      .values({
+        id: uuid(),
+        name: 'role',
+        description: 'This is a role',
+      })
+      .execute();
   });
 
   afterAll(async (): Promise<void> => {
