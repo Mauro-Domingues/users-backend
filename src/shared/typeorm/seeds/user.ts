@@ -1,19 +1,21 @@
 import { hash } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import { DataSource, QueryRunner } from 'typeorm';
+import { QueryRunner } from 'typeorm';
 import { hashConfig } from '@config/hash';
+import { User } from '@modules/users/entities/User';
 
-export async function seedUser(
-  connection: DataSource,
-  trx: QueryRunner,
-): Promise<void> {
+export async function seedUser(trx: QueryRunner): Promise<void> {
   const password = await hash('Admin*123@', hashConfig.config.salt);
 
-  return connection
-    .query(
-      'INSERT INTO users (id, email, password) VALUES (?, ?, ?);',
-      [uuid(), 'manager@admin.com.br', password],
-      trx,
-    )
+  return trx.manager
+    .createQueryBuilder()
+    .insert()
+    .into(User)
+    .values({
+      id: uuid(),
+      email: 'manager@admin.com.br',
+      password,
+    })
+    .execute()
     .then(() => console.log('Users seeded'));
 }

@@ -1,15 +1,17 @@
-import { DataSource, QueryRunner } from 'typeorm';
+import { Folder } from '@modules/system/entities/Folder';
+import { QueryRunner } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
-export async function seedFolder(
-  connection: DataSource,
-  trx: QueryRunner,
-): Promise<void> {
-  await connection
-    .query(
-      'INSERT INTO folders (id, name, slug) VALUES (?, ?, ?);',
-      [uuid(), 'Hidden', 'hidden'],
-      trx,
-    )
+export async function seedFolder(trx: QueryRunner): Promise<void> {
+  return trx.manager
+    .createQueryBuilder()
+    .insert()
+    .into(Folder)
+    .values({
+      id: uuid(),
+      name: 'Hidden',
+      slug: 'hidden',
+    })
+    .execute()
     .then(() => console.log('Folders seeded'));
 }
