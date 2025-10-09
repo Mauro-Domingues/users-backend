@@ -16,10 +16,7 @@ describe('ShowPermissionService', (): void => {
 
   beforeEach((): void => {
     fakePermissionsRepository = new FakePermissionsRepository();
-    showPermissionService = new ShowPermissionService(
-      fakePermissionsRepository,
-      connection,
-    );
+    showPermissionService = new ShowPermissionService(fakePermissionsRepository);
   });
 
   it('Should be able to show a permission', async (): Promise<void> => {
@@ -28,7 +25,7 @@ describe('ShowPermissionService', (): void => {
       description: 'This is a permission',
     });
 
-    const getPermission = await showPermissionService.execute(permission.id);
+    const getPermission = await showPermissionService.execute(connection, permission.id);
 
     expect(getPermission.data).toHaveProperty('id');
     expect(getPermission.data).toEqual(permission);
@@ -36,7 +33,7 @@ describe('ShowPermissionService', (): void => {
 
   it('Should not be able to show a permission with a non-existing id', async (): Promise<void> => {
     await expect(
-      showPermissionService.execute('non-existing-permission-id'),
+      showPermissionService.execute(connection, 'non-existing-permission-id'),
     ).rejects.toBeInstanceOf(AppError);
   });
 });

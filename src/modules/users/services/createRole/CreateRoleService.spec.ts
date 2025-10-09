@@ -23,12 +23,11 @@ describe('CreateRoleService', (): void => {
     createRoleService = new CreateRoleService(
       fakeRolesRepository,
       fakeCacheProvider,
-      connection,
     );
   });
 
   it('Should be able to create a new role', async (): Promise<void> => {
-    const role = await createRoleService.execute({
+    const role = await createRoleService.execute(connection, {
       name: 'role',
       description: 'This is a role',
     });
@@ -41,8 +40,8 @@ describe('CreateRoleService', (): void => {
       throw new AppError('FAILED_TO_CREATE', 'Failed to create a role');
     });
 
-    await expect(createRoleService.execute({})).rejects.toBeInstanceOf(
-      AppError,
-    );
+    await expect(
+      createRoleService.execute(connection, {}),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

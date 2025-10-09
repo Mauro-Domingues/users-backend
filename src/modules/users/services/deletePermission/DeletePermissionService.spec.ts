@@ -23,7 +23,6 @@ describe('DeletePermissionService', (): void => {
     deletePermissionService = new DeletePermissionService(
       fakePermissionsRepository,
       fakeCacheProvider,
-      connection,
     );
   });
 
@@ -33,7 +32,7 @@ describe('DeletePermissionService', (): void => {
       description: 'This is a permission',
     });
 
-    await deletePermissionService.execute(permission.id);
+    await deletePermissionService.execute(connection, permission.id);
 
     const deletedPermission = await fakePermissionsRepository.findBy({
       where: {
@@ -46,7 +45,7 @@ describe('DeletePermissionService', (): void => {
 
   it('Should not be able to delete a permission with a non-existing id', async (): Promise<void> => {
     await expect(
-      deletePermissionService.execute('non-existing-permission-id'),
+      deletePermissionService.execute(connection, 'non-existing-permission-id'),
     ).rejects.toBeInstanceOf(AppError);
   });
 });

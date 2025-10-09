@@ -23,12 +23,11 @@ describe('CreatePermissionService', (): void => {
     createPermissionService = new CreatePermissionService(
       fakePermissionsRepository,
       fakeCacheProvider,
-      connection,
     );
   });
 
   it('Should be able to create a new permission', async (): Promise<void> => {
-    const permission = await createPermissionService.execute({
+    const permission = await createPermissionService.execute(connection, {
       name: 'permission',
       description: 'This is a permission',
     });
@@ -41,8 +40,8 @@ describe('CreatePermissionService', (): void => {
       throw new AppError('FAILED_TO_CREATE', 'Failed to create a permission');
     });
 
-    await expect(createPermissionService.execute({})).rejects.toBeInstanceOf(
-      AppError,
-    );
+    await expect(
+      createPermissionService.execute(connection, {}),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

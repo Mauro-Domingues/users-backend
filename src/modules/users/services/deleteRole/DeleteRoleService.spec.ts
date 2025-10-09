@@ -23,7 +23,6 @@ describe('DeleteRoleService', (): void => {
     deleteRoleService = new DeleteRoleService(
       fakeRolesRepository,
       fakeCacheProvider,
-      connection,
     );
   });
 
@@ -33,7 +32,7 @@ describe('DeleteRoleService', (): void => {
       description: 'This is a role',
     });
 
-    await deleteRoleService.execute(role.id);
+    await deleteRoleService.execute(connection, role.id);
 
     const deletedRole = await fakeRolesRepository.findBy({
       where: {
@@ -46,7 +45,7 @@ describe('DeleteRoleService', (): void => {
 
   it('Should not be able to delete a role with a non-existing id', async (): Promise<void> => {
     await expect(
-      deleteRoleService.execute('non-existing-role-id'),
+      deleteRoleService.execute(connection, 'non-existing-role-id'),
     ).rejects.toBeInstanceOf(AppError);
   });
 });

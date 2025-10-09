@@ -23,7 +23,6 @@ describe('ListPermissionService', (): void => {
     listPermissionService = new ListPermissionService(
       fakePermissionsRepository,
       fakeCacheProvider,
-      connection,
     );
   });
 
@@ -39,7 +38,7 @@ describe('ListPermissionService', (): void => {
       },
     ]);
 
-    const permissionList = await listPermissionService.execute(1, 2, {});
+    const permissionList = await listPermissionService.execute(connection, 1, 2, {});
 
     expect(permissionList.data).toEqual([permission01, permission02]);
   });
@@ -56,9 +55,9 @@ describe('ListPermissionService', (): void => {
       },
     ]);
 
-    await listPermissionService.execute(1, 2, {});
+    await listPermissionService.execute(connection, 1, 2, {});
 
-    const permissionList = await listPermissionService.execute(1, 2, {});
+    const permissionList = await listPermissionService.execute(connection, 1, 2, {});
 
     expect(permissionList.data).toEqual(
       JSON.parse(JSON.stringify([permission01, permission02])),
@@ -81,11 +80,11 @@ describe('ListPermissionService', (): void => {
       },
     ]);
 
-    const permissionList01 = await listPermissionService.execute(1, 1, {});
+    const permissionList01 = await listPermissionService.execute(connection, 1, 1, {});
 
     expect(permissionList01.data).toEqual([permission01]);
 
-    const permissionList02 = await listPermissionService.execute(1, 2, {});
+    const permissionList02 = await listPermissionService.execute(connection, 1, 2, {});
 
     expect(permissionList02.data).toEqual([permission01, permission02]);
   });
@@ -95,8 +94,8 @@ describe('ListPermissionService', (): void => {
       throw new AppError('FAILED_TO_LIST', 'Failed to list permissions');
     });
 
-    await expect(listPermissionService.execute(1, 2, {})).rejects.toBeInstanceOf(
-      AppError,
-    );
+    await expect(
+      listPermissionService.execute(connection, 1, 2, {}),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

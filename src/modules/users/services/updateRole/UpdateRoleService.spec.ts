@@ -23,7 +23,6 @@ describe('UpdateRoleService', (): void => {
     updateRoleService = new UpdateRoleService(
       fakeRolesRepository,
       fakeCacheProvider,
-      connection,
     );
   });
 
@@ -33,17 +32,21 @@ describe('UpdateRoleService', (): void => {
       description: 'This is a role',
     });
 
-    const updatedRole = await updateRoleService.execute(role.id, {
-      ...role,
-      name: 'updatedRole',
-    });
+    const updatedRole = await updateRoleService.execute(
+      connection,
+      role.id,
+      {
+        ...role,
+        name: 'updatedRole',
+      },
+    );
 
     expect(updatedRole.data.name).toEqual('updatedRole');
   });
 
   it('Should not be able to update a role with a non-existing id', async (): Promise<void> => {
     await expect(
-      updateRoleService.execute('non-existing-role-id', {}),
+      updateRoleService.execute(connection, 'non-existing-role-id', {}),
     ).rejects.toBeInstanceOf(AppError);
   });
 });

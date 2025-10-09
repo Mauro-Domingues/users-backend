@@ -23,7 +23,6 @@ describe('UpdatePermissionService', (): void => {
     updatePermissionService = new UpdatePermissionService(
       fakePermissionsRepository,
       fakeCacheProvider,
-      connection,
     );
   });
 
@@ -33,17 +32,21 @@ describe('UpdatePermissionService', (): void => {
       description: 'This is a permission',
     });
 
-    const updatedPermission = await updatePermissionService.execute(permission.id, {
-      ...permission,
-      name: 'updatedPermission',
-    });
+    const updatedPermission = await updatePermissionService.execute(
+      connection,
+      permission.id,
+      {
+        ...permission,
+        name: 'updatedPermission',
+      },
+    );
 
     expect(updatedPermission.data.name).toEqual('updatedPermission');
   });
 
   it('Should not be able to update a permission with a non-existing id', async (): Promise<void> => {
     await expect(
-      updatePermissionService.execute('non-existing-permission-id', {}),
+      updatePermissionService.execute(connection, 'non-existing-permission-id', {}),
     ).rejects.toBeInstanceOf(AppError);
   });
 });

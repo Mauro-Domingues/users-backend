@@ -23,7 +23,6 @@ describe('ListRoleService', (): void => {
     listRoleService = new ListRoleService(
       fakeRolesRepository,
       fakeCacheProvider,
-      connection,
     );
   });
 
@@ -39,7 +38,7 @@ describe('ListRoleService', (): void => {
       },
     ]);
 
-    const roleList = await listRoleService.execute(1, 2, {});
+    const roleList = await listRoleService.execute(connection, 1, 2, {});
 
     expect(roleList.data).toEqual([role01, role02]);
   });
@@ -56,9 +55,9 @@ describe('ListRoleService', (): void => {
       },
     ]);
 
-    await listRoleService.execute(1, 2, {});
+    await listRoleService.execute(connection, 1, 2, {});
 
-    const roleList = await listRoleService.execute(1, 2, {});
+    const roleList = await listRoleService.execute(connection, 1, 2, {});
 
     expect(roleList.data).toEqual(
       JSON.parse(JSON.stringify([role01, role02])),
@@ -81,11 +80,11 @@ describe('ListRoleService', (): void => {
       },
     ]);
 
-    const roleList01 = await listRoleService.execute(1, 1, {});
+    const roleList01 = await listRoleService.execute(connection, 1, 1, {});
 
     expect(roleList01.data).toEqual([role01]);
 
-    const roleList02 = await listRoleService.execute(1, 2, {});
+    const roleList02 = await listRoleService.execute(connection, 1, 2, {});
 
     expect(roleList02.data).toEqual([role01, role02]);
   });
@@ -95,8 +94,8 @@ describe('ListRoleService', (): void => {
       throw new AppError('FAILED_TO_LIST', 'Failed to list roles');
     });
 
-    await expect(listRoleService.execute(1, 2, {})).rejects.toBeInstanceOf(
-      AppError,
-    );
+    await expect(
+      listRoleService.execute(connection, 1, 2, {}),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

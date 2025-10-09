@@ -16,10 +16,7 @@ describe('ShowRoleService', (): void => {
 
   beforeEach((): void => {
     fakeRolesRepository = new FakeRolesRepository();
-    showRoleService = new ShowRoleService(
-      fakeRolesRepository,
-      connection,
-    );
+    showRoleService = new ShowRoleService(fakeRolesRepository);
   });
 
   it('Should be able to show a role', async (): Promise<void> => {
@@ -28,7 +25,7 @@ describe('ShowRoleService', (): void => {
       description: 'This is a role',
     });
 
-    const getRole = await showRoleService.execute(role.id);
+    const getRole = await showRoleService.execute(connection, role.id);
 
     expect(getRole.data).toHaveProperty('id');
     expect(getRole.data).toEqual(role);
@@ -36,7 +33,7 @@ describe('ShowRoleService', (): void => {
 
   it('Should not be able to show a role with a non-existing id', async (): Promise<void> => {
     await expect(
-      showRoleService.execute('non-existing-role-id'),
+      showRoleService.execute(connection, 'non-existing-role-id'),
     ).rejects.toBeInstanceOf(AppError);
   });
 });
