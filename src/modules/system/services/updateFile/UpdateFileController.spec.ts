@@ -2,7 +2,7 @@ import request from 'supertest';
 import { Connection, IConnection } from '@shared/typeorm';
 import { app } from '@shared/app';
 import { v4 as uuid } from 'uuid';
-import { File } from '@modules/systems/entities/File';
+import { File } from '@modules/system/entities/File';
 
 const id = uuid();
 let connection: IConnection;

@@ -1,8 +1,8 @@
 import { FakeCacheProvider } from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import { AppError } from '@shared/errors/AppError';
-import { FakeFilesRepository } from '@modules/systems/repositories/fakes/FakeFilesRepository';
-import { IFilesRepository } from '@modules/systems/repositories/IFilesRepository';
+import { FakeFilesRepository } from '@modules/system/repositories/fakes/FakeFilesRepository';
+import { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
 import { Connection, IConnection } from '@shared/typeorm';
 import { DeleteFileService } from './DeleteFileService';
 

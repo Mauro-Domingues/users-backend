@@ -1,8 +1,8 @@
 import { FakeCacheProvider } from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import { AppError } from '@shared/errors/AppError';
-import { FakeFilesRepository } from '@modules/systems/repositories/fakes/FakeFilesRepository';
-import { IFilesRepository } from '@modules/systems/repositories/IFilesRepository';
+import { FakeFilesRepository } from '@modules/system/repositories/fakes/FakeFilesRepository';
+import { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
 import { Connection, IConnection } from '@shared/typeorm';
 import { UpdateFileService } from './UpdateFileService';
 
@@ -32,14 +32,10 @@ describe('UpdateFileService', (): void => {
       description: 'This is a file',
     });
 
-    const updatedFile = await updateFileService.execute(
-      connection,
-      file.id,
-      {
-        ...file,
-        name: 'updatedFile',
-      },
-    );
+    const updatedFile = await updateFileService.execute(connection, file.id, {
+      ...file,
+      name: 'updatedFile',
+    });
 
     expect(updatedFile.data.name).toEqual('updatedFile');
   });

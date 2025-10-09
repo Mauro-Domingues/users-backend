@@ -2,7 +2,7 @@ import request from 'supertest';
 import { Connection, IConnection } from '@shared/typeorm';
 import { app } from '@shared/app';
 import { v4 as uuid } from 'uuid';
-import { Folder } from '@modules/systems/entities/Folder';
+import { Folder } from '@modules/system/entities/Folder';
 
 let connection: IConnection;
 

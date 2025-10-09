@@ -1,7 +1,7 @@
 import { FakeCacheProvider } from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { FakeFoldersRepository } from '@modules/systems/repositories/fakes/FakeFoldersRepository';
-import { IFoldersRepository } from '@modules/systems/repositories/IFoldersRepository';
+import { FakeFoldersRepository } from '@modules/system/repositories/fakes/FakeFoldersRepository';
+import { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
 import { Connection, IConnection } from '@shared/typeorm';
 import { AppError } from '@shared/errors/AppError';
 import { CreateFolderService } from './CreateFolderService';

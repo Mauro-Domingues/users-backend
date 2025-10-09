@@ -1,5 +1,5 @@
-import { FakeFilesRepository } from '@modules/systems/repositories/fakes/FakeFilesRepository';
-import { IFilesRepository } from '@modules/systems/repositories/IFilesRepository';
+import { FakeFilesRepository } from '@modules/system/repositories/fakes/FakeFilesRepository';
+import { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
 import { FakeCacheProvider } from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import { Connection, IConnection } from '@shared/typeorm';
@@ -59,9 +59,7 @@ describe('ListFileService', (): void => {
 
     const fileList = await listFileService.execute(connection, 1, 2, {});
 
-    expect(fileList.data).toEqual(
-      JSON.parse(JSON.stringify([file01, file02])),
-    );
+    expect(fileList.data).toEqual(JSON.parse(JSON.stringify([file01, file02])));
   });
 
   it('Should be able to list the files with the specified pagination', async (): Promise<void> => {
