@@ -14,7 +14,7 @@ export class ShowUserController {
 
     const { id } = request.params;
 
-    const user = await showUser.execute(id);
+    const user = await showUser.execute(request.dbConnection, id);
 
     response.status(user.code).send(user);
   }

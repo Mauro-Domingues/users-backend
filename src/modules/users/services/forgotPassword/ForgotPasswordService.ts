@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 import { AppError } from '@shared/errors/AppError';
 import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Post, Body } from 'tsoa';
+import { Route, Tags, Post, Body, Inject } from 'tsoa';
 import { IQueueProvider } from '@shared/container/providers/QueueProvider/models/IQueueProvider';
 import { User } from '@modules/users/entities/User';
 import { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
@@ -25,9 +25,6 @@ export class ForgotPasswordService {
 
     @inject('QueueProvider')
     private readonly queueProvider: IQueueProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   private get recoveryValidity(): IIntervalDTO {
@@ -85,9 +82,10 @@ export class ForgotPasswordService {
   @Post()
   @Tags('User')
   public async execute(
+    @Inject() connection: IConnection,
     @Body() { email }: IForgotPasswordDTO,
   ): Promise<IResponseDTO<null>> {
-    const trx = this.connection.mysql.createQueryRunner();
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
@@ -123,7 +121,7 @@ export class ForgotPasswordService {
       await this.queueProvider.schedule({
         job: DeleteCode,
         data: {
-          client: this.connection.client,
+          client: connection.client,
           id: passwordReset.id,
         },
         delay: this.recoveryValidity,

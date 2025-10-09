@@ -25,7 +25,7 @@ export class CreateFileController {
       });
     }
 
-    const file = await createFile.execute(fileData);
+    const file = await createFile.execute(request.dbConnection, fileData);
 
     response.status(file.code).send(file);
   }

@@ -4,7 +4,7 @@ import { ICacheProvider } from '@shared/container/providers/CacheProvider/models
 import { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
 import { IResponseDTO } from '@dtos/IResponseDTO';
 import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Delete, Path } from 'tsoa';
+import { Route, Tags, Delete, Path, Inject } from 'tsoa';
 
 @Route('/roles')
 @injectable()
@@ -15,36 +15,28 @@ export class DeleteRoleService {
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   @Delete('{id}')
   @Tags('Role')
-  public async execute(@Path() id: string): Promise<IResponseDTO<null>> {
-    const trx = this.connection.mysql.createQueryRunner();
+  public async execute(
+    @Inject() connection: IConnection,
+    @Path() id: string,
+  ): Promise<IResponseDTO<null>> {
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
-      const role = await this.rolesRepository.exists(
-        { where: { id } },
-        trx,
-      );
+      const role = await this.rolesRepository.exists({ where: { id } }, trx);
 
       if (!role) {
-        throw new AppError(
-          'NOT_FOUND',
-          `Role not found with id: "${id}"`,
-          404,
-        );
+        throw new AppError('NOT_FOUND', `Role not found with id: "${id}"`, 404);
       }
 
       await this.rolesRepository.delete({ id }, trx);
 
-      await this.cacheProvider.invalidatePrefix(
-        `${this.connection.client}:roles`,
-      );
+      await this.cacheProvider.invalidatePrefix(`${connection.client}:roles`);
+      await this.cacheProvider.invalidatePrefix(`${connection.client}:users`);
       if (trx.isTransactionActive) await trx.commitTransaction();
 
       return {

@@ -13,7 +13,7 @@ export class DeleteFileController {
 
     const { id } = request.params;
 
-    const file = await deleteFile.execute(id);
+    const file = await deleteFile.execute(request.dbConnection, id);
 
     response.send(file);
   }

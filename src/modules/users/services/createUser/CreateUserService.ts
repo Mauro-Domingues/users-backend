@@ -6,7 +6,7 @@ import { User } from '@modules/users/entities/User';
 import { instanceToInstance } from 'class-transformer';
 import { IResponseDTO } from '@dtos/IResponseDTO';
 import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Post, Body } from 'tsoa';
+import { Route, Tags, Post, Body, Inject } from 'tsoa';
 import { AppError } from '@shared/errors/AppError';
 import { IHashProvider } from '@shared/container/providers/HashProvider/models/IHashProvider';
 import { Profile } from '@modules/users/entities/Profile';
@@ -33,9 +33,6 @@ export class CreateUserService {
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   private async setProfile({
@@ -62,64 +59,50 @@ export class CreateUserService {
     user.address = await this.addressesRepository.create(address, trx);
   }
 
-  public async setUser({
-    trx,
-    userData,
-  }: {
-    userData: IUserDTO;
-    trx: QueryRunner;
-  }): Promise<User> {
-    const { profile, address, password, ...rest } = userData;
-
-    const checkByEmail = await this.usersRepository.exists(
-      {
-        where: {
-          email: rest.email,
-        },
-      },
-      trx,
-    );
-
-    if (checkByEmail) {
-      throw new AppError(
-        'EMAIL_ALREADY_EXISTS',
-        'Email address already in use',
-      );
-    }
-
-    const hashedPassword = await this.hashProvider.generateHash(password);
-
-    const user = await this.usersRepository.create(
-      {
-        ...rest,
-        password: hashedPassword,
-      },
-      trx,
-    );
-
-    if (profile) await this.setProfile({ trx, user, profile });
-    if (address) await this.setAddress({ trx, user, address });
-
-    await this.usersRepository.update(user, trx);
-
-    await this.cacheProvider.invalidatePrefix(
-      `${this.connection.client}:users`,
-    );
-
-    return user;
-  }
-
   @Post()
   @Tags('User')
   public async execute(
+    @Inject() connection: IConnection,
     @Body() userData: IUserDTO,
   ): Promise<IResponseDTO<User>> {
-    const trx = this.connection.mysql.createQueryRunner();
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
-      const user = await this.setUser({ trx, userData });
+      const { profile, address, password, ...rest } = userData;
 
+      const checkByEmail = await this.usersRepository.exists(
+        {
+          where: {
+            email: rest.email,
+          },
+        },
+        trx,
+      );
+
+      if (checkByEmail) {
+        throw new AppError(
+          'EMAIL_ALREADY_EXISTS',
+          'Email address already in use',
+        );
+      }
+
+      const hashedPassword = await this.hashProvider.generateHash(password);
+
+      const user = await this.usersRepository.create(
+        {
+          ...rest,
+          password: hashedPassword,
+        },
+        trx,
+      );
+
+      if (profile) await this.setProfile({ trx, user, profile });
+      if (address) await this.setAddress({ trx, user, address });
+
+      await this.usersRepository.update(user, trx);
+
+      await this.cacheProvider.invalidatePrefix(`${connection.client}:users`);
       if (trx.isTransactionActive) await trx.commitTransaction();
 
       return {

@@ -15,7 +15,11 @@ export class UpdateFolderController {
     const { id } = request.params;
     const folderData = request.body;
 
-    const folder = await updateFolder.execute(id, folderData);
+    const folder = await updateFolder.execute(
+      request.dbConnection,
+      id,
+      folderData,
+    );
 
     response.status(folder.code).send(folder);
   }

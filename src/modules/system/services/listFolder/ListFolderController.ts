@@ -19,7 +19,12 @@ export class ListFolderController {
 
     const { page = 1, limit = 20, ...filters } = request.query;
 
-    const folders = await listFolder.execute(page, limit, filters);
+    const folders = await listFolder.execute(
+      request.dbConnection,
+      page,
+      limit,
+      filters,
+    );
 
     response.status(folders.code).send(folders);
   }

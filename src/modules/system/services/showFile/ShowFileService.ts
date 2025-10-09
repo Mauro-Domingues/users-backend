@@ -5,7 +5,7 @@ import { File } from '@modules/system/entities/File';
 import { instanceToInstance } from 'class-transformer';
 import { IResponseDTO } from '@dtos/IResponseDTO';
 import { IConnection } from '@shared/typeorm';
-import { Get, Route, Tags, Path } from 'tsoa';
+import { Get, Route, Tags, Path, Inject } from 'tsoa';
 
 @Route('/files')
 @injectable()
@@ -13,15 +13,15 @@ export class ShowFileService {
   public constructor(
     @inject('FilesRepository')
     private readonly filesRepository: IFilesRepository,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   @Get('{id}')
   @Tags('File')
-  public async execute(@Path() id: string): Promise<IResponseDTO<File>> {
-    const trx = this.connection.mysql.createQueryRunner();
+  public async execute(
+    @Inject() connection: IConnection,
+    @Path() id: string,
+  ): Promise<IResponseDTO<File>> {
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {

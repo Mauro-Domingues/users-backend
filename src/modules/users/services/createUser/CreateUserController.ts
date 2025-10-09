@@ -14,7 +14,7 @@ export class CreateUserController {
 
     const createUser = container.resolve(CreateUserService);
 
-    const user = await createUser.execute(userData);
+    const user = await createUser.execute(request.dbConnection, userData);
 
     response.status(user.code).send(user);
   }

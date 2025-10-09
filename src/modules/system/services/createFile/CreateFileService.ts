@@ -9,7 +9,7 @@ import { IFoldersRepository } from '@modules/system/repositories/IFoldersReposit
 import { AppError } from '@shared/errors/AppError';
 import { ICreateFileDTO } from '@modules/system/dtos/ICreateFileDTO';
 import { IFileDTO } from '@modules/system/dtos/IFileDTO';
-import { Route, Tags, Post, Body, Consumes } from 'tsoa';
+import { Route, Tags, Post, Body, Consumes, Inject } from 'tsoa';
 import { IStorageProvider } from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 
 @Route('/files')
@@ -27,18 +27,16 @@ export class CreateFileService {
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   @Post()
   @Tags('File')
   @Consumes('multipart/form-data')
   public async execute(
+    @Inject() connection: IConnection,
     @Body() fileData: ICreateFileDTO,
   ): Promise<IResponseDTO<Array<File>>> {
-    const trx = this.connection.mysql.createQueryRunner();
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
@@ -86,12 +84,8 @@ export class CreateFileService {
 
       const files = await this.filesRepository.createMany(fileDataArray, trx);
 
-      await this.cacheProvider.invalidatePrefix(
-        `${this.connection.client}:files`,
-      );
-      await this.cacheProvider.invalidatePrefix(
-        `${this.connection.client}:folders`,
-      );
+      await this.cacheProvider.invalidatePrefix(`${connection.client}:files`);
+      await this.cacheProvider.invalidatePrefix(`${connection.client}:folders`);
 
       if (trx.isTransactionActive) await trx.commitTransaction();
 

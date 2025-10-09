@@ -16,18 +16,16 @@ export class ChangePasswordService {
 
     @inject('HashProvider')
     private readonly hashProvider: IHashProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   @Patch()
   @Tags('User')
   public async execute(
+    @Inject() connection: IConnection,
     @Inject() id: string,
     @Body() { password }: IChangePasswordDTO,
   ): Promise<IResponseDTO<null>> {
-    const trx = this.connection.mysql.createQueryRunner();
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {

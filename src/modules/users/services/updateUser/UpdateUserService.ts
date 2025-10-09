@@ -8,7 +8,7 @@ import { User } from '@modules/users/entities/User';
 import { instanceToInstance } from 'class-transformer';
 import { IResponseDTO } from '@dtos/IResponseDTO';
 import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Put, Body, Path } from 'tsoa';
+import { Route, Tags, Put, Body, Path, Inject } from 'tsoa';
 import { Profile } from '@modules/users/entities/Profile';
 import { IAddressesRepository } from '@modules/users/repositories/IAddressesRepository';
 import { IProfilesRepository } from '@modules/users/repositories/IProfilesRepository';
@@ -39,9 +39,6 @@ export class UpdateUserService extends SimpleDependency {
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {
     super();
   }
@@ -94,10 +91,11 @@ export class UpdateUserService extends SimpleDependency {
   @Put('{id}')
   @Tags('User')
   public async execute(
+    @Inject() connection: IConnection,
     @Path() id: string,
     @Body() userData: IUserDTO,
   ): Promise<IResponseDTO<User>> {
-    const trx = this.connection.mysql.createQueryRunner();
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
@@ -120,9 +118,7 @@ export class UpdateUserService extends SimpleDependency {
 
       await this.usersRepository.update(updateAttribute(user, rest), trx);
 
-      await this.cacheProvider.invalidatePrefix(
-        `${this.connection.client}:users`,
-      );
+      await this.cacheProvider.invalidatePrefix(`${connection.client}:users`);
       if (trx.isTransactionActive) await trx.commitTransaction();
 
       return {

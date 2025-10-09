@@ -8,7 +8,7 @@ import { ITokensRepository } from '@modules/users/repositories/ITokensRepository
 import { IAuthDTO } from '@modules/users/dtos/IAuthDTO';
 import { QueryRunner } from 'typeorm';
 import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Post, Body } from 'tsoa';
+import { Route, Tags, Post, Body, Inject } from 'tsoa';
 import { IJwtTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IJwtTokenDTO';
 import { IRefreshTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IRefreshTokenDTO';
 
@@ -27,9 +27,6 @@ export class AuthenticateUserService {
 
     @inject('CryptoProvider')
     private readonly cryptoProvider: ICryptoProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   private async generateByToken({
@@ -158,6 +155,7 @@ export class AuthenticateUserService {
   @Post()
   @Tags('User')
   public async execute(
+    @Inject() connection: IConnection,
     @Body() { email, password, refreshToken }: IAuthDTO,
   ): Promise<
     IResponseDTO<{
@@ -165,7 +163,7 @@ export class AuthenticateUserService {
       refreshToken: IRefreshTokenDTO;
     }>
   > {
-    const trx = this.connection.mysql.createQueryRunner();
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {

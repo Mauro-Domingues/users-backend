@@ -13,7 +13,7 @@ export class DeleteUserController {
 
     const { id } = request.params;
 
-    const user = await deleteUser.execute(id);
+    const user = await deleteUser.execute(request.dbConnection, id);
 
     response.send(user);
   }

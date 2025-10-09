@@ -18,7 +18,10 @@ export class CheckTokenController {
 
     const checkToken = container.resolve(CheckTokenService);
 
-    const authenticationTokens = await checkToken.execute(tokenData);
+    const authenticationTokens = await checkToken.execute(
+      request.dbConnection,
+      tokenData,
+    );
 
     response.status(authenticationTokens.code).send(authenticationTokens);
   }

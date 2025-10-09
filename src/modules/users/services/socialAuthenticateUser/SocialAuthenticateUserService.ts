@@ -2,7 +2,6 @@ import { injectable, inject } from 'tsyringe';
 import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
 import { IResponseDTO } from '@dtos/IResponseDTO';
 import { AppError } from '@shared/errors/AppError';
-import { IHashProvider } from '@shared/container/providers/HashProvider/models/IHashProvider';
 import { ICryptoProvider } from '@shared/container/providers/CryptoProvider/models/ICryptoProvider';
 import { ITokensRepository } from '@modules/users/repositories/ITokensRepository';
 import { QueryRunner } from 'typeorm';
@@ -22,14 +21,8 @@ export class SocialAuthenticateUserService {
     @inject('TokensRepository')
     private readonly tokensRepository: ITokensRepository,
 
-    @inject('HashProvider')
-    private readonly hashProvider: IHashProvider,
-
     @inject('CryptoProvider')
     private readonly cryptoProvider: ICryptoProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   private async generateByEmail({
@@ -102,6 +95,7 @@ export class SocialAuthenticateUserService {
   @Get()
   @Tags('User')
   public async execute(
+    @Inject() connection: IConnection,
     @Inject() { email, isAuthenticated }: ISocialAuthDTO,
   ): Promise<
     IResponseDTO<{
@@ -109,7 +103,7 @@ export class SocialAuthenticateUserService {
       refreshToken: IRefreshTokenDTO;
     }>
   > {
-    const trx = this.connection.mysql.createQueryRunner();
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {

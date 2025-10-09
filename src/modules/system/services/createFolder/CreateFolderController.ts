@@ -14,7 +14,7 @@ export class CreateFolderController {
 
     const createFolder = container.resolve(CreateFolderService);
 
-    const folder = await createFolder.execute(folderData);
+    const folder = await createFolder.execute(request.dbConnection, folderData);
 
     response.status(folder.code).send(folder);
   }

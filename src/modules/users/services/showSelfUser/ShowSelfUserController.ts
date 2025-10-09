@@ -13,7 +13,7 @@ export class ShowSelfUserController {
 
     const { id } = { id: request.user?.sub };
 
-    const user = await showSelfUser.execute(id);
+    const user = await showSelfUser.execute(request.dbConnection, id);
 
     response.status(user.code).send(user);
   }

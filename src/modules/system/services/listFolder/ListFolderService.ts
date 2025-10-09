@@ -18,24 +18,22 @@ export class ListFolderService {
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   @Get()
   @Tags('Folder')
   public async execute(
+    @Inject() connection: IConnection,
     @Query() page: number,
     @Query() limit: number,
     @Inject() filters: FindOptionsWhere<Folder>,
   ): Promise<IListDTO<Folder>> {
-    const trx = this.connection.mysql.createQueryRunner();
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
       const cacheKey = `${
-        this.connection.client
+        connection.client
       }:folders:${page}:${limit}:${JSON.stringify(filters)}`;
 
       let cache =

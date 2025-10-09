@@ -14,7 +14,11 @@ export class ChangePasswordController {
 
     const changePassword = container.resolve(ChangePasswordService);
 
-    const passwordChanged = await changePassword.execute(id, userData);
+    const passwordChanged = await changePassword.execute(
+      request.dbConnection,
+      id,
+      userData,
+    );
 
     response.status(passwordChanged.code).send(passwordChanged);
   }

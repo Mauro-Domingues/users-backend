@@ -54,7 +54,7 @@ const authValidator = Joi.object<IAuthConfigDTO>({
     google: Joi.object<IAuthConfigDTO['config']['google']>({
       clientID: Joi.string().allow('').required(),
       clientSecret: Joi.string().allow('').required(),
-      callbackURL: Joi.string().valid('callback'),
+      callbackURL: Joi.string().valid('callback').required(),
     }).required(),
   }).required(),
 });

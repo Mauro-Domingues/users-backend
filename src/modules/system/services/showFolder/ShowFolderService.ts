@@ -5,7 +5,7 @@ import { Folder } from '@modules/system/entities/Folder';
 import { instanceToInstance } from 'class-transformer';
 import { IResponseDTO } from '@dtos/IResponseDTO';
 import { IConnection } from '@shared/typeorm';
-import { Get, Route, Tags, Path } from 'tsoa';
+import { Get, Route, Tags, Path, Inject } from 'tsoa';
 
 @Route('/folders')
 @injectable()
@@ -13,15 +13,15 @@ export class ShowFolderService {
   public constructor(
     @inject('FoldersRepository')
     private readonly foldersRepository: IFoldersRepository,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   @Get('{id}')
   @Tags('Folder')
-  public async execute(@Path() id: string): Promise<IResponseDTO<Folder>> {
-    const trx = this.connection.mysql.createQueryRunner();
+  public async execute(
+    @Inject() connection: IConnection,
+    @Path() id: string,
+  ): Promise<IResponseDTO<Folder>> {
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {

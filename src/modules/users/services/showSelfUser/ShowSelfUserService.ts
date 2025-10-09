@@ -17,19 +17,19 @@ export class ShowSelfUserService {
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   @Get()
   @Tags('User')
-  public async execute(@Inject() id: string): Promise<IResponseDTO<User>> {
-    const trx = this.connection.mysql.createQueryRunner();
+  public async execute(
+    @Inject() connection: IConnection,
+    @Inject() id: string,
+  ): Promise<IResponseDTO<User>> {
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
-      const cacheKey = `${this.connection.client}:users:${id}`;
+      const cacheKey = `${connection.client}:users:${id}`;
 
       let cache = await this.cacheProvider.recovery<{ data: User }>(cacheKey);
 

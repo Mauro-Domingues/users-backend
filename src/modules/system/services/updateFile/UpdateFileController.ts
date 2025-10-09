@@ -17,7 +17,7 @@ export class UpdateFileController {
     fileData.file = request.file?.filename;
     fileData.name = request.file?.originalname;
 
-    const file = await updateFile.execute(id, fileData);
+    const file = await updateFile.execute(request.dbConnection, id, fileData);
 
     response.status(file.code).send(file);
   }

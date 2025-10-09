@@ -18,24 +18,22 @@ export class ListFileService {
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   @Get()
   @Tags('File')
   public async execute(
+    @Inject() connection: IConnection,
     @Query() page: number,
     @Query() limit: number,
     @Inject() filters: FindOptionsWhere<File>,
   ): Promise<IListDTO<File>> {
-    const trx = this.connection.mysql.createQueryRunner();
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
       const cacheKey = `${
-        this.connection.client
+        connection.client
       }:files:${page}:${limit}:${JSON.stringify(filters)}`;
 
       let cache = await this.cacheProvider.recovery<ICacheDTO<File>>(cacheKey);

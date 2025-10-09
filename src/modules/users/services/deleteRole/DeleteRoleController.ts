@@ -13,7 +13,7 @@ export class DeleteRoleController {
 
     const { id } = request.params;
 
-    const role = await deleteRole.execute(id);
+    const role = await deleteRole.execute(request.dbConnection, id);
 
     response.send(role);
   }

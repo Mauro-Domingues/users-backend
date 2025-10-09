@@ -19,7 +19,12 @@ export class ListRoleController {
 
     const { page = 1, limit = 20, ...filters } = request.query;
 
-    const roles = await listRole.execute(page, limit, filters);
+    const roles = await listRole.execute(
+      request.dbConnection,
+      page,
+      limit,
+      filters,
+    );
 
     response.status(roles.code).send(roles);
   }

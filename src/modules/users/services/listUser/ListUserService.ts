@@ -18,24 +18,22 @@ export class ListUserService {
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   @Get()
   @Tags('User')
   public async execute(
+    @Inject() connection: IConnection,
     @Query() page: number,
     @Query() limit: number,
     @Inject() filters: FindOptionsWhere<User>,
   ): Promise<IListDTO<User>> {
-    const trx = this.connection.mysql.createQueryRunner();
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
       const cacheKey = `${
-        this.connection.client
+        connection.client
       }:users:${page}:${limit}:${JSON.stringify(filters)}`;
 
       let cache = await this.cacheProvider.recovery<ICacheDTO<User>>(cacheKey);

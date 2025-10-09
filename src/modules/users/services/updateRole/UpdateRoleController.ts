@@ -15,7 +15,7 @@ export class UpdateRoleController {
     const { id } = request.params;
     const roleData = request.body;
 
-    const role = await updateRole.execute(id, roleData);
+    const role = await updateRole.execute(request.dbConnection, id, roleData);
 
     response.status(role.code).send(role);
   }

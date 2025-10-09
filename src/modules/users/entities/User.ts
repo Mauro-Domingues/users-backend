@@ -1,8 +1,18 @@
-import { Entity, Column, JoinColumn, OneToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  JoinColumn,
+  OneToOne,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+} from 'typeorm';
 import { Base } from '@shared/container/modules/entities/Base';
 import { Exclude } from 'class-transformer';
 import { Profile } from './Profile';
 import { Address } from './Address';
+import { Permission } from './Permission';
+import { Role } from './Role';
 
 @Entity('users')
 export class User extends Base {
@@ -40,4 +50,34 @@ export class User extends Base {
     referencedColumnName: 'id',
   })
   declare public address: Address;
+
+  @ManyToOne(() => Role, role => role.users, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({
+    name: 'role_id',
+    foreignKeyConstraintName: 'FK_users_role',
+    referencedColumnName: 'id',
+  })
+  declare public role: Role;
+
+  @ManyToMany(() => Permission, permission => permission.users, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinTable({
+    name: 'users_permissions',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+      foreignKeyConstraintName: 'FK_users_permissions_user',
+    },
+    inverseJoinColumn: {
+      name: 'permission_id',
+      referencedColumnName: 'id',
+      foreignKeyConstraintName: 'FK_users_permissions_permission',
+    },
+  })
+  declare public permissions: Array<Permission>;
 }

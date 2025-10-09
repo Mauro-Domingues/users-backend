@@ -14,7 +14,7 @@ export class CreateRoleController {
 
     const createRole = container.resolve(CreateRoleService);
 
-    const role = await createRole.execute(roleData);
+    const role = await createRole.execute(request.dbConnection, roleData);
 
     response.status(role.code).send(role);
   }

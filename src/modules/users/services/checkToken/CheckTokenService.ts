@@ -6,7 +6,7 @@ import { AppError } from '@shared/errors/AppError';
 import { ICryptoProvider } from '@shared/container/providers/CryptoProvider/models/ICryptoProvider';
 import { QueryRunner } from 'typeorm';
 import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Post, Body } from 'tsoa';
+import { Route, Tags, Post, Body, Inject } from 'tsoa';
 import { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
 import { IJwtTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IJwtTokenDTO';
 import { ICheckTokenDTO } from '@modules/users/dtos/ICheckTokenDTO';
@@ -26,9 +26,6 @@ export class CheckTokenService {
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   private async generateByEmail({
@@ -71,13 +68,14 @@ export class CheckTokenService {
   @Post()
   @Tags('User')
   public async execute(
+    @Inject() connection: IConnection,
     @Body() { email, recoveryCode }: ICheckTokenDTO,
   ): Promise<
     IResponseDTO<{
       jwtToken: IJwtTokenDTO;
     }>
   > {
-    const trx = this.connection.mysql.createQueryRunner();
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
@@ -97,9 +95,7 @@ export class CheckTokenService {
 
       const tokens = await this.generateByEmail({ trx, email });
 
-      await this.cacheProvider.invalidatePrefix(
-        `${this.connection.client}:users`,
-      );
+      await this.cacheProvider.invalidatePrefix(`${connection.client}:users`);
       if (trx.isTransactionActive) await trx.commitTransaction();
 
       return {

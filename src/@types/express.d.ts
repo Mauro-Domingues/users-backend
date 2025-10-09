@@ -5,5 +5,6 @@ declare namespace Express {
       readonly email: string;
       readonly sub: string;
     };
+    dbConnection: import('@shared/typeorm').IConnection;
   }
 }

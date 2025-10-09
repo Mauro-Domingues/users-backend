@@ -22,7 +22,12 @@ export class ListUserController {
 
     const { page = 1, limit = 20, ...filters } = request.query;
 
-    const users = await listUser.execute(page, limit, filters);
+    const users = await listUser.execute(
+      request.dbConnection,
+      page,
+      limit,
+      filters,
+    );
 
     response.status(users.code).send(users);
   }

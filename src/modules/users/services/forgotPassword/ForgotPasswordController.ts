@@ -13,7 +13,10 @@ export class ForgotPasswordController {
 
     const forgotPassword = container.resolve(ForgotPasswordService);
 
-    const passwordForgotten = await forgotPassword.execute(userData);
+    const passwordForgotten = await forgotPassword.execute(
+      request.dbConnection,
+      userData,
+    );
 
     response.status(passwordForgotten.code).send(passwordForgotten);
   }

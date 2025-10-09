@@ -19,7 +19,12 @@ export class ListFileController {
 
     const { page = 1, limit = 20, ...filters } = request.query;
 
-    const files = await listFile.execute(page, limit, filters);
+    const files = await listFile.execute(
+      request.dbConnection,
+      page,
+      limit,
+      filters,
+    );
 
     response.status(files.code).send(files);
   }

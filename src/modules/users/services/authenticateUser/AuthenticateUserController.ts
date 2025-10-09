@@ -20,7 +20,10 @@ export class AuthenticateUserController {
 
     const authenticateUser = container.resolve(AuthenticateUserService);
 
-    const authenticatedUser = await authenticateUser.execute(userData);
+    const authenticatedUser = await authenticateUser.execute(
+      request.dbConnection,
+      userData,
+    );
 
     response.status(authenticatedUser.code).send(authenticatedUser);
   }

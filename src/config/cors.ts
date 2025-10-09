@@ -9,10 +9,12 @@ const corsValidator = Joi.object<ICorsConfigDTO>({
     .min(1)
     .required(),
   origin: Joi.function().arity(2).required(),
+  credentials: Joi.boolean().required(),
 });
 
 export const corsConfig = Object.freeze<ICorsConfigDTO>({
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  credentials: true,
   origin(origin, callback) {
     if (appConfig.config.apiMode === 'production') {
       if (origin && appConfig.config.allowedDomains?.includes(origin)) {

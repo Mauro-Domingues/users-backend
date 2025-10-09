@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import 'reflect-metadata';
+import '@shared/container';
 import 'express-async-errors';
 import cluster from 'node:cluster';
 import { truncateSync, existsSync } from 'node:fs';
@@ -9,7 +10,7 @@ import express, {
   Express,
   json,
   urlencoded,
-  // static as staticPath,
+  static as staticPath,
 } from 'express';
 import { serve, setup } from 'swagger-ui-express';
 import { setConnection } from '@middlewares/setConnection';
@@ -20,11 +21,10 @@ import { convertToMilliseconds } from '@utils/convertToMilliseconds';
 import cors from 'cors';
 import { appConfig } from '@config/app';
 import { corsConfig } from '@config/cors';
-// import { cryptoConfig } from '@config/crypto'; // cryptoProvider
-// import { storageConfig } from '@config/storage'; // storageProvider
+import { cryptoConfig } from '@config/crypto';
+import { storageConfig } from '@config/storage';
 import { routes } from '../routes';
 import swaggerDocs from '../swagger.json';
-import '@shared/container';
 
 export const app = new (class App {
   public readonly server: Express;
@@ -49,8 +49,8 @@ export const app = new (class App {
 
   private staticRoutes(): void {
     this.server.use('/doc', serve, setup(swaggerDocs));
-    // this.server.use('/uploads', staticPath(storageConfig.config.uploadsFolder)); // storageProvider
-    // this.server.use('/jwks', staticPath(cryptoConfig.config.jwksPath)); // expose public key feature
+    this.server.use('/uploads', staticPath(storageConfig.config.uploadsFolder));
+    this.server.use('/jwks', staticPath(cryptoConfig.config.jwksPath));
   }
 
   private errorHandlers(): void {

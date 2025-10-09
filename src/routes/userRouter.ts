@@ -24,6 +24,17 @@ import { listRole } from '@modules/users/validators/roles/listRole';
 import { showRole } from '@modules/users/validators/roles/showRole';
 import { updateRole } from '@modules/users/validators/roles/updateRole';
 import { deleteRole } from '@modules/users/validators/roles/deleteRole';
+import { CreatePermissionController } from '@modules/users/services/createPermission/CreatePermissionController';
+import { ShowPermissionController } from '@modules/users/services/showPermission/ShowPermissionController';
+import { ListPermissionController } from '@modules/users/services/listPermission/ListPermissionController';
+import { UpdatePermissionController } from '@modules/users/services/updatePermission/UpdatePermissionController';
+import { DeletePermissionController } from '@modules/users/services/deletePermission/DeletePermissionController';
+import { createPermission } from '@modules/users/validators/permissions/createPermission';
+import { listPermission } from '@modules/users/validators/permissions/listPermission';
+import { showPermission } from '@modules/users/validators/permissions/showPermission';
+import { updatePermission } from '@modules/users/validators/permissions/updatePermission';
+import { deletePermission } from '@modules/users/validators/permissions/deletePermission';
+import { accessControl } from '@middlewares/accessControl';
 
 const userRouter = Router();
 const createUserController = new CreateUserController();
@@ -49,6 +60,7 @@ userRouter.get(
 );
 userRouter.get(
   '/users/:id',
+  accessControl,
   showUser as ReturnType<typeof celebrate>,
   showUserController.handle,
 );
@@ -76,3 +88,32 @@ userRouter
   );
 
 export { userRouter };
+
+const createPermissionController = new CreatePermissionController();
+const listPermissionController = new ListPermissionController();
+const showPermissionController = new ShowPermissionController();
+const updatePermissionController = new UpdatePermissionController();
+const deletePermissionController = new DeletePermissionController();
+
+userRouter
+  .route('/permissions')
+  .post(createPermission, createPermissionController.handle)
+  .get(
+    listPermission as ReturnType<typeof celebrate>,
+    listPermissionController.handle,
+  );
+
+userRouter
+  .route('/permissions/:id')
+  .get(
+    showPermission as ReturnType<typeof celebrate>,
+    showPermissionController.handle,
+  )
+  .put(
+    updatePermission as ReturnType<typeof celebrate>,
+    updatePermissionController.handle,
+  )
+  .delete(
+    deletePermission as ReturnType<typeof celebrate>,
+    deletePermissionController.handle,
+  );

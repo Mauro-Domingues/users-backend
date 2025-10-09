@@ -1,5 +1,5 @@
 import { Base } from '@shared/container/modules/entities/Base';
-import { Entity, Column, JoinColumn, ManyToOne, Unique } from 'typeorm';
+import { Entity, Column, JoinColumn, ManyToOne, Unique, Index } from 'typeorm';
 import { User } from './User';
 
 @Entity('password_resets')
@@ -8,6 +8,7 @@ import { User } from './User';
   'recoveryCode',
 ])
 export class PasswordReset extends Base {
+  @Index('INDEX_password_resets_user_id', ['userId'])
   @Column({ name: 'user_id', type: 'uuid', nullable: false })
   declare public userId: string;
 

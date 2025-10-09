@@ -10,8 +10,6 @@ export class SocialAuthenticateUserController {
     request: Request<never, never, never, { state: string }>,
     response: Response<never>,
   ): Promise<void> {
-    console.group(request.user);
-
     const userData: ISocialAuthDTO = {
       email: request?.user?.email,
       isAuthenticated: request.isAuthenticated(),
@@ -24,7 +22,7 @@ export class SocialAuthenticateUserController {
         jwtToken: { expiresIn, token: jwtToken },
         refreshToken: { token: refreshToken },
       },
-    } = await authenticateUser.execute(userData);
+    } = await authenticateUser.execute(request.dbConnection, userData);
 
     response.cookie('jwtToken', jwtToken, {
       maxAge: expiresIn,

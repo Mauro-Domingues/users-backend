@@ -4,7 +4,7 @@ import { ICacheProvider } from '@shared/container/providers/CacheProvider/models
 import { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
 import { IResponseDTO } from '@dtos/IResponseDTO';
 import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Delete, Path } from 'tsoa';
+import { Route, Tags, Delete, Path, Inject } from 'tsoa';
 import { IStorageProvider } from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 
 @Route('/files')
@@ -19,15 +19,15 @@ export class DeleteFileService {
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   @Delete('{id}')
   @Tags('File')
-  public async execute(@Path() id: string): Promise<IResponseDTO<null>> {
-    const trx = this.connection.mysql.createQueryRunner();
+  public async execute(
+    @Inject() connection: IConnection,
+    @Path() id: string,
+  ): Promise<IResponseDTO<null>> {
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
@@ -51,12 +51,8 @@ export class DeleteFileService {
 
       await this.filesRepository.delete({ id }, trx);
 
-      await this.cacheProvider.invalidatePrefix(
-        `${this.connection.client}:files`,
-      );
-      await this.cacheProvider.invalidatePrefix(
-        `${this.connection.client}:folders`,
-      );
+      await this.cacheProvider.invalidatePrefix(`${connection.client}:files`);
+      await this.cacheProvider.invalidatePrefix(`${connection.client}:folders`);
       if (trx.isTransactionActive) await trx.commitTransaction();
 
       return {

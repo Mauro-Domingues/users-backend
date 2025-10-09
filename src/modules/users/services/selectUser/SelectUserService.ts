@@ -18,22 +18,20 @@ export class SelectUserService {
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   @Get()
   @Tags('User')
   public async execute(
+    @Inject() connection: IConnection,
     @Inject() filters: FindOptionsWhere<User>,
   ): Promise<IResponseDTO<Array<User>>> {
-    const trx = this.connection.mysql.createQueryRunner();
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
       const cacheKey = `${
-        this.connection.client
+        connection.client
       }:users:select:${JSON.stringify(filters)}`;
 
       let cache = await this.cacheProvider.recovery<ICacheDTO<User>>(cacheKey);

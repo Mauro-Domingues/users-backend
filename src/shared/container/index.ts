@@ -17,6 +17,8 @@ import { AddressesRepository } from '@modules/users/repositories/AdressesReposit
 
 import { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
 import { RolesRepository } from '@modules/users/repositories/RolesRepository';
+import { IPermissionsRepository } from '@modules/users/repositories/IPermissionsRepository';
+import { PermissionsRepository } from '@modules/users/repositories/PermissionsRepository';
 
 container.registerSingleton<ITokensRepository>(
   'TokensRepository',
@@ -56,4 +58,9 @@ container.registerSingleton<IProfilesRepository>(
 container.registerSingleton<IRolesRepository>(
   'RolesRepository',
   RolesRepository,
+);
+
+container.registerSingleton<IPermissionsRepository>(
+  'PermissionsRepository',
+  PermissionsRepository,
 );

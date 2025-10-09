@@ -13,7 +13,7 @@ export class DeleteFolderController {
 
     const { id } = request.params;
 
-    const folder = await deleteFolder.execute(id);
+    const folder = await deleteFolder.execute(request.dbConnection, id);
 
     response.send(folder);
   }

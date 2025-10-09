@@ -4,7 +4,7 @@ import { ICacheProvider } from '@shared/container/providers/CacheProvider/models
 import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
 import { IResponseDTO } from '@dtos/IResponseDTO';
 import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Delete, Path } from 'tsoa';
+import { Route, Tags, Delete, Path, Inject } from 'tsoa';
 
 @Route('/users')
 @injectable()
@@ -15,15 +15,15 @@ export class DeleteUserService {
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
-
-    @inject('Connection')
-    private readonly connection: IConnection,
   ) {}
 
   @Delete('{id}')
   @Tags('User')
-  public async execute(@Path() id: string): Promise<IResponseDTO<null>> {
-    const trx = this.connection.mysql.createQueryRunner();
+  public async execute(
+    @Inject() connection: IConnection,
+    @Path() id: string,
+  ): Promise<IResponseDTO<null>> {
+    const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
@@ -35,9 +35,7 @@ export class DeleteUserService {
 
       await this.usersRepository.softDelete({ id }, trx);
 
-      await this.cacheProvider.invalidatePrefix(
-        `${this.connection.client}:users`,
-      );
+      await this.cacheProvider.invalidatePrefix(`${connection.client}:users`);
       if (trx.isTransactionActive) await trx.commitTransaction();
 
       return {
