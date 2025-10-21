@@ -21,6 +21,6 @@ export class UpdatePermissionController {
       permissionData,
     );
 
-    response.status(permission.code).send(permission);
+    response.status(permission.code).json(permission);
   }
 }

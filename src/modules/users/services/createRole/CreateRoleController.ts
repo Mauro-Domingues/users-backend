@@ -16,6 +16,6 @@ export class CreateRoleController {
 
     const role = await createRole.execute(request.dbConnection, roleData);
 
-    response.status(role.code).send(role);
+    response.status(role.code).json(role);
   }
 }

@@ -15,6 +15,6 @@ export class DeleteFileController {
 
     const file = await deleteFile.execute(request.dbConnection, id);
 
-    response.send(file);
+    response.sendStatus(file.code);
   }
 }

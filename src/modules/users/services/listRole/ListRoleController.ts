@@ -26,6 +26,6 @@ export class ListRoleController {
       filters,
     );
 
-    response.status(roles.code).send(roles);
+    response.status(roles.code).json(roles);
   }
 }

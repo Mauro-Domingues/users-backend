@@ -16,6 +16,6 @@ export class ShowFolderController {
 
     const folder = await showFolder.execute(request.dbConnection, id);
 
-    response.status(folder.code).send(folder);
+    response.status(folder.code).json(folder);
   }
 }

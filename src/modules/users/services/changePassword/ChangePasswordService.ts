@@ -48,7 +48,7 @@ export class ChangePasswordService {
       if (trx.isTransactionActive) await trx.commitTransaction();
 
       return {
-        code: 200,
+        code: 204,
         messageCode: 'UPDATED',
         message: 'Successfully changed password',
         data: null,

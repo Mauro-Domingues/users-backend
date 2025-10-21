@@ -29,6 +29,6 @@ export class ListUserController {
       filters,
     );
 
-    response.status(users.code).send(users);
+    response.status(users.code).json(users);
   }
 }

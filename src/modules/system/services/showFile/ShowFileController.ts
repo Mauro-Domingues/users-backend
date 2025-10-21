@@ -16,6 +16,6 @@ export class ShowFileController {
 
     const file = await showFile.execute(request.dbConnection, id);
 
-    response.status(file.code).send(file);
+    response.status(file.code).json(file);
   }
 }

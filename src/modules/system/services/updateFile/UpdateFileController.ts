@@ -19,6 +19,6 @@ export class UpdateFileController {
 
     const file = await updateFile.execute(request.dbConnection, id, fileData);
 
-    response.status(file.code).send(file);
+    response.status(file.code).json(file);
   }
 }

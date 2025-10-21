@@ -131,7 +131,7 @@ export class ForgotPasswordService {
       if (trx.isTransactionActive) await trx.commitTransaction();
 
       return {
-        code: 201,
+        code: 204,
         messageCode: 'SENT',
         message: 'Email successfully sent',
         data: null,

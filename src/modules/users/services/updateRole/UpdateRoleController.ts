@@ -17,6 +17,6 @@ export class UpdateRoleController {
 
     const role = await updateRole.execute(request.dbConnection, id, roleData);
 
-    response.status(role.code).send(role);
+    response.status(role.code).json(role);
   }
 }

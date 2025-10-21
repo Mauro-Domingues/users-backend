@@ -26,6 +26,6 @@ export class ListFolderController {
       filters,
     );
 
-    response.status(folders.code).send(folders);
+    response.status(folders.code).json(folders);
   }
 }

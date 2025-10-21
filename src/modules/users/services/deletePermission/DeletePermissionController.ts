@@ -15,6 +15,6 @@ export class DeletePermissionController {
 
     const permission = await deletePermission.execute(request.dbConnection, id);
 
-    response.send(permission);
+    response.json(permission);
   }
 }

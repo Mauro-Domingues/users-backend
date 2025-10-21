@@ -16,6 +16,6 @@ export class CreateFolderController {
 
     const folder = await createFolder.execute(request.dbConnection, folderData);
 
-    response.status(folder.code).send(folder);
+    response.status(folder.code).json(folder);
   }
 }

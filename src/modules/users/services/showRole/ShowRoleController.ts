@@ -16,6 +16,6 @@ export class ShowRoleController {
 
     const role = await showRole.execute(request.dbConnection, id);
 
-    response.status(role.code).send(role);
+    response.status(role.code).json(role);
   }
 }

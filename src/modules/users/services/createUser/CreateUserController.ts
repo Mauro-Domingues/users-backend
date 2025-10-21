@@ -16,6 +16,6 @@ export class CreateUserController {
 
     const user = await createUser.execute(request.dbConnection, userData);
 
-    response.status(user.code).send(user);
+    response.status(user.code).json(user);
   }
 }

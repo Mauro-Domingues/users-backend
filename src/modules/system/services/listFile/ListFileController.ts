@@ -26,6 +26,6 @@ export class ListFileController {
       filters,
     );
 
-    response.status(files.code).send(files);
+    response.status(files.code).json(files);
   }
 }

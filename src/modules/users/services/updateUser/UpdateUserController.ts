@@ -17,6 +17,6 @@ export class UpdateUserController {
 
     const user = await updateUser.execute(request.dbConnection, id, userData);
 
-    response.status(user.code).send(user);
+    response.status(user.code).json(user);
   }
 }

@@ -25,6 +25,6 @@ export class AuthenticateUserController {
       userData,
     );
 
-    response.status(authenticatedUser.code).send(authenticatedUser);
+    response.status(authenticatedUser.code).json(authenticatedUser);
   }
 }

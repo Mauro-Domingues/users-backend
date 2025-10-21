@@ -19,6 +19,6 @@ export class GenerateKeyControllerController {
 
     const generatedKey = await generateKeyController.execute();
 
-    response.status(generatedKey.code).send(generatedKey);
+    response.status(generatedKey.code).json(generatedKey);
   }
 }

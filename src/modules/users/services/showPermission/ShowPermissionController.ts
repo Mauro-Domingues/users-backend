@@ -16,6 +16,6 @@ export class ShowPermissionController {
 
     const permission = await showPermission.execute(request.dbConnection, id);
 
-    response.status(permission.code).send(permission);
+    response.status(permission.code).json(permission);
   }
 }

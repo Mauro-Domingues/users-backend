@@ -20,6 +20,6 @@ export class ChangePasswordController {
       userData,
     );
 
-    response.status(passwordChanged.code).send(passwordChanged);
+    response.sendStatus(passwordChanged.code);
   }
 }

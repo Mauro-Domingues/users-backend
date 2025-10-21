@@ -15,6 +15,6 @@ export class DeleteRoleController {
 
     const role = await deleteRole.execute(request.dbConnection, id);
 
-    response.send(role);
+    response.sendStatus(role.code);
   }
 }

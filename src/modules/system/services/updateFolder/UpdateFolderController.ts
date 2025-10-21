@@ -21,6 +21,6 @@ export class UpdateFolderController {
       folderData,
     );
 
-    response.status(folder.code).send(folder);
+    response.status(folder.code).json(folder);
   }
 }

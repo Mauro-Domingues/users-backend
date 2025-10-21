@@ -16,6 +16,6 @@ export class SelectUserController {
 
     const users = await selectUser.execute(request.dbConnection, filters);
 
-    response.status(users.code).send(users);
+    response.status(users.code).json(users);
   }
 }

@@ -18,6 +18,6 @@ export class ForgotPasswordController {
       userData,
     );
 
-    response.status(passwordForgotten.code).send(passwordForgotten);
+    response.sendStatus(passwordForgotten.code);
   }
 }

@@ -15,6 +15,6 @@ export class ShowSelfUserController {
 
     const user = await showSelfUser.execute(request.dbConnection, id);
 
-    response.status(user.code).send(user);
+    response.status(user.code).json(user);
   }
 }

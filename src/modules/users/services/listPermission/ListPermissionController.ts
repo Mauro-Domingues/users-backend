@@ -26,6 +26,6 @@ export class ListPermissionController {
       filters,
     );
 
-    response.status(permissions.code).send(permissions);
+    response.status(permissions.code).json(permissions);
   }
 }

@@ -15,6 +15,6 @@ export class DeleteUserController {
 
     const user = await deleteUser.execute(request.dbConnection, id);
 
-    response.send(user);
+    response.sendStatus(user.code);
   }
 }

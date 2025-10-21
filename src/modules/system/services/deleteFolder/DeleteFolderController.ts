@@ -15,6 +15,6 @@ export class DeleteFolderController {
 
     const folder = await deleteFolder.execute(request.dbConnection, id);
 
-    response.send(folder);
+    response.sendStatus(folder.code);
   }
 }

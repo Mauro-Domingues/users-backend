@@ -23,6 +23,6 @@ export class CheckTokenController {
       tokenData,
     );
 
-    response.status(authenticationTokens.code).send(authenticationTokens);
+    response.status(authenticationTokens.code).json(authenticationTokens);
   }
 }
