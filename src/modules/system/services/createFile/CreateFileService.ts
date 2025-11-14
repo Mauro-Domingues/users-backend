@@ -6,10 +6,8 @@ import type { ICreateFileDTO } from '@modules/system/dtos/ICreateFileDTO';
 import type { IFileDTO } from '@modules/system/dtos/IFileDTO';
 import type { File } from '@modules/system/entities/File';
 import type { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
-import type { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
 import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import type { IStorageProvider } from '@shared/container/providers/StorageProvider/models/IStorageProvider';
-import { AppError } from '@shared/errors/AppError';
 import type { IConnection } from '@shared/typeorm';
 
 @Route('/files')
@@ -18,9 +16,6 @@ export class CreateFileService {
   public constructor(
     @inject('FilesRepository')
     private readonly filesRepository: IFilesRepository,
-
-    @inject('FoldersRepository')
-    private readonly foldersRepository: IFoldersRepository,
 
     @inject('StorageProvider')
     private readonly storageProvider: IStorageProvider,
@@ -40,33 +35,13 @@ export class CreateFileService {
 
     await trx.startTransaction();
     try {
-      const folder = await this.foldersRepository.findBy(
-        {
-          where: [
-            {
-              id: fileData.folderId,
-            },
-            { slug: 'hidden' },
-          ],
-          select: { id: true },
-        },
-        trx,
-      );
-
-      if (!folder) {
-        throw new AppError(
-          'CAN_NOT_RESOLVE_RELATION',
-          'Could not resolve folder location',
-        );
-      }
-
       const fileDataArray: Array<IFileDTO> = [];
       const createdFiles: Array<string> = [];
 
       await Promise.all(
         fileData.files.map(async file => {
           fileDataArray.push({
-            folderId: folder.id,
+            folderId: fileData.folderId,
             file: file.file,
             name: file.name,
           });
@@ -85,7 +60,11 @@ export class CreateFileService {
       const files = await this.filesRepository.createMany(fileDataArray, trx);
 
       await this.cacheProvider.invalidatePrefix(`${connection.client}:files`);
-      await this.cacheProvider.invalidatePrefix(`${connection.client}:folders`);
+      if (fileData.folderId) {
+        await this.cacheProvider.invalidatePrefix(
+          `${connection.client}:folders`,
+        );
+      }
 
       if (trx.isTransactionActive) await trx.commitTransaction();
 

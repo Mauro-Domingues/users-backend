@@ -5,7 +5,6 @@ import type { IResponseDTO } from '@dtos/IResponseDTO';
 import type { IFileDTO } from '@modules/system/dtos/IFileDTO';
 import type { File } from '@modules/system/entities/File';
 import type { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
-import type { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
 import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import type { IStorageProvider } from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import { AppError } from '@shared/errors/AppError';
@@ -16,9 +15,6 @@ import { updateAttribute } from '@utils/mappers';
 @injectable()
 export class UpdateFileService {
   public constructor(
-    @inject('FoldersRepository')
-    private readonly foldersRepository: IFoldersRepository,
-
     @inject('FilesRepository')
     private readonly filesRepository: IFilesRepository,
 
@@ -41,23 +37,6 @@ export class UpdateFileService {
 
     await trx.startTransaction();
     try {
-      const folder = await this.foldersRepository.findBy(
-        {
-          where: [
-            {
-              id: fileData.folderId,
-            },
-            { slug: 'hidden' },
-          ],
-          select: { id: true },
-        },
-        trx,
-      );
-
-      if (!folder) {
-        throw new AppError('NOT_FOUND', 'Could not resolve folder location');
-      }
-
       const file = await this.filesRepository.findBy({ where: { id } }, trx);
 
       if (!file) {
@@ -69,13 +48,14 @@ export class UpdateFileService {
         await this.storageProvider.saveFile(fileData.file);
       }
 
-      await this.filesRepository.update(
-        updateAttribute(file, { ...fileData, folderId: folder.id }),
-        trx,
-      );
+      await this.filesRepository.update(updateAttribute(file, fileData), trx);
 
       await this.cacheProvider.invalidatePrefix(`${connection.client}:files`);
-      await this.cacheProvider.invalidatePrefix(`${connection.client}:folders`);
+      if (fileData.folderId) {
+        await this.cacheProvider.invalidatePrefix(
+          `${connection.client}:folders`,
+        );
+      }
       if (trx.isTransactionActive) await trx.commitTransaction();
 
       return {

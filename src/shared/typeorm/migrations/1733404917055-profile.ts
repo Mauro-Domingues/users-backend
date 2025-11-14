@@ -2,7 +2,7 @@ import type { MigrationInterface, QueryRunner } from 'typeorm';
 import { Table, TableForeignKey } from 'typeorm';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
 
-export class Profile1733404949519
+export class Profile1733404917055
   extends BaseMigration
   implements MigrationInterface
 {

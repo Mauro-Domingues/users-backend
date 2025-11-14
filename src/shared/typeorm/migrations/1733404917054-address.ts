@@ -2,7 +2,7 @@ import type { MigrationInterface, QueryRunner } from 'typeorm';
 import { Table } from 'typeorm';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
 
-export class Address1733404949519
+export class Address1733404917054
   extends BaseMigration
   implements MigrationInterface
 {

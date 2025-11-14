@@ -44,16 +44,19 @@ export class DeleteFolderService {
         throw new AppError('NOT_FOUND', 'Folder not found', 404);
       }
 
-      await Promise.allSettled(
-        folder.files.map(async image => {
-          return this.storageProvider.deleteFile(image.file);
-        }),
-      );
+      if (folder.files?.length) {
+        await Promise.allSettled(
+          folder.files.map(async image => {
+            return this.storageProvider.deleteFile(image.file);
+          }),
+        );
+        await this.cacheProvider.invalidatePrefix(`${connection.client}:files`);
+      }
 
       await this.foldersRepository.delete({ id }, trx);
 
       await this.cacheProvider.invalidatePrefix(`${connection.client}:folders`);
-      await this.cacheProvider.invalidatePrefix(`${connection.client}:files`);
+
       if (trx.isTransactionActive) await trx.commitTransaction();
 
       return {

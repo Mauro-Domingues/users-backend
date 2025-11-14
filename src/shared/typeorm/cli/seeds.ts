@@ -1,10 +1,10 @@
 import type { QueryRunner } from 'typeorm';
 import { Connection } from '../index';
-import { seedFolder } from '../seeds/folder';
+import { seedAccessControl } from '../seeds/accessControl';
 import { seedUser } from '../seeds/user';
 
 const available = {
-  folder: seedFolder,
+  accessControl: seedAccessControl,
   user: seedUser,
 } as const;
 

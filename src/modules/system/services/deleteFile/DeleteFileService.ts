@@ -36,6 +36,7 @@ export class DeleteFileService {
           where: { id },
           select: {
             file: true,
+            folderId: true,
           },
         },
         trx,
@@ -52,7 +53,11 @@ export class DeleteFileService {
       await this.filesRepository.delete({ id }, trx);
 
       await this.cacheProvider.invalidatePrefix(`${connection.client}:files`);
-      await this.cacheProvider.invalidatePrefix(`${connection.client}:folders`);
+      if (file.folderId) {
+        await this.cacheProvider.invalidatePrefix(
+          `${connection.client}:folders`,
+        );
+      }
       if (trx.isTransactionActive) await trx.commitTransaction();
 
       return {

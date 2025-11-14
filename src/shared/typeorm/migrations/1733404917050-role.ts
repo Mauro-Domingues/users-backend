@@ -1,15 +1,16 @@
 import type { MigrationInterface, QueryRunner } from 'typeorm';
 import { Table } from 'typeorm';
+import { IRoleTypeDTO } from '@modules/users/dtos/IRoleTypeDTO';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
 
-export class Permission1759885655990
+export class Role1733404917050
   extends BaseMigration
   implements MigrationInterface
 {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'permissions',
+        name: 'roles',
         columns: [
           ...this.baseColumns,
           {
@@ -22,6 +23,13 @@ export class Permission1759885655990
             type: 'varchar',
             isNullable: true,
           },
+          {
+            name: 'type',
+            type: 'enum',
+            enum: Object.values(IRoleTypeDTO),
+            isNullable: false,
+            default: `'${IRoleTypeDTO.CUSTOM}'`,
+          },
         ],
       }),
       true,
@@ -29,6 +37,6 @@ export class Permission1759885655990
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('permissions', true);
+    await queryRunner.dropTable('roles', true);
   }
 }

@@ -2,7 +2,7 @@ import type { MigrationInterface, QueryRunner } from 'typeorm';
 import { Table, TableForeignKey, TableIndex } from 'typeorm';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
 
-export class User1733404949520
+export class User1733404917056
   extends BaseMigration
   implements MigrationInterface
 {
@@ -20,6 +20,12 @@ export class User1733404949520
           },
           {
             name: 'address_id',
+            type: 'varchar',
+            length: '36',
+            isNullable: true,
+          },
+          {
+            name: 'role_id',
             type: 'varchar',
             length: '36',
             isNullable: true,
@@ -63,6 +69,18 @@ export class User1733404949520
       }),
     );
 
+    await queryRunner.createForeignKey(
+      'users',
+      new TableForeignKey({
+        columnNames: ['role_id'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'roles',
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+        name: 'FK_users_role',
+      }),
+    );
+
     await queryRunner.createIndex(
       'users',
       new TableIndex({
@@ -80,13 +98,24 @@ export class User1733404949520
         isUnique: true,
       }),
     );
+
+    await queryRunner.createIndex(
+      'users',
+      new TableIndex({
+        name: 'UNIQUE_users_role_id',
+        columnNames: ['role_id'],
+        isUnique: true,
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropForeignKey('users', 'FK_users_profile');
     await queryRunner.dropForeignKey('users', 'FK_users_address');
+    await queryRunner.dropForeignKey('users', 'FK_users_role');
     await queryRunner.dropIndex('users', 'UNIQUE_users_profile_id');
     await queryRunner.dropIndex('users', 'UNIQUE_users_address_id');
+    await queryRunner.dropIndex('users', 'UNIQUE_users_role_id');
     await queryRunner.dropTable('users', true);
   }
 }
