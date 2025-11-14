@@ -6,10 +6,12 @@ import type { IResponseDTO } from '@dtos/IResponseDTO';
 import type { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
 import type { IUserDTO } from '@modules/users/dtos/IUserDTO';
 import type { Address } from '@modules/users/entities/Address';
+import type { Permission } from '@modules/users/entities/Permission';
 import type { Profile } from '@modules/users/entities/Profile';
 import type { User } from '@modules/users/entities/User';
 import type { IAddressesRepository } from '@modules/users/repositories/IAddressesRepository';
 import type { IProfilesRepository } from '@modules/users/repositories/IProfilesRepository';
+import type { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
 import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
 import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import type { IStorageProvider } from '@shared/container/providers/StorageProvider/models/IStorageProvider';
@@ -30,6 +32,9 @@ export class UpdateUserService extends SimpleDependency {
 
     @inject('AddressesRepository')
     private readonly addressesRepository: IAddressesRepository,
+
+    @inject('RolesRepository')
+    private readonly rolesRepository: IRolesRepository,
 
     @inject('FilesRepository')
     protected readonly filesRepository: IFilesRepository,
@@ -88,6 +93,41 @@ export class UpdateUserService extends SimpleDependency {
     }
   }
 
+  private async patchRoleAndPermissions({
+    permissions,
+    roleId,
+    user,
+    trx,
+  }: {
+    permissions: Array<Permission>;
+    trx: QueryRunner;
+    roleId: string;
+    user: User;
+  }): Promise<void> {
+    if (user.roleId !== roleId) {
+      const role = await this.rolesRepository.findBy(
+        {
+          where: { id: roleId },
+          relations: { permissions: true },
+          select: {
+            id: true,
+            permissions: {
+              id: true,
+            },
+          },
+        },
+        trx,
+      );
+
+      if (!role) {
+        throw new AppError('NOT_FOUND', 'Role not found', 404);
+      }
+
+      user.roleId = role.id;
+      user.permissions = role.permissions.concat(permissions);
+    }
+  }
+
   @Put('{id}')
   @Tags('User')
   public async execute(
@@ -99,12 +139,12 @@ export class UpdateUserService extends SimpleDependency {
 
     await trx.startTransaction();
     try {
-      const { address, profile, ...rest } = userData;
+      const { address, profile, roleId, permissions = [], ...rest } = userData;
 
       const user = await this.usersRepository.findBy(
         {
           where: { id },
-          select: { id: true, addressId: true, profileId: true },
+          select: { id: true, addressId: true, profileId: true, roleId: true },
         },
         trx,
       );
@@ -115,6 +155,8 @@ export class UpdateUserService extends SimpleDependency {
 
       if (address) await this.patchAddress({ address, trx, user });
       if (profile) await this.patchProfile({ profile, trx, user });
+      if (roleId)
+        await this.patchRoleAndPermissions({ permissions, trx, user, roleId });
 
       await this.usersRepository.update(updateAttribute(user, rest), trx);
 

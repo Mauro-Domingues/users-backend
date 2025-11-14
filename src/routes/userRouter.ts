@@ -48,11 +48,26 @@ const listRoleController = new ListRoleController();
 const showRoleController = new ShowRoleController();
 const updateRoleController = new UpdateRoleController();
 const deleteRoleController = new DeleteRoleController();
+const createPermissionController = new CreatePermissionController();
+const listPermissionController = new ListPermissionController();
+const showPermissionController = new ShowPermissionController();
+const updatePermissionController = new UpdatePermissionController();
+const deletePermissionController = new DeletePermissionController();
 
 userRouter.post('/register', createUser, createUserController.handle);
-userRouter.get('/select-users', selectUser, selectUserController.handle);
-userRouter.get('/me', showSelfUser, showSelfUserController.handle);
-userRouter.get('/users', listUser, listUserController.handle);
+userRouter.get(
+  '/select-users',
+  accessControl,
+  selectUser,
+  selectUserController.handle,
+);
+userRouter.get(
+  '/me',
+  accessControl,
+  showSelfUser,
+  showSelfUserController.handle,
+);
+userRouter.get('/users', accessControl, listUser, listUserController.handle);
 userRouter.get(
   '/users/:id',
   accessControl,
@@ -62,35 +77,29 @@ userRouter.get(
 
 userRouter
   .route('/users/:id')
-  .put(updateUser, updateUserController.handle)
-  .delete(deleteUser, deleteUserController.handle);
+  .put(accessControl, updateUser, updateUserController.handle)
+  .delete(accessControl, deleteUser, deleteUserController.handle);
 
 userRouter
   .route('/roles')
-  .post(createRole, createRoleController.handle)
-  .get(listRole, listRoleController.handle);
+  .post(accessControl, createRole, createRoleController.handle)
+  .get(accessControl, listRole, listRoleController.handle);
 
 userRouter
   .route('/roles/:id')
-  .get(showRole, showRoleController.handle)
-  .put(updateRole, updateRoleController.handle)
-  .delete(deleteRole, deleteRoleController.handle);
-
-export { userRouter };
-
-const createPermissionController = new CreatePermissionController();
-const listPermissionController = new ListPermissionController();
-const showPermissionController = new ShowPermissionController();
-const updatePermissionController = new UpdatePermissionController();
-const deletePermissionController = new DeletePermissionController();
+  .get(accessControl, showRole, showRoleController.handle)
+  .put(accessControl, updateRole, updateRoleController.handle)
+  .delete(accessControl, deleteRole, deleteRoleController.handle);
 
 userRouter
   .route('/permissions')
-  .post(createPermission, createPermissionController.handle)
-  .get(listPermission, listPermissionController.handle);
+  .post(accessControl, createPermission, createPermissionController.handle)
+  .get(accessControl, listPermission, listPermissionController.handle);
 
 userRouter
   .route('/permissions/:id')
-  .get(showPermission, showPermissionController.handle)
-  .put(updatePermission, updatePermissionController.handle)
-  .delete(deletePermission, deletePermissionController.handle);
+  .get(accessControl, showPermission, showPermissionController.handle)
+  .put(accessControl, updatePermission, updatePermissionController.handle)
+  .delete(accessControl, deletePermission, deletePermissionController.handle);
+
+export { userRouter };

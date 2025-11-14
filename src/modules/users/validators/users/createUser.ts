@@ -10,6 +10,7 @@ export const createUser = baseValidator(ctx => {
     body: userValidationSchema.keys({
       email: userValidationSchema.extract('email').required(),
       password: userValidationSchema.extract('password').required(),
+      role: userValidationSchema.extract('role').forbidden(),
     }),
   };
 });

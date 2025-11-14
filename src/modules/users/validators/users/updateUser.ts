@@ -12,6 +12,7 @@ export const updateUser = baseValidator(ctx => {
     query: ctx.object({}),
     body: userValidationSchema.keys({
       password: userValidationSchema.extract('password').forbidden(),
+      role: userValidationSchema.extract('role').forbidden(),
     }),
   };
 });

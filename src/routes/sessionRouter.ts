@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { accessControl } from '@middlewares/accessControl';
 import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
 import { AuthenticateUserController } from '@modules/users/services/authenticateUser/AuthenticateUserController';
 import { ChangePasswordController } from '@modules/users/services/changePassword/ChangePasswordController';
@@ -40,6 +41,7 @@ sessionRouter.post(
 sessionRouter.post('/check-token', checkToken, checkTokenController.handle);
 sessionRouter.patch(
   '/change-password',
+  accessControl,
   changePassword,
   changePasswordController.handle,
 );

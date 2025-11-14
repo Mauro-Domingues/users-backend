@@ -14,7 +14,7 @@ export const userSchema = baseSchema(User, (ctx, { id }) => {
   return {
     permissions: ctx.array().items(permissionValidationSchema),
     email: ctx.string().email().max(255),
-    password: ctx.string().max(255),
+    password: ctx.string().min(8).max(255),
     address: addressValidationSchema,
     addressId: id,
     profile: profileValidationSchema,

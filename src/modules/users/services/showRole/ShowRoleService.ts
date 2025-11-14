@@ -28,7 +28,20 @@ export class ShowRoleService {
       const role = await this.rolesRepository.findBy(
         {
           where: { id },
-          select: { id: true, name: true, description: true },
+          relations: { permissions: true },
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            type: true,
+            permissions: {
+              id: true,
+              name: true,
+              slug: true,
+              method: true,
+              route: true,
+            },
+          },
         },
         trx,
       );

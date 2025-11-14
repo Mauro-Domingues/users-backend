@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 import { storageConfig } from '@config/storage';
+import { accessControl } from '@middlewares/accessControl';
 import { CreateFileController } from '@modules/system/services/createFile/CreateFileController';
 import { CreateFolderController } from '@modules/system/services/createFolder/CreateFolderController';
 import { DeleteFileController } from '@modules/system/services/deleteFile/DeleteFileController';
@@ -46,24 +47,34 @@ systemRouter.get(
 
 systemRouter
   .route('/folders')
-  .post(createFolder, createFolderController.handle)
-  .get(listFolder, listFolderController.handle);
+  .post(accessControl, createFolder, createFolderController.handle)
+  .get(accessControl, listFolder, listFolderController.handle);
 
 systemRouter
   .route('/folders/:id')
-  .get(showFolder, showFolderController.handle)
-  .put(updateFolder, updateFolderController.handle)
-  .delete(deleteFolder, deleteFolderController.handle);
+  .get(accessControl, showFolder, showFolderController.handle)
+  .put(accessControl, updateFolder, updateFolderController.handle)
+  .delete(accessControl, deleteFolder, deleteFolderController.handle);
 
 systemRouter
   .route('/files')
-  .post(upload.array('files'), createFile, createFileController.handle)
-  .get(listFile, listFileController.handle);
+  .post(
+    accessControl,
+    upload.array('files'),
+    createFile,
+    createFileController.handle,
+  )
+  .get(accessControl, listFile, listFileController.handle);
 
 systemRouter
   .route('/files/:id')
-  .get(showFile, showFileController.handle)
-  .put(upload.single('file') as never, updateFile, updateFileController.handle)
-  .delete(deleteFile, deleteFileController.handle);
+  .get(accessControl, showFile, showFileController.handle)
+  .put(
+    accessControl,
+    upload.single('file') as never,
+    updateFile,
+    updateFileController.handle,
+  )
+  .delete(accessControl, deleteFile, deleteFileController.handle);
 
 export { systemRouter };
