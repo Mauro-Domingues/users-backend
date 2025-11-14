@@ -1,5 +1,5 @@
 import { Profile } from '@modules/users/entities/Profile';
-import { IProfilesRepository } from '@modules/users/repositories/IProfilesRepository';
+import type { IProfilesRepository } from '@modules/users/repositories/IProfilesRepository';
 import { FakeBaseRepository } from '@shared/container/modules/repositories/fakes/FakeBaseRepository';
 
 export class FakeProfilesRepository

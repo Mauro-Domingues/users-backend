@@ -1,12 +1,14 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import { IRoleDTO } from '@modules/users/dtos/IRoleDTO';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 import { roleSchema } from './roleSchema';
 
-export const createRole = celebrate({
-  [Segments.PARAMS]: Joi.object({}),
-  [Segments.QUERY]: Joi.object({}),
-  [Segments.BODY]: Joi.object<IRoleDTO>({
-    ...roleSchema,
-    name: roleSchema.name.required(),
-  }),
+export const createRole = baseValidator(ctx => {
+  const roleValidationSchema = roleSchema(ctx);
+
+  return {
+    params: ctx.object({}),
+    query: ctx.object({}),
+    body: roleValidationSchema.keys({
+      name: roleValidationSchema.extract('name').required(),
+    }),
+  };
 });

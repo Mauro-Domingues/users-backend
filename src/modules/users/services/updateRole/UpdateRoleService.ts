@@ -1,16 +1,15 @@
-import { injectable, inject } from 'tsyringe';
-
-import { AppError } from '@shared/errors/AppError';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
-import { IRoleDTO } from '@modules/users/dtos/IRoleDTO';
-import { updateAttribute } from '@utils/mappers';
-import { Role } from '@modules/users/entities/Role';
 import { instanceToInstance } from 'class-transformer';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Put, Body, Path, Inject } from 'tsoa';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import { Body, Inject, Path, Put, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IRoleDTO } from '@modules/users/dtos/IRoleDTO';
+import type { Role } from '@modules/users/entities/Role';
+import type { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
+import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import { AppError } from '@shared/errors/AppError';
+import type { IConnection } from '@shared/typeorm';
+import { updateAttribute } from '@utils/mappers';
 
 @Route('/roles')
 @injectable()

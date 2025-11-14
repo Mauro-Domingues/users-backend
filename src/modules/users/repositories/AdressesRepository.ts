@@ -1,5 +1,5 @@
 import { Address } from '@modules/users/entities/Address';
-import { IAddressesRepository } from '@modules/users/repositories/IAddressesRepository';
+import type { IAddressesRepository } from '@modules/users/repositories/IAddressesRepository';
 import { BaseRepository } from '@shared/container/modules/repositories/BaseRepository';
 
 export class AddressesRepository

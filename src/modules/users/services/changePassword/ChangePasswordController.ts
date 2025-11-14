@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IChangePasswordDTO } from '@modules/users/dtos/IChangePasswordDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IChangePasswordDTO } from '@modules/users/dtos/IChangePasswordDTO';
 import { ChangePasswordService } from './ChangePasswordService';
 
 export class ChangePasswordController {

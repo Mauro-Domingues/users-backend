@@ -1,5 +1,5 @@
 import { Folder } from '@modules/system/entities/Folder';
-import { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
+import type { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
 import { BaseRepository } from '@shared/container/modules/repositories/BaseRepository';
 
 export class FoldersRepository

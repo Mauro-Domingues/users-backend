@@ -1,11 +1,11 @@
-import { injectable, inject } from 'tsyringe';
-import { AppError } from '@shared/errors/AppError';
-import { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
-import { Folder } from '@modules/system/entities/Folder';
 import { instanceToInstance } from 'class-transformer';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IConnection } from '@shared/typeorm';
-import { Get, Route, Tags, Path, Inject } from 'tsoa';
+import { Get, Inject, Path, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { Folder } from '@modules/system/entities/Folder';
+import type { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
+import { AppError } from '@shared/errors/AppError';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/folders')
 @injectable()

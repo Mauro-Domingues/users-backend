@@ -1,17 +1,17 @@
+import { Exclude } from 'class-transformer';
 import {
-  Entity,
   Column,
+  Entity,
   JoinColumn,
-  OneToOne,
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToOne,
 } from 'typeorm';
 import { Base } from '@shared/container/modules/entities/Base';
-import { Exclude } from 'class-transformer';
-import { Profile } from './Profile';
 import { Address } from './Address';
 import { Permission } from './Permission';
+import { Profile } from './Profile';
 import { Role } from './Role';
 
 @Entity('users')
@@ -21,6 +21,9 @@ export class User extends Base {
 
   @Column({ name: 'address_id', type: 'uuid', nullable: true })
   declare public addressId: string;
+
+  @Column({ name: 'role_id', type: 'uuid', nullable: true })
+  declare public roleId: string;
 
   @Column({ name: 'email', type: 'varchar', nullable: false })
   declare public email: string;

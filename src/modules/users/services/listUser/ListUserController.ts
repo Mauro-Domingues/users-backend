@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { FindOptionsWhere } from 'typeorm';
-import { User } from '@modules/users/entities/User';
-import { IListDTO } from '@dtos/IListDTO';
+import type { IListDTO } from '@dtos/IListDTO';
+import type { User } from '@modules/users/entities/User';
 import { ListUserService } from './ListUserService';
 
 export class ListUserController {
@@ -14,7 +13,7 @@ export class ListUserController {
       {
         page: number;
         limit: number;
-      } & FindOptionsWhere<User>
+      } & Partial<User>
     >,
     response: Response<IListDTO<User>>,
   ): Promise<void> {

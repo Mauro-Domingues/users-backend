@@ -1,12 +1,13 @@
-import { Job, Queue, createQueue, DoneCallback } from 'kue';
+import type { DoneCallback, Job, Queue } from 'kue';
+import { createQueue } from 'kue';
 import { queueConfig } from '@config/queue';
+import type { IIntervalDTO } from '@dtos/IIntervalDTO';
 import { convertToMilliseconds } from '@utils/convertToMilliseconds';
-import { IIntervalDTO } from '@dtos/IIntervalDTO';
-import { IQueueProvider } from '../models/IQueueProvider';
+import type { IHandleDataDTO } from '../dtos/IHandleDataDTO';
+import type { IHandleDTO } from '../dtos/IHandleDTO';
+import type { IQueueDTO } from '../dtos/IQueueDTO';
+import type { IQueueProvider } from '../models/IQueueProvider';
 import { jobs } from '../public/jobs';
-import { IQueueDTO } from '../dtos/IQueueDTO';
-import { IHandleDTO } from '../dtos/IHandleDTO';
-import { IHandleDataDTO } from '../dtos/IHandleDataDTO';
 
 export class KueProvider implements IQueueProvider {
   private readonly queues: IQueueDTO<Queue> = {};

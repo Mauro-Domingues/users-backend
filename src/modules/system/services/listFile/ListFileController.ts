@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { FindOptionsWhere } from 'typeorm';
-import { File } from '@modules/system/entities/File';
-import { IListDTO } from '@dtos/IListDTO';
+import type { IListDTO } from '@dtos/IListDTO';
+import type { File } from '@modules/system/entities/File';
 import { ListFileService } from './ListFileService';
 
 export class ListFileController {
@@ -11,7 +10,7 @@ export class ListFileController {
       never,
       never,
       never,
-      { page: number; limit: number } & FindOptionsWhere<File>
+      { page: number; limit: number } & Partial<File>
     >,
     response: Response<IListDTO<File>>,
   ): Promise<void> {

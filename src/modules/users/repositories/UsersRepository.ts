@@ -1,8 +1,8 @@
+import type { FindOptionsWhere, QueryRunner } from 'typeorm';
 import { User } from '@modules/users/entities/User';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
 import { BaseRepository } from '@shared/container/modules/repositories/BaseRepository';
-import { FindOptionsWhere, QueryRunner } from 'typeorm';
-import { Profile } from '../entities/Profile';
+import type { Profile } from '../entities/Profile';
 
 export class UsersRepository
   extends BaseRepository<User>

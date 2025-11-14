@@ -1,5 +1,5 @@
 import { Role } from '@modules/users/entities/Role';
-import { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
+import type { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
 import { FakeBaseRepository } from '@shared/container/modules/repositories/fakes/FakeBaseRepository';
 
 export class FakeRolesRepository

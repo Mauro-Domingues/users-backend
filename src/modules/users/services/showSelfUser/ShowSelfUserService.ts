@@ -1,12 +1,12 @@
-import { injectable, inject } from 'tsyringe';
-import { AppError } from '@shared/errors/AppError';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import { User } from '@modules/users/entities/User';
-import { IResponseDTO } from '@dtos/IResponseDTO';
 import { instanceToInstance } from 'class-transformer';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { IConnection } from '@shared/typeorm';
-import { Get, Route, Tags, Inject } from 'tsoa';
+import { Get, Inject, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { User } from '@modules/users/entities/User';
+import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import { AppError } from '@shared/errors/AppError';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/me')
 @injectable()

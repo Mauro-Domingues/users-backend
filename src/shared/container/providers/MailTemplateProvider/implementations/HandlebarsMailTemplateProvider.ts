@@ -1,8 +1,8 @@
-import { readFileSync } from 'node:fs';
 import Handlebars from 'handlebars';
-import { IParseMailTemplateDTO } from '../dtos/IParseMailTemplateDTO';
-import { IMailTemplateProvider } from '../models/IMailTemplateProvider';
-import { IMailTemplateFragmentDTO } from '../dtos/IMailTemplateFragmentDTO';
+import { readFileSync } from 'node:fs';
+import type { IMailTemplateFragmentDTO } from '../dtos/IMailTemplateFragmentDTO';
+import type { IParseMailTemplateDTO } from '../dtos/IParseMailTemplateDTO';
+import type { IMailTemplateProvider } from '../models/IMailTemplateProvider';
 
 export class HandlebarsMailTemplateProvider implements IMailTemplateProvider {
   private parseTemplate({ file, variables }: IMailTemplateFragmentDTO): string {

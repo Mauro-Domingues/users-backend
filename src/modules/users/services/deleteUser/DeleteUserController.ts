@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IUserDTO } from '@modules/users/dtos/IUserDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IUserDTO } from '@modules/users/dtos/IUserDTO';
 import { DeleteUserService } from './DeleteUserService';
 
 export class DeleteUserController {

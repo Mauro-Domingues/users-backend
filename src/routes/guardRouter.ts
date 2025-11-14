@@ -1,7 +1,7 @@
-import passport from 'passport';
 import { Router } from 'express';
+import passport from 'passport';
+import type { IExceptionDTO } from '@dtos/IExceptionDTO';
 import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
-import { IExceptionDTO } from '@dtos/IExceptionDTO';
 import { getExceptionOptions } from '@utils/getExceptionOptions';
 
 const guardRouter = Router();

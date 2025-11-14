@@ -1,4 +1,4 @@
-import { IObjectDTO } from '@dtos/IObjectDTO';
+import type { IObjectDTO } from '@dtos/IObjectDTO';
 
 /**
  * CLONE VALUES -> Receives as parameter a key array and another object of type unknown, returns an array of objects with the same value, is useful for queries find WHERE + OR.

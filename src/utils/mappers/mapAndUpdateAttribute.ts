@@ -1,4 +1,4 @@
-import { IObjectDTO } from '@dtos/IObjectDTO';
+import type { IObjectDTO } from '@dtos/IObjectDTO';
 
 /**
  * PUT OBJECT -> Takes as a parameter an entity and an object, maps the object and returns the entity with the updated properties. Considers empty values sent, but non-entity-type properties are discarded.

@@ -1,11 +1,6 @@
+import type { MigrationInterface, QueryRunner } from 'typeorm';
+import { Table, TableForeignKey, TableIndex } from 'typeorm';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-  TableIndex,
-} from 'typeorm';
 
 export class PasswordReset1733404973946
   extends BaseMigration

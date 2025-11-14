@@ -1,5 +1,5 @@
 import { PasswordReset } from '@modules/users/entities/PasswordReset';
-import { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
+import type { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
 import { BaseRepository } from '@shared/container/modules/repositories/BaseRepository';
 
 export class PasswordResetsRepository

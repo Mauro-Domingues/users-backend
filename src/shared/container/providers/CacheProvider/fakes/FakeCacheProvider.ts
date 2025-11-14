@@ -1,4 +1,4 @@
-import { ICacheProvider } from '../models/ICacheProvider';
+import type { ICacheProvider } from '../models/ICacheProvider';
 
 export class FakeCacheProvider implements ICacheProvider {
   private readonly cache: Map<string, string> = new Map<string, string>();

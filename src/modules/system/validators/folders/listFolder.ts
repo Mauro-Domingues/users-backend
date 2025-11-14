@@ -1,13 +1,17 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import { Folder } from '@modules/system/entities/Folder';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 import { folderSchema } from './folderSchema';
 
-export const listFolder = celebrate({
-  [Segments.PARAMS]: Joi.object({}),
-  [Segments.QUERY]: Joi.object<Folder & { page: number; limit: number }>({
-    ...folderSchema,
-    page: Joi.number().integer().optional(),
-    limit: Joi.number().integer().optional(),
-  }),
-  [Segments.BODY]: Joi.object({}),
+export const listFolder = baseValidator(ctx => {
+  const folderValidationSchema = folderSchema(ctx);
+
+  return {
+    params: ctx.object({}),
+    query: folderValidationSchema.concat(
+      ctx.object({
+        page: ctx.number().integer().positive().optional(),
+        limit: ctx.number().integer().positive().optional(),
+      }),
+    ),
+    body: ctx.object({}),
+  };
 });

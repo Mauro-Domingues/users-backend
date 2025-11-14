@@ -1,15 +1,16 @@
-import { Router, Request, Response } from 'express';
-import { celebrate, Segments, Joi } from 'celebrate';
+import type { Request, Response } from 'express';
+import { Router } from 'express';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 
 const healthRouter = Router();
 
 healthRouter.get(
   '/health',
-  celebrate({
-    [Segments.PARAMS]: Joi.object({}),
-    [Segments.QUERY]: Joi.object({}),
-    [Segments.BODY]: Joi.object({}),
-  }),
+  baseValidator(ctx => ({
+    params: ctx.object({}),
+    query: ctx.object({}),
+    body: ctx.object({}),
+  })),
   (_request: Request, response: Response): void => {
     response.sendStatus(204);
   },

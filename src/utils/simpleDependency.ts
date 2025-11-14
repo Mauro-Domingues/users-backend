@@ -1,13 +1,13 @@
-import { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
-import { IBaseRepository } from '@shared/container/modules/repositories/IBaseRepository';
-import { IStorageProvider } from '@shared/container/providers/StorageProvider/models/IStorageProvider';
-import {
+import type {
   DeepPartial,
   FindManyOptions,
   FindOneOptions,
   ObjectLiteral,
   QueryRunner,
 } from 'typeorm';
+import type { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
+import type { IBaseRepository } from '@shared/container/modules/repositories/IBaseRepository';
+import type { IStorageProvider } from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 
 export abstract class SimpleDependency {
   protected readonly filesRepository: IFilesRepository;

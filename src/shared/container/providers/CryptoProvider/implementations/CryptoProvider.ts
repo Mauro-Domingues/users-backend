@@ -1,26 +1,28 @@
+import type { SignOptions } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
+import type { JWK } from 'pem-jwk';
+import { pem2jwk } from 'pem-jwk';
 import {
-  randomBytes,
   createCipheriv,
   createDecipheriv,
   createHash,
   generateKeyPairSync,
+  randomBytes,
 } from 'node:crypto';
 import {
-  readFileSync,
   appendFileSync,
-  truncateSync,
   existsSync,
   mkdirSync,
+  readFileSync,
+  truncateSync,
 } from 'node:fs';
 import { resolve } from 'node:path';
-import { sign, SignOptions } from 'jsonwebtoken';
-import { JWK, pem2jwk } from 'pem-jwk';
 import { cryptoConfig } from '@config/crypto';
 import { convertToMilliseconds } from '@utils/convertToMilliseconds';
-import { IEncryptedDTO } from '../dtos/IEncryptedDTO';
-import { ICryptoProvider } from '../models/ICryptoProvider';
-import { IRefreshTokenDTO } from '../dtos/IRefreshTokenDTO';
-import { IJwtTokenDTO } from '../dtos/IJwtTokenDTO';
+import type { IEncryptedDTO } from '../dtos/IEncryptedDTO';
+import type { IJwtTokenDTO } from '../dtos/IJwtTokenDTO';
+import type { IRefreshTokenDTO } from '../dtos/IRefreshTokenDTO';
+import type { ICryptoProvider } from '../models/ICryptoProvider';
 
 export class CryptoProvider implements ICryptoProvider {
   private write(path: string, filename: string, data: string): void {

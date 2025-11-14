@@ -2,23 +2,22 @@ import './providers';
 import { container } from 'tsyringe';
 import { FilesRepository } from '@modules/system/repositories/FilesRepository';
 import { FoldersRepository } from '@modules/system/repositories/FoldersRepository';
-import { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
-import { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
-import { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
-import { IProfilesRepository } from '@modules/users/repositories/IProfilesRepository';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import { PasswordResetsRepository } from '@modules/users/repositories/PasswordResetsRepository';
-import { ProfilesRepository } from '@modules/users/repositories/ProfilesRepository';
-import { UsersRepository } from '@modules/users/repositories/UsersRepository';
-import { ITokensRepository } from '@modules/users/repositories/ITokensRepository';
-import { TokensRepository } from '@modules/users/repositories/TokensRepository';
-import { IAddressesRepository } from '@modules/users/repositories/IAddressesRepository';
+import type { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
+import type { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
 import { AddressesRepository } from '@modules/users/repositories/AdressesRepository';
-
-import { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
-import { RolesRepository } from '@modules/users/repositories/RolesRepository';
-import { IPermissionsRepository } from '@modules/users/repositories/IPermissionsRepository';
+import type { IAddressesRepository } from '@modules/users/repositories/IAddressesRepository';
+import type { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
+import type { IPermissionsRepository } from '@modules/users/repositories/IPermissionsRepository';
+import type { IProfilesRepository } from '@modules/users/repositories/IProfilesRepository';
+import type { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
+import type { ITokensRepository } from '@modules/users/repositories/ITokensRepository';
+import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import { PasswordResetsRepository } from '@modules/users/repositories/PasswordResetsRepository';
 import { PermissionsRepository } from '@modules/users/repositories/PermissionsRepository';
+import { ProfilesRepository } from '@modules/users/repositories/ProfilesRepository';
+import { RolesRepository } from '@modules/users/repositories/RolesRepository';
+import { TokensRepository } from '@modules/users/repositories/TokensRepository';
+import { UsersRepository } from '@modules/users/repositories/UsersRepository';
 
 container.registerSingleton<ITokensRepository>(
   'TokensRepository',

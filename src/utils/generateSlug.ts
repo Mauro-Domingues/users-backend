@@ -1,6 +1,6 @@
-import { QueryRunner } from 'typeorm';
+import type { QueryRunner } from 'typeorm';
+import type { IBaseRepository } from '@shared/container/modules/repositories/IBaseRepository';
 import { AppError } from '@shared/errors/AppError';
-import { IBaseRepository } from '@shared/container/modules/repositories/IBaseRepository';
 import { slugify } from './slugify';
 
 /**

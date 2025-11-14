@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IFileDTO } from '@modules/system/dtos/IFileDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IFileDTO } from '@modules/system/dtos/IFileDTO';
 import { DeleteFileService } from './DeleteFileService';
 
 export class DeleteFileController {

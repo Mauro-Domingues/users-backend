@@ -1,8 +1,8 @@
-import { mailConfig } from '@config/mail';
 import { container } from 'tsyringe';
-import { SMTPMailProvider } from './implementations/SMTPMailProvider';
+import { mailConfig } from '@config/mail';
 import { SESMailProvider } from './implementations/SESMailProvider';
-import { IMailProvider } from './models/IMailProvider';
+import { SMTPMailProvider } from './implementations/SMTPMailProvider';
+import type { IMailProvider } from './models/IMailProvider';
 
 const providers: Record<typeof mailConfig.driver, () => IMailProvider> = {
   smtp: () => container.resolve(SMTPMailProvider),

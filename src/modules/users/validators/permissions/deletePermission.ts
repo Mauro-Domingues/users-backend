@@ -1,9 +1,15 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import { Permission } from '@modules/users/entities/Permission';
+import type { Permission } from '@modules/users/entities/Permission';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 import { permissionSchema } from './permissionSchema';
 
-export const deletePermission = celebrate({
-  [Segments.PARAMS]: Joi.object<Permission>({ id: permissionSchema.id.required() }),
-  [Segments.QUERY]: Joi.object({}),
-  [Segments.BODY]: Joi.object({}),
+export const deletePermission = baseValidator(ctx => {
+  const permissionValidationSchema = permissionSchema(ctx);
+
+  return {
+    params: ctx.object<Permission>({
+      id: permissionValidationSchema.extract('id').required(),
+    }),
+    query: ctx.object({}),
+    body: ctx.object({}),
+  };
 });

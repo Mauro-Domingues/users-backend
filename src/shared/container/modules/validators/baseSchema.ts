@@ -1,9 +1,26 @@
-import { Joi } from 'celebrate';
-import { Base } from '../entities/Base';
+import type { ObjectSchema, Root, Schema } from 'joi';
+import type { Base } from '../entities/Base';
 
-export const baseSchema: Record<keyof Base, Joi.Schema> = {
-  id: Joi.string().uuid({ separator: '-', version: 'uuidv4' }).length(36),
-  createdAt: Joi.date().iso(),
-  updatedAt: Joi.date().iso(),
-  deletedAt: Joi.date().iso(),
-};
+export const baseSchema =
+  <T extends Base>(
+    target: { new (...args: Array<unknown>): T },
+    rest: (
+      ctx: Root,
+      baseFields: Record<keyof Base, Schema>,
+    ) => Partial<Record<keyof T, Schema>>,
+  ) =>
+  (ctx: Root): ObjectSchema<T> => {
+    const baseFields: Record<keyof Base, Schema> = {
+      id: ctx.string().guid({ version: 'uuidv4' }).length(36),
+      createdAt: ctx.date().iso(),
+      updatedAt: ctx.date().iso(),
+      deletedAt: ctx.date().iso(),
+    };
+
+    return ctx
+      .object<T>({
+        ...baseFields,
+        ...rest(ctx, baseFields),
+      })
+      .id(target.name);
+  };

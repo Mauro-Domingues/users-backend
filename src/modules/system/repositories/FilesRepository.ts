@@ -1,5 +1,5 @@
 import { File } from '@modules/system/entities/File';
-import { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
+import type { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
 import { BaseRepository } from '@shared/container/modules/repositories/BaseRepository';
 
 export class FilesRepository

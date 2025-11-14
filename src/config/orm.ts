@@ -1,5 +1,5 @@
 import { Joi } from 'celebrate';
-import { DataSourceOptions } from 'typeorm';
+import type { DataSourceOptions } from 'typeorm';
 import { appConfig } from './app';
 
 interface IOrmConfigDTO {

@@ -1,7 +1,8 @@
 import { Joi } from 'celebrate';
+import type { StorageEngine } from 'multer';
+import { diskStorage } from 'multer';
 import { randomBytes } from 'node:crypto';
-import { StorageEngine, diskStorage } from 'multer';
-import { resolve, extname } from 'node:path';
+import { extname, resolve } from 'node:path';
 import { slugify } from '@utils/slugify';
 
 const tmpFolder = resolve(__dirname, '..', '..', 'tmp');

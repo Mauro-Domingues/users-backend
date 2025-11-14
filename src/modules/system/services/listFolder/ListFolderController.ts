@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { FindOptionsWhere } from 'typeorm';
-import { Folder } from '@modules/system/entities/Folder';
-import { IListDTO } from '@dtos/IListDTO';
+import type { IListDTO } from '@dtos/IListDTO';
+import type { Folder } from '@modules/system/entities/Folder';
 import { ListFolderService } from './ListFolderService';
 
 export class ListFolderController {
@@ -11,7 +10,7 @@ export class ListFolderController {
       never,
       never,
       never,
-      { page: number; limit: number } & FindOptionsWhere<Folder>
+      { page: number; limit: number } & Partial<Folder>
     >,
     response: Response<IListDTO<Folder>>,
   ): Promise<void> {

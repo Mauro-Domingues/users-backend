@@ -2,27 +2,23 @@ import 'dotenv/config';
 import 'reflect-metadata';
 import '@shared/container';
 import 'express-async-errors';
-import cluster from 'node:cluster';
-import { truncateSync, existsSync } from 'node:fs';
-import { resolve } from 'node:path';
-import { cpus } from 'node:os';
-import express, {
-  Express,
-  json,
-  urlencoded,
-  static as staticPath,
-} from 'express';
-import { serve, setup } from 'swagger-ui-express';
-import { setConnection } from '@middlewares/setConnection';
-import { errorHandler } from '@middlewares/errorHandler';
-import { parseParam } from '@middlewares/parseParam';
-import { rateLimiter } from '@middlewares/rateLimiter';
-import { convertToMilliseconds } from '@utils/convertToMilliseconds';
 import cors from 'cors';
+import type { Express } from 'express';
+import express, { json, static as staticPath, urlencoded } from 'express';
+import { serve, setup } from 'swagger-ui-express';
+import cluster from 'node:cluster';
+import { existsSync, truncateSync } from 'node:fs';
+import { cpus } from 'node:os';
+import { resolve } from 'node:path';
 import { appConfig } from '@config/app';
 import { corsConfig } from '@config/cors';
 import { cryptoConfig } from '@config/crypto';
 import { storageConfig } from '@config/storage';
+import { errorHandler } from '@middlewares/errorHandler';
+import { parseParam } from '@middlewares/parseParam';
+import { rateLimiter } from '@middlewares/rateLimiter';
+import { setConnection } from '@middlewares/setConnection';
+import { convertToMilliseconds } from '@utils/convertToMilliseconds';
 import { routes } from '../routes';
 import swaggerDocs from '../swagger.json';
 

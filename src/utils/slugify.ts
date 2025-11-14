@@ -3,7 +3,7 @@ export function slugify(name?: string): string | undefined {
     ?.toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[\s:;/]/g, '-')
+    .replace(/[_\s:;/]/g, '-')
     .replace(/[^\w-]+/g, '')
     .replace(/^-+/, '')
     .replace(/-+$/, '')

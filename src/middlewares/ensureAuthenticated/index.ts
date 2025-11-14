@@ -1,9 +1,10 @@
-import passport, { AuthenticateOptions } from 'passport';
+import type { NextFunction, Request, Response } from 'express';
 import { unless } from 'express-unless';
-import { Request, Response, NextFunction } from 'express';
+import type { AuthenticateOptions } from 'passport';
+import passport from 'passport';
 import { authConfig } from '@config/auth';
-import { jwtStrategy } from './strategies/jwtStrategy';
 import { googleStrategy } from './strategies/googleStrategy';
+import { jwtStrategy } from './strategies/jwtStrategy';
 
 jwtStrategy();
 googleStrategy();

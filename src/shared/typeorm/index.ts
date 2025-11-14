@@ -1,8 +1,8 @@
-import { DataSource } from 'typeorm';
-import { ormConfig } from '@config/orm';
+import type { DataSource } from 'typeorm';
 import { appConfig } from '@config/app';
-import { MysqlDataSource } from './dataSources/mysqlDataSource';
+import { ormConfig } from '@config/orm';
 import { FakeDataSource } from './dataSources/fakes/fakeDataSource';
+import { MysqlDataSource } from './dataSources/mysqlDataSource';
 
 export interface IConnection {
   connect(): Promise<void>;

@@ -1,13 +1,12 @@
-import { injectable, inject } from 'tsyringe';
-import { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { Folder } from '@modules/system/entities/Folder';
 import { instanceToInstance } from 'class-transformer';
-import { ICacheDTO } from '@dtos/ICacheDTO';
-import { IListDTO } from '@dtos/IListDTO';
-import { IConnection } from '@shared/typeorm';
-import { FindOptionsWhere } from 'typeorm';
-import { Get, Route, Tags, Query, Inject } from 'tsoa';
+import { Get, Inject, Query, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { ICacheDTO } from '@dtos/ICacheDTO';
+import type { IListDTO } from '@dtos/IListDTO';
+import type { Folder } from '@modules/system/entities/Folder';
+import type { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/folders')
 @injectable()
@@ -26,7 +25,7 @@ export class ListFolderService {
     @Inject() connection: IConnection,
     @Query() page: number,
     @Query() limit: number,
-    @Inject() filters: FindOptionsWhere<Folder>,
+    @Inject() filters: Partial<Folder>,
   ): Promise<IListDTO<Folder>> {
     const trx = connection.mysql.createQueryRunner();
 

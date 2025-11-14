@@ -1,4 +1,4 @@
-import { Entity, Column, Unique, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, Unique } from 'typeorm';
 import { Base } from '@shared/container/modules/entities/Base';
 import { File } from './File';
 

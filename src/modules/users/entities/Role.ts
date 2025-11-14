@@ -1,8 +1,8 @@
-import { Entity, Column, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { Base } from '@shared/container/modules/entities/Base';
+import { IRoleTypeDTO } from '../dtos/IRoleTypeDTO';
 import { Permission } from './Permission';
 import { User } from './User';
-import { IRoleTypeDTO } from '../dtos/IRoleTypeDTO';
 
 @Entity('roles')
 export class Role extends Base {

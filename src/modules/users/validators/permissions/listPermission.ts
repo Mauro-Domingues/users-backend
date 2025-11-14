@@ -1,13 +1,17 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import { Permission } from '@modules/users/entities/Permission';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 import { permissionSchema } from './permissionSchema';
 
-export const listPermission = celebrate({
-  [Segments.PARAMS]: Joi.object({}),
-  [Segments.QUERY]: Joi.object<Permission & { page: number; limit: number }>({
-    ...permissionSchema,
-    page: Joi.number().integer().positive().optional(),
-    limit: Joi.number().integer().positive().optional(),
-  }),
-  [Segments.BODY]: Joi.object({}),
+export const listPermission = baseValidator(ctx => {
+  const permissionValidationSchema = permissionSchema(ctx);
+
+  return {
+    params: ctx.object({}),
+    query: permissionValidationSchema.concat(
+      ctx.object({
+        page: ctx.number().integer().positive().optional(),
+        limit: ctx.number().integer().positive().optional(),
+      }),
+    ),
+    body: ctx.object({}),
+  };
 });

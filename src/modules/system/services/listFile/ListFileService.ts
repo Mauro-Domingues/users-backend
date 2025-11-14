@@ -1,13 +1,12 @@
-import { injectable, inject } from 'tsyringe';
-import { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { File } from '@modules/system/entities/File';
 import { instanceToInstance } from 'class-transformer';
-import { ICacheDTO } from '@dtos/ICacheDTO';
-import { IListDTO } from '@dtos/IListDTO';
-import { IConnection } from '@shared/typeorm';
-import { FindOptionsWhere } from 'typeorm';
-import { Get, Route, Tags, Query, Inject } from 'tsoa';
+import { Get, Inject, Query, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { ICacheDTO } from '@dtos/ICacheDTO';
+import type { IListDTO } from '@dtos/IListDTO';
+import type { File } from '@modules/system/entities/File';
+import type { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/files')
 @injectable()
@@ -26,7 +25,7 @@ export class ListFileService {
     @Inject() connection: IConnection,
     @Query() page: number,
     @Query() limit: number,
-    @Inject() filters: FindOptionsWhere<File>,
+    @Inject() filters: Partial<File>,
   ): Promise<IListDTO<File>> {
     const trx = connection.mysql.createQueryRunner();
 

@@ -1,10 +1,6 @@
+import type { MigrationInterface, QueryRunner } from 'typeorm';
+import { Table, TableForeignKey } from 'typeorm';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
 
 export class File1733404917053
   extends BaseMigration

@@ -1,4 +1,4 @@
-import { Role } from '../entities/Role';
+import type { Role } from '../entities/Role';
 
 export interface IRoleDTO extends Partial<Role> {
   name: string;

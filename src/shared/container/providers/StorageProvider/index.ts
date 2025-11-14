@@ -1,8 +1,8 @@
-import { storageConfig } from '@config/storage';
 import { container } from 'tsyringe';
+import { storageConfig } from '@config/storage';
 import { DiskStorageProvider } from './implementations/DiskStorageProvider';
 import { S3StorageProvider } from './implementations/S3StorageProvider';
-import { IStorageProvider } from './models/IStorageProvider';
+import type { IStorageProvider } from './models/IStorageProvider';
 
 const providers: Record<typeof storageConfig.driver, () => IStorageProvider> = {
   disk: () => container.resolve(DiskStorageProvider),

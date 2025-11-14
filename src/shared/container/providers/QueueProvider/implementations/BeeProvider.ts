@@ -1,12 +1,13 @@
-import Bee, { Job } from 'bee-queue';
+import type { Job } from 'bee-queue';
+import Bee from 'bee-queue';
 import { queueConfig } from '@config/queue';
+import type { IIntervalDTO } from '@dtos/IIntervalDTO';
 import { convertToMilliseconds } from '@utils/convertToMilliseconds';
-import { IIntervalDTO } from '@dtos/IIntervalDTO';
-import { IQueueProvider } from '../models/IQueueProvider';
+import type { IHandleDataDTO } from '../dtos/IHandleDataDTO';
+import type { IHandleDTO } from '../dtos/IHandleDTO';
+import type { IQueueDTO } from '../dtos/IQueueDTO';
+import type { IQueueProvider } from '../models/IQueueProvider';
 import { jobs } from '../public/jobs';
-import { IQueueDTO } from '../dtos/IQueueDTO';
-import { IHandleDTO } from '../dtos/IHandleDTO';
-import { IHandleDataDTO } from '../dtos/IHandleDataDTO';
 
 export class BeeProvider implements IQueueProvider {
   private readonly queues: IQueueDTO<Bee> = {};

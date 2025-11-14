@@ -1,16 +1,16 @@
-import { injectable, inject } from 'tsyringe';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
-import { File } from '@modules/system/entities/File';
 import { instanceToInstance } from 'class-transformer';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IConnection } from '@shared/typeorm';
-import { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
+import { Body, Consumes, Inject, Post, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { ICreateFileDTO } from '@modules/system/dtos/ICreateFileDTO';
+import type { IFileDTO } from '@modules/system/dtos/IFileDTO';
+import type { File } from '@modules/system/entities/File';
+import type { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
+import type { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import type { IStorageProvider } from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import { AppError } from '@shared/errors/AppError';
-import { ICreateFileDTO } from '@modules/system/dtos/ICreateFileDTO';
-import { IFileDTO } from '@modules/system/dtos/IFileDTO';
-import { Route, Tags, Post, Body, Consumes, Inject } from 'tsoa';
-import { IStorageProvider } from '@shared/container/providers/StorageProvider/models/IStorageProvider';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/files')
 @injectable()

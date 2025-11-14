@@ -1,15 +1,15 @@
-import { injectable, inject } from 'tsyringe';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import { IResponseDTO } from '@dtos/IResponseDTO';
+import { Body, Inject, Post, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { QueryRunner } from 'typeorm';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { ICheckTokenDTO } from '@modules/users/dtos/ICheckTokenDTO';
+import type { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
+import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import type { IJwtTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IJwtTokenDTO';
+import type { ICryptoProvider } from '@shared/container/providers/CryptoProvider/models/ICryptoProvider';
 import { AppError } from '@shared/errors/AppError';
-import { ICryptoProvider } from '@shared/container/providers/CryptoProvider/models/ICryptoProvider';
-import { QueryRunner } from 'typeorm';
-import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Post, Body, Inject } from 'tsoa';
-import { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
-import { IJwtTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IJwtTokenDTO';
-import { ICheckTokenDTO } from '@modules/users/dtos/ICheckTokenDTO';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/check-token')
 @injectable()

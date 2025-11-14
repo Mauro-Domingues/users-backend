@@ -1,4 +1,4 @@
-import { IObjectDTO } from '@dtos/IObjectDTO';
+import type { IObjectDTO } from '@dtos/IObjectDTO';
 import { mapAndInsertAttribute } from './mapAndInsertAttribute';
 
 /**

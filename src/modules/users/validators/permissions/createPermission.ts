@@ -1,12 +1,14 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import { IPermissionDTO } from '@modules/users/dtos/IPermissionDTO';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 import { permissionSchema } from './permissionSchema';
 
-export const createPermission = celebrate({
-  [Segments.PARAMS]: Joi.object({}),
-  [Segments.QUERY]: Joi.object({}),
-  [Segments.BODY]: Joi.object<IPermissionDTO>({
-    ...permissionSchema,
-    name: permissionSchema.name.required(),
-  }),
+export const createPermission = baseValidator(ctx => {
+  const permissionValidationSchema = permissionSchema(ctx);
+
+  return {
+    params: ctx.object({}),
+    query: ctx.object({}),
+    body: permissionValidationSchema.keys({
+      name: permissionValidationSchema.extract('name').required(),
+    }),
+  };
 });

@@ -1,5 +1,5 @@
 import { Joi } from 'celebrate';
-import { RedisOptions } from 'ioredis';
+import type { RedisOptions } from 'ioredis';
 
 interface ICacheConfigDTO {
   readonly driver: 'redis';

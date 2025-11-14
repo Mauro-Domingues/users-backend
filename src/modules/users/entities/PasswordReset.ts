@@ -1,5 +1,5 @@
+import { Column, Entity, Index, JoinColumn, ManyToOne, Unique } from 'typeorm';
 import { Base } from '@shared/container/modules/entities/Base';
-import { Entity, Column, JoinColumn, ManyToOne, Unique, Index } from 'typeorm';
 import { User } from './User';
 
 @Entity('password_resets')

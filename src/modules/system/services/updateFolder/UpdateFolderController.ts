@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { IFolderDTO } from '@modules/system/dtos/IFolderDTO';
-import { Folder } from '@modules/system/entities/Folder';
-import { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IFolderDTO } from '@modules/system/dtos/IFolderDTO';
+import type { Folder } from '@modules/system/entities/Folder';
 import { UpdateFolderService } from './UpdateFolderService';
 
 export class UpdateFolderController {

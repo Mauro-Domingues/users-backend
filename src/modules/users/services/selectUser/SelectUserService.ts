@@ -1,13 +1,12 @@
-import { injectable, inject } from 'tsyringe';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { User } from '@modules/users/entities/User';
 import { instanceToInstance } from 'class-transformer';
-import { ICacheDTO } from '@dtos/ICacheDTO';
-import { IConnection } from '@shared/typeorm';
-import { FindOptionsWhere } from 'typeorm';
-import { Get, Route, Tags, Inject } from 'tsoa';
-import { IResponseDTO } from '@dtos/IResponseDTO';
+import { Get, Inject, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { ICacheDTO } from '@dtos/ICacheDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { User } from '@modules/users/entities/User';
+import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/select-users')
 @injectable()
@@ -24,7 +23,7 @@ export class SelectUserService {
   @Tags('User')
   public async execute(
     @Inject() connection: IConnection,
-    @Inject() filters: FindOptionsWhere<User>,
+    @Inject() filters: Partial<User>,
   ): Promise<IResponseDTO<Array<User>>> {
     const trx = connection.mysql.createQueryRunner();
 

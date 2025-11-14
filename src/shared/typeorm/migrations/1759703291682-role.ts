@@ -1,5 +1,6 @@
+import type { MigrationInterface, QueryRunner } from 'typeorm';
+import { Table } from 'typeorm';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class Role1759703291682
   extends BaseMigration

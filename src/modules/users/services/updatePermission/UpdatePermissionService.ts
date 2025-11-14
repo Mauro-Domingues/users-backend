@@ -1,15 +1,14 @@
-import { injectable, inject } from 'tsyringe';
-
-import { AppError } from '@shared/errors/AppError';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { IPermissionsRepository } from '@modules/users/repositories/IPermissionsRepository';
-import { IPermissionDTO } from '@modules/users/dtos/IPermissionDTO';
-import { updateAttribute } from '@utils/mappers';
-import { Permission } from '@modules/users/entities/Permission';
 import { instanceToInstance } from 'class-transformer';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Put, Body, Path, Inject } from 'tsoa';
+import { Body, Inject, Path, Put, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IPermissionDTO } from '@modules/users/dtos/IPermissionDTO';
+import type { Permission } from '@modules/users/entities/Permission';
+import type { IPermissionsRepository } from '@modules/users/repositories/IPermissionsRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import { AppError } from '@shared/errors/AppError';
+import type { IConnection } from '@shared/typeorm';
+import { updateAttribute } from '@utils/mappers';
 
 @Route('/permissions')
 @injectable()

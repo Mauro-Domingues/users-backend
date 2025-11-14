@@ -1,5 +1,5 @@
-import { IExceptionDTO } from '@dtos/IExceptionDTO';
-import { Params } from 'express-unless';
+import type { Params } from 'express-unless';
+import type { IExceptionDTO } from '@dtos/IExceptionDTO';
 
 function serializePath({
   allowRawRoute,

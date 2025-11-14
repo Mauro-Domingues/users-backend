@@ -1,8 +1,8 @@
-import { Entity, Column, Unique, ManyToMany } from 'typeorm';
+import { Column, Entity, ManyToMany, Unique } from 'typeorm';
 import { Base } from '@shared/container/modules/entities/Base';
+import { IPermissionMethodDTO } from '../dtos/IPermissionMethodDTO';
 import { Role } from './Role';
 import { User } from './User';
-import { IPermissionMethodDTO } from '../dtos/IPermissionMethodDTO';
 
 @Entity('permissions')
 export class Permission extends Base {

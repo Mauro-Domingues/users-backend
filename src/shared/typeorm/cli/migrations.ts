@@ -1,4 +1,4 @@
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 import { Connection } from '../index';
 
 async function mysqlMigrations(mysql: DataSource): Promise<void> {

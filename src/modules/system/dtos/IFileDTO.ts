@@ -1,3 +1,3 @@
-import { File } from '../entities/File';
+import type { File } from '../entities/File';
 
 export interface IFileDTO extends Partial<File> {}

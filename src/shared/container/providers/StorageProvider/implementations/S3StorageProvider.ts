@@ -1,14 +1,14 @@
-import { storageConfig } from '@config/storage';
 import {
-  S3Client,
-  PutObjectCommand,
   DeleteObjectCommand,
+  PutObjectCommand,
+  S3Client,
 } from '@aws-sdk/client-s3';
-import { createReadStream, unlinkSync } from 'node:fs';
 import { getType } from 'mime';
+import { createReadStream, unlinkSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { storageConfig } from '@config/storage';
 import { AppError } from '@shared/errors/AppError';
-import { IStorageProvider } from '../models/IStorageProvider';
+import type { IStorageProvider } from '../models/IStorageProvider';
 
 export class S3StorageProvider implements IStorageProvider {
   private readonly client: S3Client;

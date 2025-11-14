@@ -1,5 +1,6 @@
+import type { MigrationInterface, QueryRunner } from 'typeorm';
+import { Table } from 'typeorm';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class Permission1759885655990
   extends BaseMigration

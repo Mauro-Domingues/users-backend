@@ -1,11 +1,15 @@
-import { celebrate, Segments, Joi } from 'celebrate';
 import { IForgotPasswordDTO } from '@modules/users/dtos/IForgotPasswordDTO';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 import { userSchema } from '../users/userSchema';
 
-export const forgotPassword = celebrate({
-  [Segments.QUERY]: Joi.object({}),
-  [Segments.PARAMS]: Joi.object({}),
-  [Segments.BODY]: Joi.object<IForgotPasswordDTO>({
-    email: userSchema.email.required(),
-  }),
+export const forgotPassword = baseValidator(ctx => {
+  const userValidationSchema = userSchema(ctx);
+
+  return {
+    query: ctx.object({}),
+    params: ctx.object({}),
+    body: ctx.object<IForgotPasswordDTO>({
+      email: userValidationSchema.extract('email').required(),
+    }),
+  };
 });

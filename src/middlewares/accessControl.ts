@@ -1,10 +1,10 @@
-import { Permission } from '@modules/users/entities/Permission';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { AppError } from '@shared/errors/AppError';
-import { IConnection } from '@shared/typeorm';
-import { slugify } from '@utils/slugify';
-import { Request, Response, NextFunction } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { Permission } from '@modules/users/entities/Permission';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import { AppError } from '@shared/errors/AppError';
+import type { IConnection } from '@shared/typeorm';
+import { slugify } from '@utils/slugify';
 
 const getMethod: Record<
   string,
@@ -18,7 +18,6 @@ const getMethod: Record<
 };
 
 const cacheProvider = container.resolve<ICacheProvider>('CacheProvider');
-// const connection = container.resolve<IConnection>('Connection');
 
 const getPermissions = async ({
   connection,

@@ -1,13 +1,12 @@
-import { injectable, inject } from 'tsyringe';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { User } from '@modules/users/entities/User';
 import { instanceToInstance } from 'class-transformer';
-import { ICacheDTO } from '@dtos/ICacheDTO';
-import { IListDTO } from '@dtos/IListDTO';
-import { IConnection } from '@shared/typeorm';
-import { FindOptionsWhere } from 'typeorm';
-import { Get, Route, Tags, Query, Inject } from 'tsoa';
+import { Get, Inject, Query, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { ICacheDTO } from '@dtos/ICacheDTO';
+import type { IListDTO } from '@dtos/IListDTO';
+import type { User } from '@modules/users/entities/User';
+import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/users')
 @injectable()
@@ -26,7 +25,7 @@ export class ListUserService {
     @Inject() connection: IConnection,
     @Query() page: number,
     @Query() limit: number,
-    @Inject() filters: FindOptionsWhere<User>,
+    @Inject() filters: Partial<User>,
   ): Promise<IListDTO<User>> {
     const trx = connection.mysql.createQueryRunner();
 

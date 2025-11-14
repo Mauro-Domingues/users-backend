@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { User } from '@modules/users/entities/User';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { User } from '@modules/users/entities/User';
 import { ShowSelfUserService } from './ShowSelfUserService';
 
 export class ShowSelfUserController {

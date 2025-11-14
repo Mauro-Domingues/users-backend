@@ -1,6 +1,7 @@
-import { authConfig } from '@config/auth';
-import passport, { PassportStatic } from 'passport';
+import type { PassportStatic } from 'passport';
+import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { authConfig } from '@config/auth';
 
 export const googleStrategy = (): PassportStatic => {
   return passport.use(

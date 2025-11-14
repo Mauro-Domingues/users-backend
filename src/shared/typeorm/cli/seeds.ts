@@ -1,7 +1,7 @@
-import { QueryRunner } from 'typeorm';
+import type { QueryRunner } from 'typeorm';
 import { Connection } from '../index';
-import { seedUser } from '../seeds/user';
 import { seedFolder } from '../seeds/folder';
+import { seedUser } from '../seeds/user';
 
 const available = {
   folder: seedFolder,

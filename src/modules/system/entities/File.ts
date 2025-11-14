@@ -1,15 +1,15 @@
 import {
-  Entity,
-  Column,
-  JoinColumn,
-  ManyToOne,
   AfterInsert,
   AfterLoad,
   AfterUpdate,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
-import { Base } from '@shared/container/modules/entities/Base';
-import { storageConfig } from '@config/storage';
 import { appConfig } from '@config/app';
+import { storageConfig } from '@config/storage';
+import { Base } from '@shared/container/modules/entities/Base';
 import { Folder } from './Folder';
 
 @Entity('files')
@@ -39,7 +39,7 @@ export class File extends Base {
   @AfterLoad()
   @AfterUpdate()
   @AfterInsert()
-  public setFileUrl(): void {
+  protected setFileUrl(): void {
     if (this.file) {
       const urlOrigins: Record<typeof storageConfig.driver, string> = {
         disk: `${appConfig.config.apiUrl}/uploads/${this.file}`,

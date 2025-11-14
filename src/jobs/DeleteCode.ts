@@ -1,8 +1,8 @@
 import { appConfig } from '@config/app';
-import { IDeleteCodeDTO } from '@modules/users/dtos/IDeleteCodeDTO';
-import { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
-import { PasswordResetsRepository } from '@modules/users/repositories/PasswordResetsRepository';
+import type { IDeleteCodeDTO } from '@modules/users/dtos/IDeleteCodeDTO';
 import { FakePasswordResetsRepository } from '@modules/users/repositories/fakes/FakePasswordResetsRepository';
+import type { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
+import { PasswordResetsRepository } from '@modules/users/repositories/PasswordResetsRepository';
 import { MysqlDataSource } from '@shared/typeorm/dataSources/mysqlDataSource';
 
 const repositories: {

@@ -1,12 +1,13 @@
-import Bull, { Job, Queue } from 'bull';
+import type { Job, Queue } from 'bull';
+import Bull from 'bull';
 import { queueConfig } from '@config/queue';
+import type { IIntervalDTO } from '@dtos/IIntervalDTO';
 import { convertToMilliseconds } from '@utils/convertToMilliseconds';
-import { IIntervalDTO } from '@dtos/IIntervalDTO';
-import { IQueueProvider } from '../models/IQueueProvider';
+import type { IHandleDataDTO } from '../dtos/IHandleDataDTO';
+import type { IHandleDTO } from '../dtos/IHandleDTO';
+import type { IQueueDTO } from '../dtos/IQueueDTO';
+import type { IQueueProvider } from '../models/IQueueProvider';
 import { jobs } from '../public/jobs';
-import { IQueueDTO } from '../dtos/IQueueDTO';
-import { IHandleDTO } from '../dtos/IHandleDTO';
-import { IHandleDataDTO } from '../dtos/IHandleDataDTO';
 
 export class BullProvider implements IQueueProvider {
   private readonly queues: IQueueDTO<Queue> = {};

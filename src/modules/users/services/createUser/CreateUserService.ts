@@ -1,19 +1,19 @@
-import { injectable, inject } from 'tsyringe';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import { IUserDTO } from '@modules/users/dtos/IUserDTO';
-import { User } from '@modules/users/entities/User';
 import { instanceToInstance } from 'class-transformer';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Post, Body, Inject } from 'tsoa';
+import { Body, Inject, Post, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { QueryRunner } from 'typeorm';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IUserDTO } from '@modules/users/dtos/IUserDTO';
+import type { Address } from '@modules/users/entities/Address';
+import type { Profile } from '@modules/users/entities/Profile';
+import type { User } from '@modules/users/entities/User';
+import type { IAddressesRepository } from '@modules/users/repositories/IAddressesRepository';
+import type { IProfilesRepository } from '@modules/users/repositories/IProfilesRepository';
+import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import type { IHashProvider } from '@shared/container/providers/HashProvider/models/IHashProvider';
 import { AppError } from '@shared/errors/AppError';
-import { IHashProvider } from '@shared/container/providers/HashProvider/models/IHashProvider';
-import { Profile } from '@modules/users/entities/Profile';
-import { QueryRunner } from 'typeorm';
-import { IAddressesRepository } from '@modules/users/repositories/IAddressesRepository';
-import { IProfilesRepository } from '@modules/users/repositories/IProfilesRepository';
-import { Address } from '@modules/users/entities/Address';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/register')
 @injectable()

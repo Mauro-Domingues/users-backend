@@ -1,7 +1,7 @@
+import type { Request, Response } from 'express';
+import type { JWK } from 'pem-jwk';
 import { container } from 'tsyringe';
-import { Request, Response } from 'express';
-import { JWK } from 'pem-jwk';
-import { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
 import { GenerateKeyService } from './GenerateKeyService';
 
 export class GenerateKeyControllerController {

@@ -1,13 +1,17 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import { Role } from '@modules/users/entities/Role';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 import { roleSchema } from './roleSchema';
 
-export const listRole = celebrate({
-  [Segments.PARAMS]: Joi.object({}),
-  [Segments.QUERY]: Joi.object<Role & { page: number; limit: number }>({
-    ...roleSchema,
-    page: Joi.number().integer().positive().optional(),
-    limit: Joi.number().integer().positive().optional(),
-  }),
-  [Segments.BODY]: Joi.object({}),
+export const listRole = baseValidator(ctx => {
+  const roleValidationSchema = roleSchema(ctx);
+
+  return {
+    params: ctx.object({}),
+    query: roleValidationSchema.concat(
+      ctx.object({
+        page: ctx.number().integer().positive().optional(),
+        limit: ctx.number().integer().positive().optional(),
+      }),
+    ),
+    body: ctx.object({}),
+  };
 });

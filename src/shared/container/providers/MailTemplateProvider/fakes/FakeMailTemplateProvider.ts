@@ -1,5 +1,5 @@
-import { IParseMailTemplateDTO } from '../dtos/IParseMailTemplateDTO';
-import { IMailTemplateProvider } from '../models/IMailTemplateProvider';
+import type { IParseMailTemplateDTO } from '../dtos/IParseMailTemplateDTO';
+import type { IMailTemplateProvider } from '../models/IMailTemplateProvider';
 
 export class FakeMailTemplateProvider implements IMailTemplateProvider {
   public compile({ variables }: IParseMailTemplateDTO): string {

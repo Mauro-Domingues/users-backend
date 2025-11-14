@@ -1,13 +1,17 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import { User } from '@modules/users/entities/User';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 import { userSchema } from './userSchema';
 
-export const listUser = celebrate({
-  [Segments.PARAMS]: Joi.object({}),
-  [Segments.QUERY]: Joi.object<User & { page: number; limit: number }>({
-    ...userSchema,
-    page: Joi.number().integer().optional(),
-    limit: Joi.number().integer().optional(),
-  }),
-  [Segments.BODY]: Joi.object({}),
+export const listUser = baseValidator(ctx => {
+  const userValidationSchema = userSchema(ctx);
+
+  return {
+    params: ctx.object({}),
+    query: userValidationSchema.concat(
+      ctx.object({
+        page: ctx.number().integer().positive().optional(),
+        limit: ctx.number().integer().positive().optional(),
+      }),
+    ),
+    body: ctx.object({}),
+  };
 });

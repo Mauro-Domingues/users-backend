@@ -1,9 +1,15 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import { User } from '@modules/users/entities/User';
+import type { User } from '@modules/users/entities/User';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 import { userSchema } from './userSchema';
 
-export const deleteUser = celebrate({
-  [Segments.PARAMS]: Joi.object<User>({ id: userSchema.id.required() }),
-  [Segments.QUERY]: Joi.object({}),
-  [Segments.BODY]: Joi.object({}),
+export const deleteUser = baseValidator(ctx => {
+  const userValidationSchema = userSchema(ctx);
+
+  return {
+    params: ctx.object<User>({
+      id: userValidationSchema.extract('id').required(),
+    }),
+    query: ctx.object({}),
+    body: ctx.object({}),
+  };
 });

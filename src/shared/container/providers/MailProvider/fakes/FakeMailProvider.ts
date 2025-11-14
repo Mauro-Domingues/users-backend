@@ -1,14 +1,14 @@
+import type { Transporter } from 'nodemailer';
 import {
-  Transporter,
   createTestAccount,
   createTransport,
   getTestMessageUrl,
 } from 'nodemailer';
-import { mailConfig } from '@config/mail';
 import { inject, injectable } from 'tsyringe';
-import { ISendMailDTO } from '../dtos/ISendMailDTO';
-import { IMailProvider } from '../models/IMailProvider';
-import { IMailTemplateProvider } from '../../MailTemplateProvider/models/IMailTemplateProvider';
+import { mailConfig } from '@config/mail';
+import type { IMailTemplateProvider } from '../../MailTemplateProvider/models/IMailTemplateProvider';
+import type { ISendMailDTO } from '../dtos/ISendMailDTO';
+import type { IMailProvider } from '../models/IMailProvider';
 
 @injectable()
 export class FakeMailProvider implements IMailProvider {

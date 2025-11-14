@@ -1,6 +1,6 @@
 import { Joi } from 'celebrate';
+import type { CorsOptions as ICorsConfigDTO } from 'cors';
 import { AppError } from '@shared/errors/AppError';
-import { CorsOptions as ICorsConfigDTO } from 'cors';
 import { appConfig } from './app';
 
 const corsValidator = Joi.object<ICorsConfigDTO>({

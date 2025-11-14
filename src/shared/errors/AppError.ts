@@ -1,4 +1,4 @@
-import { ICodeDTO } from '@dtos/ICodeDTO';
+import type { ICodeDTO } from '@dtos/ICodeDTO';
 
 export class AppError extends Error {
   public constructor(

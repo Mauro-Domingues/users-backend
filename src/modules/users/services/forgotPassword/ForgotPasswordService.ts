@@ -1,16 +1,16 @@
-import { injectable, inject } from 'tsyringe';
-import { AppError } from '@shared/errors/AppError';
-import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Post, Body, Inject } from 'tsoa';
-import { IQueueProvider } from '@shared/container/providers/QueueProvider/models/IQueueProvider';
-import { User } from '@modules/users/entities/User';
-import { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
+import { Body, Inject, Post, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { IIntervalDTO } from '@dtos/IIntervalDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
 import { DeleteCode } from '@jobs/DeleteCode';
 import { InfoMail } from '@jobs/InfoMail';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IForgotPasswordDTO } from '@modules/users/dtos/IForgotPasswordDTO';
-import { IIntervalDTO } from '@dtos/IIntervalDTO';
+import type { IForgotPasswordDTO } from '@modules/users/dtos/IForgotPasswordDTO';
+import type { User } from '@modules/users/entities/User';
+import type { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
+import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import type { IQueueProvider } from '@shared/container/providers/QueueProvider/models/IQueueProvider';
+import { AppError } from '@shared/errors/AppError';
+import type { IConnection } from '@shared/typeorm';
 import { getName } from '@utils/email/getName';
 
 @Route('/forgot-password')

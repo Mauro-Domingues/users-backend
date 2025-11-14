@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IRoleDTO } from '@modules/users/dtos/IRoleDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IRoleDTO } from '@modules/users/dtos/IRoleDTO';
 import { DeleteRoleService } from './DeleteRoleService';
 
 export class DeleteRoleController {

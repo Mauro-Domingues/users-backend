@@ -1,9 +1,9 @@
-import { Base } from '@shared/container/modules/entities/Base';
+import type { ObjectLiteral } from 'typeorm';
 import { v4 as uuid } from 'uuid';
-import { ObjectLiteral } from 'typeorm';
+import type { IObjectDTO } from '@dtos/IObjectDTO';
+import type { Base } from '@shared/container/modules/entities/Base';
 import { AppError } from '@shared/errors/AppError';
-import { IObjectDTO } from '@dtos/IObjectDTO';
-import { IBaseRepository } from '../IBaseRepository';
+import type { IBaseRepository } from '../IBaseRepository';
 
 export abstract class FakeBaseRepository<Entity extends ObjectLiteral & Base>
   implements IBaseRepository<Entity>

@@ -1,13 +1,15 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import { IUserDTO } from '@modules/users/dtos/IUserDTO';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 import { userSchema } from './userSchema';
 
-export const createUser = celebrate({
-  [Segments.PARAMS]: Joi.object({}),
-  [Segments.QUERY]: Joi.object({}),
-  [Segments.BODY]: Joi.object<IUserDTO>({
-    ...userSchema,
-    email: userSchema.email.required(),
-    password: userSchema.password.required(),
-  }),
+export const createUser = baseValidator(ctx => {
+  const userValidationSchema = userSchema(ctx);
+
+  return {
+    params: ctx.object({}),
+    query: ctx.object({}),
+    body: userValidationSchema.keys({
+      email: userValidationSchema.extract('email').required(),
+      password: userValidationSchema.extract('password').required(),
+    }),
+  };
 });

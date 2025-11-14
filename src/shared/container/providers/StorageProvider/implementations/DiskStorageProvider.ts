@@ -1,7 +1,7 @@
-import { storageConfig } from '@config/storage';
-import { existsSync, mkdirSync, unlinkSync, renameSync } from 'node:fs';
+import { existsSync, mkdirSync, renameSync, unlinkSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { IStorageProvider } from '../models/IStorageProvider';
+import { storageConfig } from '@config/storage';
+import type { IStorageProvider } from '../models/IStorageProvider';
 
 export class DiskStorageProvider implements IStorageProvider {
   public constructor() {

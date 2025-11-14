@@ -1,21 +1,21 @@
-import { injectable, inject } from 'tsyringe';
-import { AppError } from '@shared/errors/AppError';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import { IUserDTO } from '@modules/users/dtos/IUserDTO';
-import { updateAttribute } from '@utils/mappers';
-import { User } from '@modules/users/entities/User';
 import { instanceToInstance } from 'class-transformer';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Put, Body, Path, Inject } from 'tsoa';
-import { Profile } from '@modules/users/entities/Profile';
-import { IAddressesRepository } from '@modules/users/repositories/IAddressesRepository';
-import { IProfilesRepository } from '@modules/users/repositories/IProfilesRepository';
-import { QueryRunner } from 'typeorm';
-import { Address } from '@modules/users/entities/Address';
-import { IStorageProvider } from '@shared/container/providers/StorageProvider/models/IStorageProvider';
-import { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
+import { Body, Inject, Path, Put, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { QueryRunner } from 'typeorm';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
+import type { IUserDTO } from '@modules/users/dtos/IUserDTO';
+import type { Address } from '@modules/users/entities/Address';
+import type { Profile } from '@modules/users/entities/Profile';
+import type { User } from '@modules/users/entities/User';
+import type { IAddressesRepository } from '@modules/users/repositories/IAddressesRepository';
+import type { IProfilesRepository } from '@modules/users/repositories/IProfilesRepository';
+import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import type { IStorageProvider } from '@shared/container/providers/StorageProvider/models/IStorageProvider';
+import { AppError } from '@shared/errors/AppError';
+import type { IConnection } from '@shared/typeorm';
+import { updateAttribute } from '@utils/mappers';
 import { SimpleDependency } from '@utils/simpleDependency';
 
 @Route('/users')

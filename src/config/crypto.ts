@@ -1,7 +1,7 @@
 import { Joi } from 'celebrate';
-import { resolve } from 'node:path';
 import { getCiphers } from 'node:crypto';
-import { IIntervalDTO } from '@dtos/IIntervalDTO';
+import { resolve } from 'node:path';
+import type { IIntervalDTO } from '@dtos/IIntervalDTO';
 
 interface ICryptoConfigDTO {
   readonly driver: 'crypto';

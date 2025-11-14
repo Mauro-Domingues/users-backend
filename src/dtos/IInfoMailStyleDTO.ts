@@ -1,4 +1,4 @@
-import { IHEXColorDTO } from './IHEXColorDTO';
+import type { IHEXColorDTO } from './IHEXColorDTO';
 
 export interface IInfoMailStyleDTO {
   layout: {

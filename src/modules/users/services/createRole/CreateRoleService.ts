@@ -1,12 +1,12 @@
-import { injectable, inject } from 'tsyringe';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
-import { IRoleDTO } from '@modules/users/dtos/IRoleDTO';
-import { Role } from '@modules/users/entities/Role';
 import { instanceToInstance } from 'class-transformer';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Post, Body, Inject } from 'tsoa';
+import { Body, Inject, Post, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IRoleDTO } from '@modules/users/dtos/IRoleDTO';
+import type { Role } from '@modules/users/entities/Role';
+import type { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/roles')
 @injectable()

@@ -1,9 +1,10 @@
 import { IOAuth2CallbackDTO } from '@modules/users/dtos/IOAuth2CallbackDTO';
-import { celebrate, Segments, Joi } from 'celebrate';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 
-export const oauth2Callback = celebrate({
-  [Segments.QUERY]: Joi.object<IOAuth2CallbackDTO>({
-    error: Joi.string()
+export const oauth2Callback = baseValidator(ctx => ({
+  query: ctx.object<IOAuth2CallbackDTO>({
+    error: ctx
+      .string()
       .valid(
         'access_denied',
         'server_error',
@@ -13,17 +14,18 @@ export const oauth2Callback = celebrate({
         'unsupported_response_type',
       )
       .optional(),
-    code: Joi.string(),
-    state: Joi.string().uri().required(),
-    scope: Joi.string().optional(),
-    authuser: Joi.number().valid(0, 1).optional(),
-    prompt: Joi.string()
+    code: ctx.string(),
+    state: ctx.string().uri().required(),
+    scope: ctx.string().optional(),
+    authuser: ctx.number().valid(0, 1).optional(),
+    prompt: ctx
+      .string()
       .pattern(
         /^(none|consent|select_account)( (none|consent|select_account))*$/,
       )
       .optional(),
-    hd: Joi.string().domain().optional(),
+    hd: ctx.string().domain().optional(),
   }),
-  [Segments.PARAMS]: Joi.object({}),
-  [Segments.BODY]: Joi.object({}),
-});
+  params: ctx.object({}),
+  body: ctx.object({}),
+}));

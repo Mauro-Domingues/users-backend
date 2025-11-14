@@ -1,16 +1,16 @@
-import { injectable, inject } from 'tsyringe';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import { IResponseDTO } from '@dtos/IResponseDTO';
+import { Body, Inject, Post, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { QueryRunner } from 'typeorm';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IAuthDTO } from '@modules/users/dtos/IAuthDTO';
+import type { ITokensRepository } from '@modules/users/repositories/ITokensRepository';
+import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import type { IJwtTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IJwtTokenDTO';
+import type { IRefreshTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IRefreshTokenDTO';
+import type { ICryptoProvider } from '@shared/container/providers/CryptoProvider/models/ICryptoProvider';
+import type { IHashProvider } from '@shared/container/providers/HashProvider/models/IHashProvider';
 import { AppError } from '@shared/errors/AppError';
-import { IHashProvider } from '@shared/container/providers/HashProvider/models/IHashProvider';
-import { ICryptoProvider } from '@shared/container/providers/CryptoProvider/models/ICryptoProvider';
-import { ITokensRepository } from '@modules/users/repositories/ITokensRepository';
-import { IAuthDTO } from '@modules/users/dtos/IAuthDTO';
-import { QueryRunner } from 'typeorm';
-import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Post, Body, Inject } from 'tsoa';
-import { IJwtTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IJwtTokenDTO';
-import { IRefreshTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IRefreshTokenDTO';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/login')
 @injectable()

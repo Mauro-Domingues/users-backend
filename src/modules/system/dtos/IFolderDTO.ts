@@ -1,4 +1,4 @@
-import { Folder } from '../entities/Folder';
+import type { Folder } from '../entities/Folder';
 
 export interface IFolderDTO extends Partial<Folder> {
   name: string;

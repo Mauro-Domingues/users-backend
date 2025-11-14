@@ -1,5 +1,5 @@
+import { AfterInsert, AfterLoad, AfterUpdate, Column, Entity } from 'typeorm';
 import { Base } from '@shared/container/modules/entities/Base';
-import { Entity, Column, AfterLoad, AfterInsert, AfterUpdate } from 'typeorm';
 
 @Entity('addresses')
 export class Address extends Base {
@@ -45,7 +45,7 @@ export class Address extends Base {
   @AfterLoad()
   @AfterUpdate()
   @AfterInsert()
-  public normalizeCoordinates(): void {
+  protected normalizeCoordinates(): void {
     if (this.lat) this.lat = Number(this.lat);
     if (this.lon) this.lon = Number(this.lon);
   }

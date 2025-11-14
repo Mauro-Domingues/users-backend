@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { IPermissionDTO } from '@modules/users/dtos/IPermissionDTO';
-import { Permission } from '@modules/users/entities/Permission';
-import { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IPermissionDTO } from '@modules/users/dtos/IPermissionDTO';
+import type { Permission } from '@modules/users/entities/Permission';
 import { UpdatePermissionService } from './UpdatePermissionService';
 
 export class UpdatePermissionController {

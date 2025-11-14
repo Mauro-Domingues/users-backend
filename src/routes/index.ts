@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { healthRouter } from './healthRouter';
 import { guardRouter } from './guardRouter';
-import { userRouter } from './userRouter';
+import { healthRouter } from './healthRouter';
 import { sessionRouter } from './sessionRouter';
 import { systemRouter } from './systemRouter';
+import { userRouter } from './userRouter';
 
 const routes = Router();
 

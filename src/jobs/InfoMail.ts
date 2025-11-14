@@ -1,22 +1,22 @@
-import { mailConfig } from '@config/mail';
-import { SESMailProvider } from '@shared/container/providers/MailProvider/implementations/SESMailProvider';
-import { IMailProvider } from '@shared/container/providers/MailProvider/models/IMailProvider';
+import { getType } from 'mime';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { getType } from 'mime';
-import { registerHeader } from '@utils/email/partials/registerHeader';
-import { registerGreetings } from '@utils/email/partials/registerGreetings';
-import { registerFooter } from '@utils/email/partials/registerFooter';
-import { registerMultiInfo } from '@utils/email/partials/registerMultiInfo';
-import { IInfoMailDTO } from '@dtos/IInfoMailDTO';
-import { FakeMailProvider } from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
-import { HandlebarsMailTemplateProvider } from '@shared/container/providers/MailTemplateProvider/implementations/HandlebarsMailTemplateProvider';
-import { mailTemplateConfig } from '@config/mailTemplate';
-import { IMailTemplateProvider } from '@shared/container/providers/MailTemplateProvider/models/IMailTemplateProvider';
-import { FakeMailTemplateProvider } from '@shared/container/providers/MailTemplateProvider/fakes/FakeMailTemplateProvider';
-import { IInfoMailStyleDTO } from '@dtos/IInfoMailStyleDTO';
-import { SMTPMailProvider } from '@shared/container/providers/MailProvider/implementations/SMTPMailProvider';
 import { appConfig } from '@config/app';
+import { mailConfig } from '@config/mail';
+import { mailTemplateConfig } from '@config/mailTemplate';
+import type { IInfoMailDTO } from '@dtos/IInfoMailDTO';
+import type { IInfoMailStyleDTO } from '@dtos/IInfoMailStyleDTO';
+import { FakeMailProvider } from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
+import { SESMailProvider } from '@shared/container/providers/MailProvider/implementations/SESMailProvider';
+import { SMTPMailProvider } from '@shared/container/providers/MailProvider/implementations/SMTPMailProvider';
+import type { IMailProvider } from '@shared/container/providers/MailProvider/models/IMailProvider';
+import { FakeMailTemplateProvider } from '@shared/container/providers/MailTemplateProvider/fakes/FakeMailTemplateProvider';
+import { HandlebarsMailTemplateProvider } from '@shared/container/providers/MailTemplateProvider/implementations/HandlebarsMailTemplateProvider';
+import type { IMailTemplateProvider } from '@shared/container/providers/MailTemplateProvider/models/IMailTemplateProvider';
+import { registerFooter } from '@utils/email/partials/registerFooter';
+import { registerGreetings } from '@utils/email/partials/registerGreetings';
+import { registerHeader } from '@utils/email/partials/registerHeader';
+import { registerMultiInfo } from '@utils/email/partials/registerMultiInfo';
 
 const providers: {
   mailTemplate: Record<

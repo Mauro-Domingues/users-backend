@@ -1,13 +1,17 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import { File } from '@modules/system/entities/File';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 import { fileSchema } from './fileSchema';
 
-export const listFile = celebrate({
-  [Segments.PARAMS]: Joi.object({}),
-  [Segments.QUERY]: Joi.object<File & { page: number; limit: number }>({
-    ...fileSchema,
-    page: Joi.number().integer().optional(),
-    limit: Joi.number().integer().optional(),
-  }),
-  [Segments.BODY]: Joi.object({}),
-}) as ReturnType<typeof celebrate>;
+export const listFile = baseValidator(ctx => {
+  const fileValidationSchema = fileSchema(ctx);
+
+  return {
+    params: ctx.object({}),
+    query: fileValidationSchema.concat(
+      ctx.object({
+        page: ctx.number().integer().positive().optional(),
+        limit: ctx.number().integer().positive().optional(),
+      }),
+    ),
+    body: ctx.object({}),
+  };
+});

@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IForgotPasswordDTO } from '@modules/users/dtos/IForgotPasswordDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IForgotPasswordDTO } from '@modules/users/dtos/IForgotPasswordDTO';
 import { ForgotPasswordService } from './ForgotPasswordService';
 
 export class ForgotPasswordController {

@@ -1,6 +1,6 @@
 import { hash } from 'bcrypt';
+import type { QueryRunner } from 'typeorm';
 import { v4 as uuid } from 'uuid';
-import { QueryRunner } from 'typeorm';
 import { hashConfig } from '@config/hash';
 import { User } from '@modules/users/entities/User';
 

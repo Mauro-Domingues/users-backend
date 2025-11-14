@@ -1,13 +1,12 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { FindOptionsWhere } from 'typeorm';
-import { User } from '@modules/users/entities/User';
-import { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { User } from '@modules/users/entities/User';
 import { SelectUserService } from './SelectUserService';
 
 export class SelectUserController {
   public async handle(
-    request: Request<never, never, never, FindOptionsWhere<User>>,
+    request: Request<never, never, never, Partial<User>>,
     response: Response<IResponseDTO<Array<User>>>,
   ): Promise<void> {
     const selectUser = container.resolve(SelectUserService);

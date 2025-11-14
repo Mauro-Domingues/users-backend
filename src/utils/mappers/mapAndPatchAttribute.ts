@@ -1,4 +1,4 @@
-import { IObjectDTO } from '@dtos/IObjectDTO';
+import type { IObjectDTO } from '@dtos/IObjectDTO';
 
 /**
  * PATCH OBJECT -> Takes as parameter an entity and an object, maps the object, and returns the entity with the patched properties. Empty or non-entity-type properties are discarded.

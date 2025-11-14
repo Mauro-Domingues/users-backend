@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { FindOptionsWhere } from 'typeorm';
-import { Role } from '@modules/users/entities/Role';
-import { IListDTO } from '@dtos/IListDTO';
+import type { IListDTO } from '@dtos/IListDTO';
+import type { Role } from '@modules/users/entities/Role';
 import { ListRoleService } from './ListRoleService';
 
 export class ListRoleController {
@@ -11,7 +10,7 @@ export class ListRoleController {
       never,
       never,
       never,
-      { page: number; limit: number } & FindOptionsWhere<Role>
+      { page: number; limit: number } & Partial<Role>
     >,
     response: Response<IListDTO<Role>>,
   ): Promise<void> {

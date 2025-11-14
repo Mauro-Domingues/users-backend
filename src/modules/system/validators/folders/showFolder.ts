@@ -1,9 +1,15 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import { Folder } from '@modules/system/entities/Folder';
+import type { Folder } from '@modules/system/entities/Folder';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 import { folderSchema } from './folderSchema';
 
-export const showFolder = celebrate({
-  [Segments.PARAMS]: Joi.object<Folder>({ id: folderSchema.id.required() }),
-  [Segments.QUERY]: Joi.object({}),
-  [Segments.BODY]: Joi.object({}),
+export const showFolder = baseValidator(ctx => {
+  const folderValidationSchema = folderSchema(ctx);
+
+  return {
+    params: ctx.object<Folder>({
+      id: folderValidationSchema.extract('id').required(),
+    }),
+    query: ctx.object({}),
+    body: ctx.object({}),
+  };
 });

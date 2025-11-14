@@ -1,5 +1,5 @@
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { Base } from '@shared/container/modules/entities/Base';
-import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 import { User } from './User';
 
 @Entity('tokens')

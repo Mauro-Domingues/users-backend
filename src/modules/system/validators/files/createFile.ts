@@ -1,11 +1,12 @@
-import { celebrate, Segments, Joi } from 'celebrate';
-import { ICreateFileDTO } from '@modules/system/dtos/ICreateFileDTO';
-import { folderSchema } from '../folders/folderSchema';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
+import { fileSchema } from './fileSchema';
 
-export const createFile = celebrate({
-  [Segments.PARAMS]: Joi.object({}),
-  [Segments.QUERY]: Joi.object({}),
-  [Segments.BODY]: Joi.object<ICreateFileDTO>({
-    folderId: folderSchema.id.optional(),
-  }),
+export const createFile = baseValidator(ctx => {
+  const fileValidationSchema = fileSchema(ctx);
+
+  return {
+    params: ctx.object({}),
+    query: ctx.object({}),
+    body: fileValidationSchema,
+  };
 });

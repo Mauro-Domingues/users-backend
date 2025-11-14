@@ -1,8 +1,8 @@
+import { CelebrateError } from 'celebrate';
+import type { NextFunction, Request, Response } from 'express';
 import { appConfig } from '@config/app';
 import { AppError } from '@shared/errors/AppError';
 import { createErrorLog } from '@utils/errorLog';
-import { CelebrateError } from 'celebrate';
-import { Request, Response, NextFunction } from 'express';
 
 const toUpperSnakeCase = (message: string): string => {
   return message

@@ -1,12 +1,10 @@
 import { Joi } from 'celebrate';
+import { passportJwtSecret } from 'jwks-rsa';
+import type { StrategyOptions as GoogleStrategyOptions } from 'passport-google-oauth20';
+import type { StrategyOptionsWithoutRequest as JwtStrategyOptions } from 'passport-jwt';
+import { ExtractJwt } from 'passport-jwt';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { passportJwtSecret } from 'jwks-rsa';
-import { StrategyOptions as GoogleStrategyOptions } from 'passport-google-oauth20';
-import {
-  ExtractJwt,
-  StrategyOptionsWithoutRequest as JwtStrategyOptions,
-} from 'passport-jwt';
 import { appConfig } from './app';
 
 interface IAuthConfigDTO {

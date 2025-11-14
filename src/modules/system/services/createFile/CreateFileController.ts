@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { File } from '@modules/system/entities/File';
-import { ICreateFileDTO } from '@modules/system/dtos/ICreateFileDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { ICreateFileDTO } from '@modules/system/dtos/ICreateFileDTO';
+import type { File } from '@modules/system/entities/File';
 import { CreateFileService } from './CreateFileService';
 
 export class CreateFileController {

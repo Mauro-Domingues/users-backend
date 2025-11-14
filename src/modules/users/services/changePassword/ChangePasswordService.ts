@@ -1,11 +1,11 @@
-import { injectable, inject } from 'tsyringe';
+import { Body, Inject, Patch, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IChangePasswordDTO } from '@modules/users/dtos/IChangePasswordDTO';
+import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import type { IHashProvider } from '@shared/container/providers/HashProvider/models/IHashProvider';
 import { AppError } from '@shared/errors/AppError';
-import { IHashProvider } from '@shared/container/providers/HashProvider/models/IHashProvider';
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Patch, Body, Inject } from 'tsoa';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IChangePasswordDTO } from '@modules/users/dtos/IChangePasswordDTO';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/change-password')
 @injectable()

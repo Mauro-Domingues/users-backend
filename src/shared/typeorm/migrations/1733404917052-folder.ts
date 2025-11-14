@@ -1,5 +1,6 @@
+import type { MigrationInterface, QueryRunner } from 'typeorm';
+import { Table, TableIndex } from 'typeorm';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
-import { MigrationInterface, QueryRunner, Table, TableIndex } from 'typeorm';
 
 export class Folder1733404917052
   extends BaseMigration

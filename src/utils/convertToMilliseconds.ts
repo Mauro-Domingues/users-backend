@@ -1,4 +1,4 @@
-import { IIntervalDTO } from '@dtos/IIntervalDTO';
+import type { IIntervalDTO } from '@dtos/IIntervalDTO';
 import { AppError } from '@shared/errors/AppError';
 
 export function convertToMilliseconds(delay: IIntervalDTO): number {

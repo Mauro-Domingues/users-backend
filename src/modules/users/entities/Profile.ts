@@ -1,6 +1,6 @@
-import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
-import { Base } from '@shared/container/modules/entities/Base';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { File } from '@modules/system/entities/File';
+import { Base } from '@shared/container/modules/entities/Base';
 
 @Entity('profiles')
 export class Profile extends Base {

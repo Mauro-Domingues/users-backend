@@ -1,4 +1,4 @@
-import { DataSource } from 'typeorm';
+import type { DataSource } from 'typeorm';
 
 const dataSources = new Map<string, DataSource>();
 

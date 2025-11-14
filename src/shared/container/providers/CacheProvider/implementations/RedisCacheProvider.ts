@@ -1,6 +1,6 @@
-import { cacheConfig } from '@config/cache';
 import { Redis } from 'ioredis';
-import { ICacheProvider } from '../models/ICacheProvider';
+import { cacheConfig } from '@config/cache';
+import type { ICacheProvider } from '../models/ICacheProvider';
 
 export class RedisCacheProvider implements ICacheProvider {
   private readonly client: Redis;

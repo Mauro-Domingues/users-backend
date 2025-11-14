@@ -1,12 +1,12 @@
-import { injectable, inject } from 'tsyringe';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { IPermissionsRepository } from '@modules/users/repositories/IPermissionsRepository';
-import { IPermissionDTO } from '@modules/users/dtos/IPermissionDTO';
-import { Permission } from '@modules/users/entities/Permission';
 import { instanceToInstance } from 'class-transformer';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IConnection } from '@shared/typeorm';
-import { Route, Tags, Post, Body, Inject } from 'tsoa';
+import { Body, Inject, Post, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IPermissionDTO } from '@modules/users/dtos/IPermissionDTO';
+import type { Permission } from '@modules/users/entities/Permission';
+import type { IPermissionsRepository } from '@modules/users/repositories/IPermissionsRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import type { IConnection } from '@shared/typeorm';
 import { GenerateSlug } from '@utils/generateSlug';
 import { slugify } from '@utils/slugify';
 

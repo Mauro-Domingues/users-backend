@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { FindOptionsWhere } from 'typeorm';
-import { Permission } from '@modules/users/entities/Permission';
-import { IListDTO } from '@dtos/IListDTO';
+import type { IListDTO } from '@dtos/IListDTO';
+import type { Permission } from '@modules/users/entities/Permission';
 import { ListPermissionService } from './ListPermissionService';
 
 export class ListPermissionController {
@@ -11,7 +10,7 @@ export class ListPermissionController {
       never,
       never,
       never,
-      { page: number; limit: number } & FindOptionsWhere<Permission>
+      { page: number; limit: number } & Partial<Permission>
     >,
     response: Response<IListDTO<Permission>>,
   ): Promise<void> {

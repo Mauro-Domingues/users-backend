@@ -1,13 +1,12 @@
-import { injectable, inject } from 'tsyringe';
-import { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
-import { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { Role } from '@modules/users/entities/Role';
 import { instanceToInstance } from 'class-transformer';
-import { ICacheDTO } from '@dtos/ICacheDTO';
-import { IListDTO } from '@dtos/IListDTO';
-import { IConnection } from '@shared/typeorm';
-import { FindOptionsWhere } from 'typeorm';
-import { Get, Route, Tags, Query, Inject } from 'tsoa';
+import { Get, Inject, Query, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { ICacheDTO } from '@dtos/ICacheDTO';
+import type { IListDTO } from '@dtos/IListDTO';
+import type { Role } from '@modules/users/entities/Role';
+import type { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
+import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/roles')
 @injectable()
@@ -26,7 +25,7 @@ export class ListRoleService {
     @Inject() connection: IConnection,
     @Query() page: number,
     @Query() limit: number,
-    @Inject() filters: FindOptionsWhere<Role>,
+    @Inject() filters: Partial<Role>,
   ): Promise<IListDTO<Role>> {
     const trx = connection.mysql.createQueryRunner();
 

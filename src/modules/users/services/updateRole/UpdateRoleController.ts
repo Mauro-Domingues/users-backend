@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { IRoleDTO } from '@modules/users/dtos/IRoleDTO';
-import { Role } from '@modules/users/entities/Role';
-import { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IRoleDTO } from '@modules/users/dtos/IRoleDTO';
+import type { Role } from '@modules/users/entities/Role';
 import { UpdateRoleService } from './UpdateRoleService';
 
 export class UpdateRoleController {

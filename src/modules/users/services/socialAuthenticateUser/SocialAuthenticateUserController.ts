@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { convertToMilliseconds } from '@utils/convertToMilliseconds';
 import { cryptoConfig } from '@config/crypto';
-import { ISocialAuthDTO } from '@modules/users/dtos/ISocialAuthDTO';
+import type { ISocialAuthDTO } from '@modules/users/dtos/ISocialAuthDTO';
+import { convertToMilliseconds } from '@utils/convertToMilliseconds';
 import { SocialAuthenticateUserService } from './SocialAuthenticateUserService';
 
 export class SocialAuthenticateUserController {

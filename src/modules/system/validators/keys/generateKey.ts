@@ -1,7 +1,7 @@
-import { celebrate, Segments, Joi } from 'celebrate';
+import { baseValidator } from '@shared/container/modules/validators/baseValidator';
 
-export const generateKey = celebrate({
-  [Segments.PARAMS]: Joi.object({}),
-  [Segments.QUERY]: Joi.object({}),
-  [Segments.BODY]: Joi.object({}),
-});
+export const generateKey = baseValidator(ctx => ({
+  params: ctx.object({}),
+  query: ctx.object({}),
+  body: ctx.object({}),
+}));

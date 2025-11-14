@@ -1,6 +1,6 @@
-import { Folder } from '@modules/system/entities/Folder';
-import { QueryRunner } from 'typeorm';
+import type { QueryRunner } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import { Folder } from '@modules/system/entities/Folder';
 
 export async function seedFolder(trx: QueryRunner): Promise<void> {
   return trx.manager

@@ -1,4 +1,4 @@
-import { ICodeDTO } from './ICodeDTO';
+import type { ICodeDTO } from './ICodeDTO';
 
 export interface IListDTO<T> {
   code: number;

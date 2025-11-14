@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { IUserDTO } from '@modules/users/dtos/IUserDTO';
-import { User } from '@modules/users/entities/User';
-import { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IUserDTO } from '@modules/users/dtos/IUserDTO';
+import type { User } from '@modules/users/entities/User';
 import { UpdateUserService } from './UpdateUserService';
 
 export class UpdateUserController {

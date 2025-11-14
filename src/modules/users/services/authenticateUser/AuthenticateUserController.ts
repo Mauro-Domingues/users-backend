@@ -1,9 +1,9 @@
-import { IAuthDTO } from '@modules/users/dtos/IAuthDTO';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IJwtTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IJwtTokenDTO';
-import { IRefreshTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IRefreshTokenDTO';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { IAuthDTO } from '@modules/users/dtos/IAuthDTO';
+import type { IJwtTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IJwtTokenDTO';
+import type { IRefreshTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IRefreshTokenDTO';
 import { AuthenticateUserService } from './AuthenticateUserService';
 
 export class AuthenticateUserController {

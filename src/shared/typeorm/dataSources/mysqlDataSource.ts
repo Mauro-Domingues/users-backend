@@ -1,5 +1,5 @@
-import { ormConfig } from '@config/orm';
 import { DataSource } from 'typeorm';
+import { ormConfig } from '@config/orm';
 
 const dataSources = new Map<string, DataSource>();
 

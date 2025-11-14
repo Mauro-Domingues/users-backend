@@ -1,8 +1,8 @@
-import { SignOptions } from 'jsonwebtoken';
-import { JWK } from 'pem-jwk';
-import { IEncryptedDTO } from '../dtos/IEncryptedDTO';
-import { IRefreshTokenDTO } from '../dtos/IRefreshTokenDTO';
-import { IJwtTokenDTO } from '../dtos/IJwtTokenDTO';
+import type { SignOptions } from 'jsonwebtoken';
+import type { JWK } from 'pem-jwk';
+import type { IEncryptedDTO } from '../dtos/IEncryptedDTO';
+import type { IJwtTokenDTO } from '../dtos/IJwtTokenDTO';
+import type { IRefreshTokenDTO } from '../dtos/IRefreshTokenDTO';
 
 export interface ICryptoProvider {
   encrypt(text: string): IEncryptedDTO;

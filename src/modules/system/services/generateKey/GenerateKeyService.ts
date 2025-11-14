@@ -1,8 +1,8 @@
-import { ICryptoProvider } from '@shared/container/providers/CryptoProvider/models/ICryptoProvider';
-import { JWK } from 'pem-jwk';
-import { injectable, inject } from 'tsyringe';
+import type { JWK } from 'pem-jwk';
 import { Get, Route, Tags } from 'tsoa';
-import { IResponseDTO } from '@dtos/IResponseDTO';
+import { inject, injectable } from 'tsyringe';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { ICryptoProvider } from '@shared/container/providers/CryptoProvider/models/ICryptoProvider';
 
 @Route('/generate-keys')
 @injectable()

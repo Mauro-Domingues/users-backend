@@ -1,11 +1,11 @@
-import { injectable, inject } from 'tsyringe';
-import { AppError } from '@shared/errors/AppError';
-import { IPermissionsRepository } from '@modules/users/repositories/IPermissionsRepository';
-import { Permission } from '@modules/users/entities/Permission';
 import { instanceToInstance } from 'class-transformer';
-import { IResponseDTO } from '@dtos/IResponseDTO';
-import { IConnection } from '@shared/typeorm';
-import { Get, Route, Tags, Path, Inject } from 'tsoa';
+import { Get, Inject, Path, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
+import type { IResponseDTO } from '@dtos/IResponseDTO';
+import type { Permission } from '@modules/users/entities/Permission';
+import type { IPermissionsRepository } from '@modules/users/repositories/IPermissionsRepository';
+import { AppError } from '@shared/errors/AppError';
+import type { IConnection } from '@shared/typeorm';
 
 @Route('/permissions')
 @injectable()

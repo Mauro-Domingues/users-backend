@@ -1,18 +1,15 @@
-import {
-  And,
-  Between,
+import type {
   DeleteResult,
   EntityTarget,
   FindManyOptions,
   FindOptionsWhere,
-  In,
-  Like,
   ObjectLiteral,
   QueryRunner,
 } from 'typeorm';
+import { And, Between, In, Like } from 'typeorm';
 import { AppError } from '@shared/errors/AppError';
 import { slugify } from '@utils/slugify';
-import { IBaseRepository } from './IBaseRepository';
+import type { IBaseRepository } from './IBaseRepository';
 
 export abstract class BaseRepository<Entity extends ObjectLiteral>
   implements IBaseRepository<Entity>
