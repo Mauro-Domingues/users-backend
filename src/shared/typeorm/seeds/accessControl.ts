@@ -291,7 +291,14 @@ async function seedRole(trx: QueryRunner): Promise<void> {
     .createQueryBuilder()
     .insert()
     .into(Role)
-    .values(roles)
+    .values(
+      roles.map(role => ({
+        id: role.id,
+        name: role.name,
+        description: role.description,
+        type: role.type,
+      })),
+    )
     .execute()
     .then(() => console.log('Roles seeded'));
 }
