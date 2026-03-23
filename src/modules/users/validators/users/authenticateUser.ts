@@ -21,6 +21,7 @@ export const authenticateUser = baseValidator(ctx => {
         then: ctx.optional(),
         otherwise: ctx.required(),
       }),
+      deviceId: tokenValidationSchema.extract('deviceId').optional(),
       refreshToken: tokenValidationSchema.extract('token').optional(),
     }),
   };

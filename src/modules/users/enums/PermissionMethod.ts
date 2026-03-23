@@ -1,4 +1,4 @@
-export enum IPermissionMethodDTO {
+export enum PermissionMethod {
   SHOW = 'show',
   LIST = 'list',
   UPDATE = 'update',

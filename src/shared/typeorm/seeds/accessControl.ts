@@ -1,19 +1,19 @@
 import type { DeepPartial, QueryRunner } from 'typeorm';
 import { v4 as uuid } from 'uuid';
-import { IPermissionMethodDTO } from '@modules/users/dtos/IPermissionMethodDTO';
-import { IRoleTypeDTO } from '@modules/users/dtos/IRoleTypeDTO';
 import { Permission } from '@modules/users/entities/Permission';
 import { Role } from '@modules/users/entities/Role';
+import { PermissionMethod } from '@modules/users/enums/PermissionMethod';
+import { RoleType } from '@modules/users/enums/RoleType';
 
-const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
-  [IRoleTypeDTO.DEVELOPER]: [
+const permissions: Record<RoleType, Array<Partial<Permission>>> = {
+  [RoleType.DEVELOPER]: [
     {
       id: uuid(),
       route: '/permissions',
       name: 'Create permission',
       description: 'This route is responsible for creating a new permission',
       slug: 'permissions___create',
-      method: IPermissionMethodDTO.CREATE,
+      method: PermissionMethod.CREATE,
     },
     {
       id: uuid(),
@@ -22,17 +22,17 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       description:
         'This route is responsible for deleting a specific permission',
       slug: 'permissions-id___delete',
-      method: IPermissionMethodDTO.DELETE,
+      method: PermissionMethod.DELETE,
     },
   ],
-  [IRoleTypeDTO.ADMIN]: [
+  [RoleType.ADMIN]: [
     {
       id: uuid(),
       route: '/folders',
       name: 'Create folder',
       description: 'This route is responsible for creating a new folder',
       slug: 'folders___create',
-      method: IPermissionMethodDTO.CREATE,
+      method: PermissionMethod.CREATE,
     },
     {
       id: uuid(),
@@ -40,7 +40,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'List folders',
       description: 'This route is responsible for listing all folders',
       slug: 'folders___list',
-      method: IPermissionMethodDTO.LIST,
+      method: PermissionMethod.LIST,
     },
     {
       id: uuid(),
@@ -48,7 +48,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Show folder',
       description: 'This route is responsible for showing a specific folder',
       slug: 'folders-id___show',
-      method: IPermissionMethodDTO.SHOW,
+      method: PermissionMethod.SHOW,
     },
     {
       id: uuid(),
@@ -56,7 +56,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Update folder',
       description: 'This route is responsible for updating a specific folder',
       slug: 'folders-id___update',
-      method: IPermissionMethodDTO.UPDATE,
+      method: PermissionMethod.UPDATE,
     },
     {
       id: uuid(),
@@ -64,7 +64,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Delete folder',
       description: 'This route is responsible for deleting a specific folder',
       slug: 'folders-id___delete',
-      method: IPermissionMethodDTO.DELETE,
+      method: PermissionMethod.DELETE,
     },
     {
       id: uuid(),
@@ -72,7 +72,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'List files',
       description: 'This route is responsible for listing all files',
       slug: 'files___list',
-      method: IPermissionMethodDTO.LIST,
+      method: PermissionMethod.LIST,
     },
     {
       id: uuid(),
@@ -80,7 +80,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Show file',
       description: 'This route is responsible for showing a specific file',
       slug: 'files-id___show',
-      method: IPermissionMethodDTO.SHOW,
+      method: PermissionMethod.SHOW,
     },
     {
       id: uuid(),
@@ -88,7 +88,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Update file',
       description: 'This route is responsible for updating a specific file',
       slug: 'files-id___update',
-      method: IPermissionMethodDTO.UPDATE,
+      method: PermissionMethod.UPDATE,
     },
     {
       id: uuid(),
@@ -96,7 +96,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Delete file',
       description: 'This route is responsible for deleting a specific file',
       slug: 'files-id___delete',
-      method: IPermissionMethodDTO.DELETE,
+      method: PermissionMethod.DELETE,
     },
     {
       id: uuid(),
@@ -104,7 +104,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Create role',
       description: 'This route is responsible for creating a new role',
       slug: 'roles___create',
-      method: IPermissionMethodDTO.CREATE,
+      method: PermissionMethod.CREATE,
     },
     {
       id: uuid(),
@@ -112,7 +112,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'List roles',
       description: 'This route is responsible for listing all roles',
       slug: 'roles___list',
-      method: IPermissionMethodDTO.LIST,
+      method: PermissionMethod.LIST,
     },
     {
       id: uuid(),
@@ -120,7 +120,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Show role',
       description: 'This route is responsible for showing a specific role',
       slug: 'roles-id___show',
-      method: IPermissionMethodDTO.SHOW,
+      method: PermissionMethod.SHOW,
     },
     {
       id: uuid(),
@@ -128,7 +128,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Update role',
       description: 'This route is responsible for updating a specific role',
       slug: 'roles-id___update',
-      method: IPermissionMethodDTO.UPDATE,
+      method: PermissionMethod.UPDATE,
     },
     {
       id: uuid(),
@@ -136,7 +136,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Delete role',
       description: 'This route is responsible for deleting a specific role',
       slug: 'roles-id___delete',
-      method: IPermissionMethodDTO.DELETE,
+      method: PermissionMethod.DELETE,
     },
     {
       id: uuid(),
@@ -144,7 +144,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'List permissions',
       description: 'This route is responsible for listing all permissions',
       slug: 'permissions___list',
-      method: IPermissionMethodDTO.LIST,
+      method: PermissionMethod.LIST,
     },
     {
       id: uuid(),
@@ -153,7 +153,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       description:
         'This route is responsible for showing a specific permission',
       slug: 'permissions-id___show',
-      method: IPermissionMethodDTO.SHOW,
+      method: PermissionMethod.SHOW,
     },
     {
       id: uuid(),
@@ -162,7 +162,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       description:
         'This route is responsible for updating a specific permission',
       slug: 'permissions-id___update',
-      method: IPermissionMethodDTO.UPDATE,
+      method: PermissionMethod.UPDATE,
     },
     {
       id: uuid(),
@@ -171,7 +171,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       description:
         'This route is responsible for listing users available for selection',
       slug: 'select-users___list',
-      method: IPermissionMethodDTO.LIST,
+      method: PermissionMethod.LIST,
     },
     {
       id: uuid(),
@@ -179,7 +179,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'List users',
       description: 'This route is responsible for listing all users',
       slug: 'users___list',
-      method: IPermissionMethodDTO.LIST,
+      method: PermissionMethod.LIST,
     },
     {
       id: uuid(),
@@ -187,7 +187,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Show user',
       description: 'This route is responsible for showing a specific user',
       slug: 'users-id___show',
-      method: IPermissionMethodDTO.SHOW,
+      method: PermissionMethod.SHOW,
     },
     {
       id: uuid(),
@@ -195,17 +195,17 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Delete user',
       description: 'This route is responsible for deleting a specific user',
       slug: 'users-id___delete',
-      method: IPermissionMethodDTO.DELETE,
+      method: PermissionMethod.DELETE,
     },
   ],
-  [IRoleTypeDTO.CLIENT]: [
+  [RoleType.CLIENT]: [
     {
       id: uuid(),
       route: '/change-password',
       name: 'Change password',
       description: 'This route is responsible for changing the user password',
       slug: 'change-password___patch',
-      method: IPermissionMethodDTO.PATCH,
+      method: PermissionMethod.PATCH,
     },
     {
       id: uuid(),
@@ -213,7 +213,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Create file',
       description: 'This route is responsible for creating a new file',
       slug: 'files___create',
-      method: IPermissionMethodDTO.CREATE,
+      method: PermissionMethod.CREATE,
     },
     {
       id: uuid(),
@@ -222,7 +222,7 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       description:
         'This route is responsible for showing the authenticated user',
       slug: 'me___show',
-      method: IPermissionMethodDTO.SHOW,
+      method: PermissionMethod.SHOW,
     },
     {
       id: uuid(),
@@ -230,10 +230,10 @@ const permissions: Record<IRoleTypeDTO, Array<Partial<Permission>>> = {
       name: 'Update user',
       description: 'This route is responsible for updating a specific user',
       slug: 'users-id___update',
-      method: IPermissionMethodDTO.UPDATE,
+      method: PermissionMethod.UPDATE,
     },
   ],
-  [IRoleTypeDTO.CUSTOM]: [],
+  [RoleType.CUSTOM]: [],
 };
 
 const roles: Array<DeepPartial<Role>> = [
@@ -241,37 +241,35 @@ const roles: Array<DeepPartial<Role>> = [
     id: uuid(),
     name: 'Developer',
     description: 'Unique role designed to the developer',
-    type: IRoleTypeDTO.DEVELOPER,
+    type: RoleType.DEVELOPER,
     permissions: [
-      IRoleTypeDTO.DEVELOPER,
-      IRoleTypeDTO.ADMIN,
-      IRoleTypeDTO.CLIENT,
-      IRoleTypeDTO.CUSTOM,
+      RoleType.DEVELOPER,
+      RoleType.ADMIN,
+      RoleType.CLIENT,
+      RoleType.CUSTOM,
     ].flatMap(key => permissions[key]),
   },
   {
     id: uuid(),
     name: 'Administrator',
     description: 'Unique role designed to the client admin',
-    type: IRoleTypeDTO.ADMIN,
-    permissions: [
-      IRoleTypeDTO.ADMIN,
-      IRoleTypeDTO.CLIENT,
-      IRoleTypeDTO.CUSTOM,
-    ].flatMap(key => permissions[key]),
+    type: RoleType.ADMIN,
+    permissions: [RoleType.ADMIN, RoleType.CLIENT, RoleType.CUSTOM].flatMap(
+      key => permissions[key],
+    ),
   },
   {
     id: uuid(),
     name: 'Client',
     description: 'Unique role designed to the common user',
-    type: IRoleTypeDTO.CLIENT,
+    type: RoleType.CLIENT,
     permissions: permissions.client,
   },
   {
     id: uuid(),
     name: 'Custom',
     description: 'Custom role designed to specified purposes',
-    type: IRoleTypeDTO.CUSTOM,
+    type: RoleType.CUSTOM,
     permissions: permissions.custom,
   },
 ];

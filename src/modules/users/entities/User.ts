@@ -2,6 +2,7 @@ import { Exclude } from 'class-transformer';
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
   JoinTable,
   ManyToMany,
@@ -16,9 +17,11 @@ import { Role } from './Role';
 
 @Entity('users')
 export class User extends Base {
+  @Index('INDEX_users_profile_id', ['profileId'])
   @Column({ name: 'profile_id', type: 'uuid', nullable: true })
   declare public profileId: string;
 
+  @Index('INDEX_users_address_id', ['addressId'])
   @Column({ name: 'address_id', type: 'uuid', nullable: true })
   declare public addressId: string;
 

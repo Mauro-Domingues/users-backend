@@ -1,6 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { Base } from '@shared/container/modules/entities/Base';
-import { IRoleTypeDTO } from '../dtos/IRoleTypeDTO';
+import { RoleType } from '../enums/RoleType';
 import { Permission } from './Permission';
 import { User } from './User';
 
@@ -15,11 +15,11 @@ export class Role extends Base {
   @Column({
     name: 'type',
     type: 'enum',
-    enum: IRoleTypeDTO,
+    enum: RoleType,
     nullable: false,
-    default: IRoleTypeDTO.CUSTOM,
+    default: RoleType.CUSTOM,
   })
-  declare public type: IRoleTypeDTO;
+  declare public type: RoleType;
 
   @OneToMany(() => User, user => user.role, {
     onDelete: 'CASCADE',

@@ -48,6 +48,15 @@ export class Token1733404917057
     await queryRunner.createIndex(
       'tokens',
       new TableIndex({
+        name: 'UNIQUE_tokens_user_id',
+        columnNames: ['user_id'],
+        isUnique: true,
+      }),
+    );
+
+    await queryRunner.createIndex(
+      'tokens',
+      new TableIndex({
         name: 'UNIQUE_tokens_user_id_device_id',
         columnNames: ['user_id', 'device_id'],
         isUnique: true,
@@ -57,6 +66,7 @@ export class Token1733404917057
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropForeignKey('tokens', 'FK_tokens_user');
+    await queryRunner.dropIndex('tokens', 'UNIQUE_tokens_user_id');
     await queryRunner.dropIndex('tokens', 'UNIQUE_tokens_user_id_device_id');
     await queryRunner.dropTable('tokens', true);
   }

@@ -2,9 +2,9 @@ import { hash } from 'bcrypt';
 import type { QueryRunner } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { hashConfig } from '@config/hash';
-import { IRoleTypeDTO } from '@modules/users/dtos/IRoleTypeDTO';
 import { Role } from '@modules/users/entities/Role';
 import { User } from '@modules/users/entities/User';
+import { RoleType } from '@modules/users/enums/RoleType';
 
 async function getPasswords(): Promise<{
   developerPassword: string;
@@ -24,14 +24,14 @@ async function getRoles(trx: QueryRunner): Promise<{
     .createQueryBuilder(Role, 'roles')
     .leftJoinAndSelect('roles.permissions', 'permissions')
     .where('roles.type IN (:...types)', {
-      types: [IRoleTypeDTO.DEVELOPER, IRoleTypeDTO.ADMIN],
+      types: [RoleType.DEVELOPER, RoleType.ADMIN],
     })
     .select(['roles.id', 'roles.type', 'permissions.id'])
     .getMany();
 
   return {
-    developerRole: roles.find(role => role.type === IRoleTypeDTO.DEVELOPER),
-    adminRole: roles.find(role => role.type === IRoleTypeDTO.ADMIN),
+    developerRole: roles.find(role => role.type === RoleType.DEVELOPER),
+    adminRole: roles.find(role => role.type === RoleType.ADMIN),
   };
 }
 

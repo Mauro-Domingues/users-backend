@@ -3,12 +3,12 @@ import { Body, Inject, Post, Route, Tags } from 'tsoa';
 import { inject, injectable } from 'tsyringe';
 import type { QueryRunner } from 'typeorm';
 import type { IResponseDTO } from '@dtos/IResponseDTO';
-import { IRoleTypeDTO } from '@modules/users/dtos/IRoleTypeDTO';
 import type { IUserDTO } from '@modules/users/dtos/IUserDTO';
 import type { Address } from '@modules/users/entities/Address';
 import type { Permission } from '@modules/users/entities/Permission';
 import type { Profile } from '@modules/users/entities/Profile';
 import type { User } from '@modules/users/entities/User';
+import { RoleType } from '@modules/users/enums/RoleType';
 import type { IAddressesRepository } from '@modules/users/repositories/IAddressesRepository';
 import type { IProfilesRepository } from '@modules/users/repositories/IProfilesRepository';
 import type { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
@@ -78,7 +78,7 @@ export class CreateUserService {
   }): Promise<void> {
     const role = await this.rolesRepository.findBy(
       {
-        where: [{ id: roleId }, { type: IRoleTypeDTO.CLIENT }],
+        where: [{ id: roleId }, { type: RoleType.CLIENT }],
         relations: { permissions: true },
         select: {
           id: true,

@@ -1,6 +1,6 @@
 import type { MigrationInterface, QueryRunner } from 'typeorm';
 import { Table } from 'typeorm';
-import { IRoleTypeDTO } from '@modules/users/dtos/IRoleTypeDTO';
+import { RoleType } from '@modules/users/enums/RoleType';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
 
 export class Role1733404917050
@@ -26,9 +26,9 @@ export class Role1733404917050
           {
             name: 'type',
             type: 'enum',
-            enum: Object.values(IRoleTypeDTO),
+            enum: Object.values(RoleType),
             isNullable: false,
-            default: `'${IRoleTypeDTO.CUSTOM}'`,
+            default: `'${RoleType.CUSTOM}'`,
           },
         ],
       }),

@@ -84,6 +84,22 @@ export class User1733404917056
     await queryRunner.createIndex(
       'users',
       new TableIndex({
+        name: 'INDEX_users_profile_id',
+        columnNames: ['profile_id'],
+      }),
+    );
+
+    await queryRunner.createIndex(
+      'users',
+      new TableIndex({
+        name: 'INDEX_users_address_id',
+        columnNames: ['address_id'],
+      }),
+    );
+
+    await queryRunner.createIndex(
+      'users',
+      new TableIndex({
         name: 'UNIQUE_users_profile_id',
         columnNames: ['profile_id'],
         isUnique: true,
@@ -98,21 +114,14 @@ export class User1733404917056
         isUnique: true,
       }),
     );
-
-    await queryRunner.createIndex(
-      'users',
-      new TableIndex({
-        name: 'UNIQUE_users_role_id',
-        columnNames: ['role_id'],
-        isUnique: true,
-      }),
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropForeignKey('users', 'FK_users_profile');
     await queryRunner.dropForeignKey('users', 'FK_users_address');
     await queryRunner.dropForeignKey('users', 'FK_users_role');
+    await queryRunner.dropIndex('users', 'INDEX_users_profile_id');
+    await queryRunner.dropIndex('users', 'INDEX_users_address_id');
     await queryRunner.dropIndex('users', 'UNIQUE_users_profile_id');
     await queryRunner.dropIndex('users', 'UNIQUE_users_address_id');
     await queryRunner.dropIndex('users', 'UNIQUE_users_role_id');

@@ -31,9 +31,11 @@ export class AuthenticateUserService {
 
   private async generateByToken({
     refreshToken,
+    deviceId,
     trx,
   }: {
     refreshToken: string;
+    deviceId?: string;
     trx: QueryRunner;
   }): Promise<{
     jwtToken: IJwtTokenDTO;
@@ -43,6 +45,7 @@ export class AuthenticateUserService {
       {
         where: {
           token: refreshToken,
+          deviceId,
         },
         select: { id: true, userId: true },
       },
@@ -74,11 +77,13 @@ export class AuthenticateUserService {
 
   private async generateByEmail({
     password,
+    deviceId,
     email,
     trx,
   }: {
     email: string;
     password: string;
+    deviceId?: string;
     trx: QueryRunner;
   }): Promise<{
     jwtToken: IJwtTokenDTO;
@@ -128,6 +133,7 @@ export class AuthenticateUserService {
       {
         where: {
           userId: checkUser.id,
+          deviceId,
         },
         select: { id: true },
       },
@@ -144,6 +150,7 @@ export class AuthenticateUserService {
         {
           userId: checkUser.id,
           token: refreshToken.token,
+          deviceId,
         },
         trx,
       );
@@ -156,7 +163,7 @@ export class AuthenticateUserService {
   @Tags('User')
   public async execute(
     @Inject() connection: IConnection,
-    @Body() { email, password, refreshToken }: IAuthDTO,
+    @Body() { email, password, refreshToken, deviceId }: IAuthDTO,
   ): Promise<
     IResponseDTO<{
       jwtToken: IJwtTokenDTO;
@@ -177,6 +184,7 @@ export class AuthenticateUserService {
           await this.generateByToken({
             trx,
             refreshToken,
+            deviceId,
           }),
         );
       } else {
@@ -185,6 +193,7 @@ export class AuthenticateUserService {
             trx,
             email,
             password,
+            deviceId,
           }),
         );
       }

@@ -7,9 +7,9 @@ import { createErrorLog } from '@utils/errorLog';
 const toUpperSnakeCase = (message: string): string => {
   return message
     .trim()
-    .replace(/\s+/g, '_')
-    .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
-    .replace(/([A-Z])([A-Z][a-z])/g, '$1_$2')
+    .replaceAll(/\s+/g, '_')
+    .replaceAll(/([a-z0-9])([A-Z])/g, '$1_$2')
+    .replaceAll(/([A-Z])([A-Z][a-z])/g, '$1_$2')
     .toUpperCase();
 };
 
@@ -60,11 +60,11 @@ export const errorHandler = (
     });
   }
 
-  return (
-    response.status(errorBody.code).send({
-      code: errorBody.code,
-      messageCode: errorBody.messageCode,
-      message: errorBody.message,
-    }) && next()
-  );
+  response.status(errorBody.code).json({
+    code: errorBody.code,
+    messageCode: errorBody.messageCode,
+    message: errorBody.message,
+  });
+
+  return next();
 };

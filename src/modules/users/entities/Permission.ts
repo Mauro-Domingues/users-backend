@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToMany, Unique } from 'typeorm';
 import { Base } from '@shared/container/modules/entities/Base';
-import { IPermissionMethodDTO } from '../dtos/IPermissionMethodDTO';
+import { PermissionMethod } from '../enums/PermissionMethod';
 import { Role } from './Role';
 import { User } from './User';
 
@@ -22,10 +22,10 @@ export class Permission extends Base {
   @Column({
     name: 'method',
     type: 'enum',
-    enum: IPermissionMethodDTO,
+    enum: PermissionMethod,
     nullable: false,
   })
-  declare public method: IPermissionMethodDTO;
+  declare public method: PermissionMethod;
 
   @ManyToMany(() => Role, role => role.permissions, {
     onDelete: 'CASCADE',

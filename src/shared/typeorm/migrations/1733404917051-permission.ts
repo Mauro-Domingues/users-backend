@@ -1,6 +1,6 @@
 import type { MigrationInterface, QueryRunner } from 'typeorm';
 import { Table } from 'typeorm';
-import { IPermissionMethodDTO } from '@modules/users/dtos/IPermissionMethodDTO';
+import { PermissionMethod } from '@modules/users/enums/PermissionMethod';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
 
 export class Permission1733404917051
@@ -36,7 +36,7 @@ export class Permission1733404917051
           {
             name: 'method',
             type: 'enum',
-            enum: Object.values(IPermissionMethodDTO),
+            enum: Object.values(PermissionMethod),
             isNullable: false,
           },
         ],
