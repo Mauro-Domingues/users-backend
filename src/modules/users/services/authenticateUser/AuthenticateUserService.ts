@@ -134,17 +134,17 @@ export class AuthenticateUserService {
       trx,
     );
 
-    if (!checkToken) {
+    if (checkToken) {
+      await this.tokensRepository.update(
+        { ...checkToken, token: refreshToken.token },
+        trx,
+      );
+    } else {
       await this.tokensRepository.create(
         {
           userId: checkUser.id,
           token: refreshToken.token,
         },
-        trx,
-      );
-    } else {
-      await this.tokensRepository.update(
-        { ...checkToken, token: refreshToken.token },
         trx,
       );
     }

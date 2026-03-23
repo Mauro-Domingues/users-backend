@@ -9,6 +9,7 @@ export const tokenSchema = baseSchema(Token, (ctx, { id }) => {
   return {
     userId: id,
     token: Joi.string().max(255),
+    deviceId: Joi.string().max(255),
     user: userValidationSchema,
   };
 });
