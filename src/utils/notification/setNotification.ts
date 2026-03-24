@@ -20,6 +20,11 @@ export function setNotification({
 } {
   const { module, a, the, of } = getDetails(type);
 
+  const userName = user?.profile?.fullName;
+  const requesterName = requester?.profile?.fullName;
+
+  const referenceText = reference ? ` com o código (${reference})` : '';
+
   const notification: Record<
     Notification['action'],
     {
@@ -29,21 +34,33 @@ export function setNotification({
   > = {
     created: {
       title: `Você tem ${a} nov${the} ${module}`,
-      content: `${
-        user?.profile?.fullName ? `${user?.profile?.fullName}, você` : 'Você'
-      } recebeu ${a} nov${the} ${module}${reference ? ` com o código (${reference})` : ''}. ${requester?.profile?.fullName ? `${the.toUpperCase()} ${module} foi solicitada por ${requester?.profile?.fullName}` : ''}`,
+      content: (() => {
+        const greeting = userName ? `${userName}, você` : 'Você';
+        const reqText = requesterName
+          ? ` ${the.toUpperCase()} ${module} foi solicitada por ${requesterName}`
+          : '';
+        return `${greeting} recebeu ${a} nov${the} ${module}${referenceText}.${reqText}`;
+      })(),
     },
     updated: {
       title: `${the.toUpperCase()} ${module} foi atualizad${the}`,
-      content: `${
-        user?.profile?.fullName ? `${user?.profile?.fullName},` : ''
-      } ${the.toUpperCase()} ${module}${reference ? ` com o código (${reference})` : ''} foi atualizad${the}. ${requester?.profile?.fullName ? `A alteração ${of} ${module} foi solicitada por ${requester?.profile?.fullName}` : ''}`,
+      content: (() => {
+        const greeting = userName ? `${userName}, ` : '';
+        const reqText = requesterName
+          ? ` A alteração ${of} ${module} foi solicitada por ${requesterName}`
+          : '';
+        return `${greeting}${the.toUpperCase()} ${module}${referenceText} foi atualizad${the}.${reqText}`;
+      })(),
     },
     deleted: {
       title: `${the.toUpperCase()} ${module} foi cancelad${the}`,
-      content: `${
-        user?.profile?.fullName ? `${user?.profile?.fullName},` : ''
-      } ${the.toUpperCase()} ${module}${reference ? ` com o código (${reference})` : ''} foi cancelad${the}. ${requester?.profile?.fullName ? `O cancelamento ${of} ${module} foi solicitado por ${requester?.profile?.fullName}` : ''}`,
+      content: (() => {
+        const greeting = userName ? `${userName}, ` : '';
+        const reqText = requesterName
+          ? ` O cancelamento ${of} ${module} foi solicitado por ${requesterName}`
+          : '';
+        return `${greeting}${the.toUpperCase()} ${module}${referenceText} foi cancelad${the}.${reqText}`;
+      })(),
     },
   };
 
