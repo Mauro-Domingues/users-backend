@@ -43,13 +43,13 @@ export abstract class SimpleDependency {
         trx,
       ));
 
-    if (!existingEntity) {
-      target[reference] = await repository.create(entity, trx);
-    } else {
+    if (existingEntity) {
       target[reference] = repository.update(
         { ...existingEntity, ...entity },
         trx,
       ) as Target[Reference];
+    } else {
+      target[reference] = await repository.create(entity, trx);
     }
 
     return target[reference];
@@ -144,7 +144,7 @@ export abstract class SimpleDependency {
 
     const referencesToDelete: Array<ObjectLiteral> = list.filter(
       existingReference =>
-        entities.findIndex(
+        !entities.some(
           (entity: Entities[number]) =>
             this.compareReferences({
               prev: entity,
@@ -156,7 +156,7 @@ export abstract class SimpleDependency {
               curr: existingReference,
               reference: filterTargetReference,
             }),
-        ) === -1,
+        ),
     );
 
     if (referencesToCreate.length) {
