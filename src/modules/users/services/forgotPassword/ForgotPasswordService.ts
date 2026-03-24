@@ -37,9 +37,9 @@ export class ForgotPasswordService {
       throw new AppError('INVALID_DELAY_FORMAT', 'Invalid delay format');
     }
 
-    const time = parseInt(match[0], 10);
+    const time = Number.parseInt(match[0], 10);
     const lastCharacter = time > 1 ? 's' : '';
-    const unit = this.recoveryValidity.replace(/\d/g, '');
+    const unit = this.recoveryValidity.replaceAll(/\d/g, '');
 
     switch (unit) {
       case 'd':

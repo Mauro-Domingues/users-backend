@@ -2,10 +2,10 @@ export function slugify(name?: string): string | undefined {
   return name
     ?.toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[_\s:;/]/g, '-')
-    .replace(/[^\w-]+/g, '')
+    .replaceAll(/[\u0300-\u036f]/g, '')
+    .replaceAll(/[_\s:;/]/g, '-')
+    .replaceAll(/[^\w-]+/g, '')
     .replace(/^-+/, '')
     .replace(/-+$/, '')
-    .replace(/--+/g, '-');
+    .replaceAll(/--+/g, '-');
 }
