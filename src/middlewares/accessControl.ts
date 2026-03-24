@@ -55,7 +55,7 @@ export const accessControl = async (
 
   const permissions = await getPermissions({
     connection: request.dbConnection,
-    userId: request.user.sub,
+    userId: request.user?.sub,
   });
 
   if (permissions.has(`${slugify(path)}___${method}`)) {

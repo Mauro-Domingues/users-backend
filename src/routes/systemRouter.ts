@@ -6,13 +6,16 @@ import { CreateFileController } from '@modules/system/services/createFile/Create
 import { CreateFolderController } from '@modules/system/services/createFolder/CreateFolderController';
 import { DeleteFileController } from '@modules/system/services/deleteFile/DeleteFileController';
 import { DeleteFolderController } from '@modules/system/services/deleteFolder/DeleteFolderController';
+import { DeleteNotificationController } from '@modules/system/services/deleteNotification/DeleteNotificationController';
 import { GenerateKeyControllerController } from '@modules/system/services/generateKey/GenerateKeyController';
 import { ListFileController } from '@modules/system/services/listFile/ListFileController';
 import { ListFolderController } from '@modules/system/services/listFolder/ListFolderController';
+import { ListNotificationController } from '@modules/system/services/listNotification/ListNotificationController';
 import { ShowFileController } from '@modules/system/services/showFile/ShowFileController';
 import { ShowFolderController } from '@modules/system/services/showFolder/ShowFolderController';
 import { UpdateFileController } from '@modules/system/services/updateFile/UpdateFileController';
 import { UpdateFolderController } from '@modules/system/services/updateFolder/UpdateFolderController';
+import { ViewNotificationController } from '@modules/system/services/viewNotification/ViewNotificationController';
 import { createFile } from '@modules/system/validators/files/createFile';
 import { deleteFile } from '@modules/system/validators/files/deleteFile';
 import { listFile } from '@modules/system/validators/files/listFile';
@@ -24,6 +27,9 @@ import { listFolder } from '@modules/system/validators/folders/listFolder';
 import { showFolder } from '@modules/system/validators/folders/showFolder';
 import { updateFolder } from '@modules/system/validators/folders/updateFolder';
 import { generateKey } from '@modules/system/validators/keys/generateKey';
+import { deleteNotification } from '@modules/system/validators/notifications/deleteNotification';
+import { listNotification } from '@modules/system/validators/notifications/listNotification';
+import { viewNotification } from '@modules/system/validators/notifications/viewNotification';
 
 const systemRouter = Router();
 const upload = multer(storageConfig.config.multer);
@@ -38,6 +44,9 @@ const listFileController = new ListFileController();
 const showFileController = new ShowFileController();
 const updateFileController = new UpdateFileController();
 const deleteFileController = new DeleteFileController();
+const listNotificationController = new ListNotificationController();
+const viewNotificationController = new ViewNotificationController();
+const deleteNotificationController = new DeleteNotificationController();
 
 systemRouter.get(
   '/generate-keys',
@@ -76,5 +85,21 @@ systemRouter
     updateFileController.handle,
   )
   .delete(accessControl, deleteFile, deleteFileController.handle);
+
+systemRouter.get(
+  '/notifications',
+  accessControl,
+  listNotification,
+  listNotificationController.handle,
+);
+
+systemRouter
+  .route('/notifications/:id')
+  .patch(accessControl, viewNotification, viewNotificationController.handle)
+  .delete(
+    accessControl,
+    deleteNotification,
+    deleteNotificationController.handle,
+  );
 
 export { systemRouter };

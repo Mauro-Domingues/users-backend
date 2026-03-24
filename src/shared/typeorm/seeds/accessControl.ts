@@ -232,6 +232,32 @@ const permissions: Record<RoleType, Array<Partial<Permission>>> = {
       slug: 'users-id___update',
       method: PermissionMethod.UPDATE,
     },
+    {
+      id: uuid(),
+      route: '/notifications/:id',
+      name: 'Update notification',
+      description:
+        'This route is responsible for patching a specific notification',
+      slug: 'notifications-id___update',
+      method: PermissionMethod.PATCH,
+    },
+    {
+      id: uuid(),
+      route: '/notifications/:id',
+      name: 'Delete notification',
+      description:
+        'This route is responsible for deleting a specific notification',
+      slug: 'notifications-id___delete',
+      method: PermissionMethod.DELETE,
+    },
+    {
+      id: uuid(),
+      route: '/notifications',
+      name: 'List notification',
+      description: 'This route is responsible for listing all notification',
+      slug: 'notifications-id___list',
+      method: PermissionMethod.LIST,
+    },
   ],
   [RoleType.CUSTOM]: [],
 };

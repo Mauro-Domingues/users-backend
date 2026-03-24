@@ -5,6 +5,7 @@ import { AuthenticateUserController } from '@modules/users/services/authenticate
 import { ChangePasswordController } from '@modules/users/services/changePassword/ChangePasswordController';
 import { CheckTokenController } from '@modules/users/services/checkToken/CheckTokenController';
 import { ForgotPasswordController } from '@modules/users/services/forgotPassword/ForgotPasswordController';
+import { LogoutUserController } from '@modules/users/services/logoutUser/LogoutUserController';
 import { SocialAuthenticateUserController } from '@modules/users/services/socialAuthenticateUser/SocialAuthenticateUserController';
 import { oauth2Callback } from '@modules/users/validators/oauth2/oauth2Callback';
 import { oauth2Request } from '@modules/users/validators/oauth2/oauth2Request';
@@ -12,10 +13,12 @@ import { changePassword } from '@modules/users/validators/passwordResets/changeP
 import { forgotPassword } from '@modules/users/validators/passwordResets/forgotPassword';
 import { checkToken } from '@modules/users/validators/tokens/checkToken';
 import { authenticateUser } from '@modules/users/validators/users/authenticateUser';
+import { loggoutUser } from '@modules/users/validators/users/logoutUser';
 
 const sessionRouter = Router();
 const socialAuthenticateUserController = new SocialAuthenticateUserController();
 const authenticateUserController = new AuthenticateUserController();
+const logoutUserController = new LogoutUserController();
 const forgotPasswordController = new ForgotPasswordController();
 const checkTokenController = new CheckTokenController();
 const changePasswordController = new ChangePasswordController();
@@ -33,6 +36,7 @@ sessionRouter.post(
   authenticateUser,
   authenticateUserController.handle,
 );
+sessionRouter.post('/logout', loggoutUser, logoutUserController.handle);
 sessionRouter.post(
   '/forgot-password',
   forgotPassword,

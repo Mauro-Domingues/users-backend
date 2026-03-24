@@ -4,6 +4,8 @@ import { FilesRepository } from '@modules/system/repositories/FilesRepository';
 import { FoldersRepository } from '@modules/system/repositories/FoldersRepository';
 import type { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
 import type { IFoldersRepository } from '@modules/system/repositories/IFoldersRepository';
+import type { INotificationsRepository } from '@modules/system/repositories/INotificationsRepository';
+import { NotificationsRepository } from '@modules/system/repositories/NotificationsRepository';
 import { AddressesRepository } from '@modules/users/repositories/AdressesRepository';
 import type { IAddressesRepository } from '@modules/users/repositories/IAddressesRepository';
 import type { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
@@ -62,4 +64,9 @@ container.registerSingleton<IRolesRepository>(
 container.registerSingleton<IPermissionsRepository>(
   'PermissionsRepository',
   PermissionsRepository,
+);
+
+container.registerSingleton<INotificationsRepository>(
+  'NotificationsRepository',
+  NotificationsRepository,
 );

@@ -17,6 +17,7 @@ export type ICodeDTO =
   | 'FILE_NOT_FOUND'
   | 'INVALID_TOKEN'
   | 'AUTHENTICATED'
+  | 'LOGGED_OUT'
   | 'GENERATED'
   | 'FORBIDDEN'
   | 'NOT_FOUND'
@@ -25,5 +26,6 @@ export type ICodeDTO =
   | 'DELETED'
   | 'PATCHED'
   | 'LISTED'
+  | 'VIWED'
   | 'FOUND'
   | 'SENT';

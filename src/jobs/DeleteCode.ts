@@ -3,7 +3,7 @@ import type { IDeleteCodeDTO } from '@modules/users/dtos/IDeleteCodeDTO';
 import { FakePasswordResetsRepository } from '@modules/users/repositories/fakes/FakePasswordResetsRepository';
 import type { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
 import { PasswordResetsRepository } from '@modules/users/repositories/PasswordResetsRepository';
-import { MysqlDataSource } from '@shared/typeorm/dataSources/mysqlDataSource';
+import { Connection } from '@shared/typeorm';
 
 const repositories: {
   passwordResets: Record<
@@ -35,11 +35,9 @@ export class DeleteCode {
   }: {
     data: IDeleteCodeDTO;
   }): Promise<void> {
-    const mysql = MysqlDataSource(client);
-
-    if (!mysql.isInitialized) {
-      await mysql.initialize();
-    }
+    const dbConnection = new Connection(client);
+    await dbConnection.connect();
+    const { mysql } = dbConnection;
 
     const trx = mysql.createQueryRunner();
 

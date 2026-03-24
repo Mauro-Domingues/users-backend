@@ -14,10 +14,10 @@ export function registerHeader(
     file: header,
     variables: {
       message,
-      placeholder: `https://placehold.co/96x96/ffffff/${styles.font.primaryColor.replace(
+      placeholder: String.raw`https://placehold.co/96x96/ffffff/${styles.font.primaryColor.replace(
         /^#/,
         '',
-      )}.webp?text=logo\\nda\\nempresa`,
+      )}.webp?text=logo\nda\nempresa`,
       styles,
     },
   };
