@@ -8,9 +8,6 @@ export class DeleteCode {
   constructor(
     @inject('PasswordResetsRepository')
     private readonly passwordResetsRepository: IPasswordResetsRepository,
-
-    @inject('MailProvider')
-    private readonly mailProvider: IMailProvider,
   ) {}
 
   public static get key(): Capitalize<string> {
@@ -30,7 +27,6 @@ export class DeleteCode {
 
     await trx.startTransaction();
     try {
-      console.log(this.mailProvider);
       await this.passwordResetsRepository.delete({ id }, trx);
       if (trx.isTransactionActive) await trx.commitTransaction();
     } catch (error: unknown) {

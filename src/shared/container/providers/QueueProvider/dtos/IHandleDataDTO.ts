@@ -1,5 +1,6 @@
 import type { IHandleDTO } from './IHandleDTO.js';
 
-export type IHandleDataDTO<T extends IHandleDTO> = Parameters<
-  InstanceType<T>['handle']
->[0]['data'];
+export type IHandleDataDTO<T extends IHandleDTO> =
+  InstanceType<T> extends { handle(args: { data: infer Data }): unknown }
+    ? Data
+    : never;

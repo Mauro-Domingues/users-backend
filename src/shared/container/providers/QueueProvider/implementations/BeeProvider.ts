@@ -28,13 +28,13 @@ export class BeeProvider implements IQueueProvider {
           activateDelayedJobs: true,
           removeOnSuccess: true,
         }),
-        handle: async (jobData: unknown) => {
+        handle: async (data: unknown) => {
           const instance = container.resolve(
             Job as unknown as InjectionToken<unknown>,
           ) as {
             handle: (data: unknown) => Promise<void>;
           };
-          return instance.handle(jobData);
+          return instance.handle(data);
         },
       };
     });
