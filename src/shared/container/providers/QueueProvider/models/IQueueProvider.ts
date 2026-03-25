@@ -1,6 +1,6 @@
 import type { IIntervalDTO } from '@dtos/IIntervalDTO';
-import type { IHandleDataDTO } from '../dtos/IHandleDataDTO';
-import type { IHandleDTO } from '../dtos/IHandleDTO';
+import type { IHandleDataDTO } from '../dtos/IHandleDataDTO.js';
+import type { IHandleDTO } from '../dtos/IHandleDTO.js';
 
 export interface IQueueProvider {
   execute<T extends IHandleDTO>(data: {

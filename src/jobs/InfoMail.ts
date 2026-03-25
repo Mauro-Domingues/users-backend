@@ -1,61 +1,21 @@
 import { getType } from 'mime';
+import { inject, injectable } from 'tsyringe';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { appConfig } from '@config/app';
-import { mailConfig } from '@config/mail';
-import { mailTemplateConfig } from '@config/mailTemplate';
 import type { IInfoMailDTO } from '@dtos/IInfoMailDTO';
 import type { IInfoMailStyleDTO } from '@dtos/IInfoMailStyleDTO';
-import { FakeMailProvider } from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
-import { SESMailProvider } from '@shared/container/providers/MailProvider/implementations/SESMailProvider';
-import { SMTPMailProvider } from '@shared/container/providers/MailProvider/implementations/SMTPMailProvider';
 import type { IMailProvider } from '@shared/container/providers/MailProvider/models/IMailProvider';
-import { FakeMailTemplateProvider } from '@shared/container/providers/MailTemplateProvider/fakes/FakeMailTemplateProvider';
-import { HandlebarsMailTemplateProvider } from '@shared/container/providers/MailTemplateProvider/implementations/HandlebarsMailTemplateProvider';
-import type { IMailTemplateProvider } from '@shared/container/providers/MailTemplateProvider/models/IMailTemplateProvider';
 import { registerFooter } from '@utils/email/partials/registerFooter';
 import { registerGreetings } from '@utils/email/partials/registerGreetings';
 import { registerHeader } from '@utils/email/partials/registerHeader';
 import { registerMultiInfo } from '@utils/email/partials/registerMultiInfo';
 
-const providers: {
-  mailTemplate: Record<
-    typeof mailTemplateConfig.driver | 'test',
-    () => IMailTemplateProvider
-  >;
-  mail: Record<
-    typeof mailConfig.driver | 'test',
-    (mailTemplateProvider: IMailTemplateProvider) => IMailProvider
-  >;
-} = {
-  mailTemplate: {
-    handlebars: () => new HandlebarsMailTemplateProvider(),
-    test: () => new FakeMailTemplateProvider(),
-  },
-  mail: {
-    smtp: (mailTemplateProvider: IMailTemplateProvider) =>
-      new SMTPMailProvider(mailTemplateProvider),
-    ses: (mailTemplateProvider: IMailTemplateProvider) =>
-      new SESMailProvider(mailTemplateProvider),
-    test: (mailTemplateProvider: IMailTemplateProvider) =>
-      new FakeMailProvider(mailTemplateProvider),
-  },
-};
-
+@injectable()
 export class InfoMail {
-  private readonly mailTemplateProvider: IMailTemplateProvider;
-
-  private readonly mailProvider: IMailProvider;
-
-  public constructor() {
-    this.mailTemplateProvider =
-      providers.mailTemplate[
-        appConfig.config.apiMode === 'test' ? 'test' : mailTemplateConfig.driver
-      ]();
-    this.mailProvider = providers.mail[
-      appConfig.config.apiMode === 'test' ? 'test' : mailConfig.driver
-    ](this.mailTemplateProvider);
-  }
+  constructor(
+    @inject('MailProvider')
+    private readonly mailProvider: IMailProvider,
+  ) {}
 
   public static get key(): Capitalize<string> {
     return 'InfoMail';

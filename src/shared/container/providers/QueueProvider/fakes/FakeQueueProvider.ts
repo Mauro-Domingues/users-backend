@@ -1,3 +1,5 @@
+import type { InjectionToken } from 'tsyringe';
+import { container } from 'tsyringe';
 import type { IIntervalDTO } from '@dtos/IIntervalDTO';
 import { convertToMilliseconds } from '@utils/convertToMilliseconds';
 import type { IHandleDataDTO } from '../dtos/IHandleDataDTO';
@@ -15,10 +17,16 @@ export class FakeQueueProvider implements IQueueProvider {
 
   private init(): void {
     return jobs.forEach(Job => {
-      const instance = new Job();
       this.queues[Job.key] = {
         queue: Job.key,
-        handle: instance.handle.bind(instance),
+        handle: async (jobData: unknown) => {
+          const instance = container.resolve(
+            Job as unknown as InjectionToken<unknown>,
+          ) as {
+            handle: (data: unknown) => Promise<void>;
+          };
+          return instance.handle(jobData);
+        },
       };
     });
   }

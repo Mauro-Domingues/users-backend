@@ -1,4 +1,4 @@
-import type { IHandleDTO } from './IHandleDTO';
+import type { IHandleDTO } from './IHandleDTO.js';
 
 export type IQueueDTO<T> = Record<
   Capitalize<string>,

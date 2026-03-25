@@ -1,30 +1,17 @@
-import { appConfig } from '@config/app';
+import { inject, injectable } from 'tsyringe';
 import type { IDeleteCodeDTO } from '@modules/users/dtos/IDeleteCodeDTO';
-import { FakePasswordResetsRepository } from '@modules/users/repositories/fakes/FakePasswordResetsRepository';
 import type { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
-import { PasswordResetsRepository } from '@modules/users/repositories/PasswordResetsRepository';
 import { Connection } from '@shared/typeorm';
 
-const repositories: {
-  passwordResets: Record<
-    typeof appConfig.config.apiMode,
-    () => IPasswordResetsRepository
-  >;
-} = {
-  passwordResets: {
-    test: () => new FakePasswordResetsRepository(),
-    development: () => new PasswordResetsRepository(),
-    production: () => new PasswordResetsRepository(),
-  },
-};
-
+@injectable()
 export class DeleteCode {
-  private readonly passwordResetsRepository: IPasswordResetsRepository;
+  constructor(
+    @inject('PasswordResetsRepository')
+    private readonly passwordResetsRepository: IPasswordResetsRepository,
 
-  constructor() {
-    this.passwordResetsRepository =
-      repositories.passwordResets[appConfig.config.apiMode]();
-  }
+    @inject('MailProvider')
+    private readonly mailProvider: IMailProvider,
+  ) {}
 
   public static get key(): Capitalize<string> {
     return 'DeleteCode';
@@ -43,6 +30,7 @@ export class DeleteCode {
 
     await trx.startTransaction();
     try {
+      console.log(this.mailProvider);
       await this.passwordResetsRepository.delete({ id }, trx);
       if (trx.isTransactionActive) await trx.commitTransaction();
     } catch (error: unknown) {
