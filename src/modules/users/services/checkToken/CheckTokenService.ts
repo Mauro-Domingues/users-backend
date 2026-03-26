@@ -6,8 +6,8 @@ import type { ICheckTokenDTO } from '@modules/users/dtos/ICheckTokenDTO';
 import type { IPasswordResetsRepository } from '@modules/users/repositories/IPasswordResetsRepository';
 import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
 import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import type { IJwtTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IJwtTokenDTO';
-import type { ICryptoProvider } from '@shared/container/providers/CryptoProvider/models/ICryptoProvider';
+import type { IJwtTokenDTO } from '@shared/container/providers/EncryptionProvider/dtos/IJwtTokenDTO';
+import type { IEncryptionProvider } from '@shared/container/providers/EncryptionProvider/models/IEncryptionProvider';
 import { AppError } from '@shared/errors/AppError';
 import type { IConnection } from '@shared/typeorm';
 
@@ -21,8 +21,8 @@ export class CheckTokenService {
     @inject('PasswordResetsRepository')
     private readonly passwordResetsRepository: IPasswordResetsRepository,
 
-    @inject('CryptoProvider')
-    private readonly cryptoProvider: ICryptoProvider,
+    @inject('EncryptionProvider')
+    private readonly encryptionProvider: IEncryptionProvider,
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
@@ -55,7 +55,7 @@ export class CheckTokenService {
       );
     }
 
-    const jwtToken = this.cryptoProvider.generateJwtToken(
+    const jwtToken = this.encryptionProvider.generateJwtToken(
       {},
       {
         subject: checkUser.id,

@@ -5,9 +5,9 @@ import type { IResponseDTO } from '@dtos/IResponseDTO';
 import type { ISocialAuthDTO } from '@modules/users/dtos/ISocialAuthDTO';
 import type { ITokensRepository } from '@modules/users/repositories/ITokensRepository';
 import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import type { IJwtTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IJwtTokenDTO';
-import type { IRefreshTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IRefreshTokenDTO';
-import type { ICryptoProvider } from '@shared/container/providers/CryptoProvider/models/ICryptoProvider';
+import type { IJwtTokenDTO } from '@shared/container/providers/EncryptionProvider/dtos/IJwtTokenDTO';
+import type { IRefreshTokenDTO } from '@shared/container/providers/EncryptionProvider/dtos/IRefreshTokenDTO';
+import type { IEncryptionProvider } from '@shared/container/providers/EncryptionProvider/models/IEncryptionProvider';
 import { AppError } from '@shared/errors/AppError';
 import type { IConnection } from '@shared/typeorm';
 
@@ -21,8 +21,8 @@ export class SocialAuthenticateUserService {
     @inject('TokensRepository')
     private readonly tokensRepository: ITokensRepository,
 
-    @inject('CryptoProvider')
-    private readonly cryptoProvider: ICryptoProvider,
+    @inject('EncryptionProvider')
+    private readonly encryptionProvider: IEncryptionProvider,
   ) {}
 
   private async generateByEmail({
@@ -55,14 +55,16 @@ export class SocialAuthenticateUserService {
       );
     }
 
-    const jwtToken = this.cryptoProvider.generateJwtToken(
+    const jwtToken = this.encryptionProvider.generateJwtToken(
       {},
       {
         subject: checkUser.id,
       },
     );
 
-    const refreshToken = this.cryptoProvider.generateRefreshToken(checkUser.id);
+    const refreshToken = this.encryptionProvider.generateRefreshToken(
+      checkUser.id,
+    );
 
     const checkToken = await this.tokensRepository.findBy(
       {

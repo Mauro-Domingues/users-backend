@@ -6,7 +6,7 @@ import type { ISendMailDTO } from '../dtos/ISendMailDTO';
 import type { IMailProvider } from '../models/IMailProvider';
 
 @injectable()
-export class SESMailProvider implements IMailProvider {
+export class SESProvider implements IMailProvider {
   private readonly client: SESClient;
 
   public constructor(

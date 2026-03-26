@@ -2,7 +2,7 @@ import { compare, hash } from 'bcrypt';
 import { hashConfig } from '@config/hash';
 import type { IHashProvider } from '../models/IHashProvider';
 
-export class BCryptHashProvider implements IHashProvider {
+export class BcryptProvider implements IHashProvider {
   public async generateHash(payload: string): Promise<string> {
     return hash(payload, hashConfig.config.salt);
   }

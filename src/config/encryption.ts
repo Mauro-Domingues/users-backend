@@ -3,8 +3,8 @@ import { getCiphers } from 'node:crypto';
 import { resolve } from 'node:path';
 import type { IIntervalDTO } from '@dtos/IIntervalDTO';
 
-interface ICryptoConfigDTO {
-  readonly driver: 'crypto';
+interface IEncryptionConfigDTO {
+  readonly driver: 'encryption';
   readonly config: {
     readonly assetsPath: string;
     readonly keysPath: string;
@@ -19,13 +19,13 @@ interface ICryptoConfigDTO {
   };
 }
 
-const cryptoValidator = Joi.object<ICryptoConfigDTO>({
-  driver: Joi.string().valid('crypto').required(),
-  config: Joi.object<ICryptoConfigDTO['config']>({
+const encryptionValidator = Joi.object<IEncryptionConfigDTO>({
+  driver: Joi.string().valid('encryption').required(),
+  config: Joi.object<IEncryptionConfigDTO['config']>({
     assetsPath: Joi.string().required(),
     keysPath: Joi.string().required(),
     jwksPath: Joi.string().required(),
-    crypto: Joi.object<ICryptoConfigDTO['config']['crypto']>({
+    crypto: Joi.object<IEncryptionConfigDTO['config']['crypto']>({
       bytes: Joi.number().integer().min(1).required(),
       algorithm: Joi.string()
         .valid(...getCiphers())
@@ -62,8 +62,8 @@ const cryptoValidator = Joi.object<ICryptoConfigDTO>({
   }).required(),
 });
 
-export const cryptoConfig = Object.freeze<ICryptoConfigDTO>({
-  driver: 'crypto',
+export const encryptionConfig = Object.freeze<IEncryptionConfigDTO>({
+  driver: 'encryption',
   config: {
     keysPath: resolve(__dirname, '..', 'keys'),
     assetsPath: resolve(__dirname, '..', 'assets'),
@@ -78,4 +78,4 @@ export const cryptoConfig = Object.freeze<ICryptoConfigDTO>({
   },
 });
 
-cryptoValidator.validateAsync(cryptoConfig);
+encryptionValidator.validateAsync(encryptionConfig);

@@ -2,14 +2,14 @@ import type { JWK } from 'pem-jwk';
 import { Get, Route, Tags } from 'tsoa';
 import { inject, injectable } from 'tsyringe';
 import type { IResponseDTO } from '@dtos/IResponseDTO';
-import type { ICryptoProvider } from '@shared/container/providers/CryptoProvider/models/ICryptoProvider';
+import type { IEncryptionProvider } from '@shared/container/providers/EncryptionProvider/models/IEncryptionProvider';
 
 @Route('/generate-keys')
 @injectable()
 export class GenerateKeyService {
   public constructor(
-    @inject('CryptoProvider')
-    private readonly cryptoProvider: ICryptoProvider,
+    @inject('EncryptionProvider')
+    private readonly encryptionProvider: IEncryptionProvider,
   ) {}
 
   @Get()
@@ -21,7 +21,7 @@ export class GenerateKeyService {
       }>
     >
   > {
-    const generatedKey = this.cryptoProvider.generateKeys();
+    const generatedKey = this.encryptionProvider.generateKeys();
 
     return {
       code: 201,

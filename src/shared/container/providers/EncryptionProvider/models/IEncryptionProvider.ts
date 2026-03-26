@@ -4,7 +4,7 @@ import type { IEncryptedDTO } from '../dtos/IEncryptedDTO';
 import type { IJwtTokenDTO } from '../dtos/IJwtTokenDTO';
 import type { IRefreshTokenDTO } from '../dtos/IRefreshTokenDTO';
 
-export interface ICryptoProvider {
+export interface IEncryptionProvider {
   encrypt(text: string): IEncryptedDTO;
   decrypt(hash: IEncryptedDTO): string;
   generateKeys(): JWK<{

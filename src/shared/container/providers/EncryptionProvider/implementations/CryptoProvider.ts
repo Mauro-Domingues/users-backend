@@ -17,14 +17,14 @@ import {
   truncateSync,
 } from 'node:fs';
 import { resolve } from 'node:path';
-import { cryptoConfig } from '@config/crypto';
+import { encryptionConfig } from '@config/encryption';
 import { convertToMilliseconds } from '@utils/convertToMilliseconds';
 import type { IEncryptedDTO } from '../dtos/IEncryptedDTO';
 import type { IJwtTokenDTO } from '../dtos/IJwtTokenDTO';
 import type { IRefreshTokenDTO } from '../dtos/IRefreshTokenDTO';
-import type { ICryptoProvider } from '../models/ICryptoProvider';
+import type { IEncryptionProvider } from '../models/IEncryptionProvider';
 
-export class CryptoProvider implements ICryptoProvider {
+export class CryptoProvider implements IEncryptionProvider {
   private write(path: string, filename: string, data: string): void {
     if (!existsSync(resolve(path))) {
       mkdirSync(resolve(path), { recursive: true });
@@ -41,29 +41,29 @@ export class CryptoProvider implements ICryptoProvider {
     const iv = randomBytes(16);
 
     const cipher = createCipheriv(
-      cryptoConfig.config.crypto.algorithm,
-      cryptoConfig.config.crypto.secretKey,
+      encryptionConfig.config.crypto.algorithm,
+      encryptionConfig.config.crypto.secretKey,
       iv,
     );
 
     const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
 
     return {
-      iv: iv.toString(cryptoConfig.config.crypto.encoding),
-      content: encrypted.toString(cryptoConfig.config.crypto.encoding),
+      iv: iv.toString(encryptionConfig.config.crypto.encoding),
+      content: encrypted.toString(encryptionConfig.config.crypto.encoding),
     };
   }
 
   public decrypt(data: IEncryptedDTO): string {
     const decipher = createDecipheriv(
-      cryptoConfig.config.crypto.algorithm,
-      cryptoConfig.config.crypto.secretKey,
-      Buffer.from(data.iv, cryptoConfig.config.crypto.encoding),
+      encryptionConfig.config.crypto.algorithm,
+      encryptionConfig.config.crypto.secretKey,
+      Buffer.from(data.iv, encryptionConfig.config.crypto.encoding),
     );
 
     const decrpyted = Buffer.concat([
       decipher.update(
-        Buffer.from(data.content, cryptoConfig.config.crypto.encoding),
+        Buffer.from(data.content, encryptionConfig.config.crypto.encoding),
       ),
       decipher.final(),
     ]);
@@ -82,11 +82,11 @@ export class CryptoProvider implements ICryptoProvider {
     options?: Omit<SignOptions, 'algorithm' | 'expiresIn'>,
   ): IJwtTokenDTO {
     const secret = readFileSync(
-      resolve(cryptoConfig.config.keysPath, 'private.pem'),
+      resolve(encryptionConfig.config.keysPath, 'private.pem'),
     );
 
     const expiresIn = convertToMilliseconds(
-      cryptoConfig.config.crypto.jwtLifetime,
+      encryptionConfig.config.crypto.jwtLifetime,
     );
 
     const token = sign(payload, secret, {
@@ -123,10 +123,14 @@ export class CryptoProvider implements ICryptoProvider {
       keys: [parsedJwk],
     };
 
-    this.write(cryptoConfig.config.keysPath, 'private.pem', privateExported);
-    this.write(cryptoConfig.config.keysPath, 'public.pem', publicExported);
     this.write(
-      resolve(cryptoConfig.config.assetsPath, '.well-known'),
+      encryptionConfig.config.keysPath,
+      'private.pem',
+      privateExported,
+    );
+    this.write(encryptionConfig.config.keysPath, 'public.pem', publicExported);
+    this.write(
+      resolve(encryptionConfig.config.assetsPath, '.well-known'),
       'jwks.json',
       JSON.stringify(jwksJson, null, 2),
     );

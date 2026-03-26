@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { storageConfig } from '@config/storage';
 import type { IStorageProvider } from '../models/IStorageProvider';
 
-export class DiskStorageProvider implements IStorageProvider {
+export class DiskProvider implements IStorageProvider {
   public constructor() {
     if (!existsSync(storageConfig.config.tmpFolder)) {
       mkdirSync(storageConfig.config.tmpFolder);

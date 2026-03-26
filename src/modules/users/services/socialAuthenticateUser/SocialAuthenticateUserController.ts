@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { cryptoConfig } from '@config/crypto';
+import { encryptionConfig } from '@config/encryption';
 import type { ISocialAuthDTO } from '@modules/users/dtos/ISocialAuthDTO';
 import { convertToMilliseconds } from '@utils/convertToMilliseconds';
 import { SocialAuthenticateUserService } from './SocialAuthenticateUserService';
@@ -39,7 +39,7 @@ export class SocialAuthenticateUserController {
       secure: true,
       path: '/',
       maxAge:
-        convertToMilliseconds(cryptoConfig.config.crypto.jwtLifetime) +
+        convertToMilliseconds(encryptionConfig.config.crypto.jwtLifetime) +
         convertToMilliseconds('1d'),
     });
     response.redirect(request.query.state);

@@ -2,14 +2,14 @@ import type { JWK } from 'pem-jwk';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { cryptoConfig } from '@config/crypto';
+import { encryptionConfig } from '@config/encryption';
 import { convertToMilliseconds } from '@utils/convertToMilliseconds';
 import type { IEncryptedDTO } from '../dtos/IEncryptedDTO';
 import type { IJwtTokenDTO } from '../dtos/IJwtTokenDTO';
 import type { IRefreshTokenDTO } from '../dtos/IRefreshTokenDTO';
-import type { ICryptoProvider } from '../models/ICryptoProvider';
+import type { IEncryptionProvider } from '../models/IEncryptionProvider';
 
-export class FakeCryptoProvider implements ICryptoProvider {
+export class FakeEncryptionProvider implements IEncryptionProvider {
   public encrypt(text: string): IEncryptedDTO {
     return {
       iv: 'base64',
@@ -29,7 +29,7 @@ export class FakeCryptoProvider implements ICryptoProvider {
 
   public generateJwtToken<T extends object>(payload: T): IJwtTokenDTO {
     const expiresIn = convertToMilliseconds(
-      cryptoConfig.config.crypto.jwtLifetime,
+      encryptionConfig.config.crypto.jwtLifetime,
     );
 
     const token = Buffer.from(
@@ -44,7 +44,7 @@ export class FakeCryptoProvider implements ICryptoProvider {
 
   public generateKeys(): JWK<{ use: string }> {
     const publicKey = readFileSync(
-      resolve(cryptoConfig.config.keysPath, 'public.pem'),
+      resolve(encryptionConfig.config.keysPath, 'public.pem'),
       { encoding: 'base64' },
     );
 

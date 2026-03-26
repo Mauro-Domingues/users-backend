@@ -12,7 +12,7 @@ import { cpus } from 'node:os';
 import { resolve } from 'node:path';
 import { appConfig } from '@config/app';
 import { corsConfig } from '@config/cors';
-import { cryptoConfig } from '@config/crypto';
+import { encryptionConfig } from '@config/encryption';
 import { storageConfig } from '@config/storage';
 import { errorHandler } from '@middlewares/errorHandler';
 import { parseParam } from '@middlewares/parseParam';
@@ -46,7 +46,7 @@ export const app = new (class App {
   private staticRoutes(): void {
     this.server.use('/doc', serve, setup(swaggerDocs));
     this.server.use('/uploads', staticPath(storageConfig.config.uploadsFolder));
-    this.server.use('/jwks', staticPath(cryptoConfig.config.jwksPath));
+    this.server.use('/jwks', staticPath(encryptionConfig.config.jwksPath));
   }
 
   private errorHandlers(): void {

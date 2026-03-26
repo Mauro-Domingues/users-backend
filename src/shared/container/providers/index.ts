@@ -4,5 +4,5 @@ import './StorageProvider';
 import './HashProvider';
 import './MailTemplateProvider';
 import './MailProvider';
-import './CryptoProvider';
+import './EncryptionProvider';
 import './NotificationProvider';

@@ -1,13 +1,13 @@
 import { container } from 'tsyringe';
 import { mailTemplateConfig } from '@config/mailTemplate';
-import { HandlebarsMailTemplateProvider } from './implementations/HandlebarsMailTemplateProvider';
+import { HandlebarsProvider } from './implementations/HandlebarsProvider';
 import type { IMailTemplateProvider } from './models/IMailTemplateProvider';
 
 const providers: Record<
   typeof mailTemplateConfig.driver,
   () => IMailTemplateProvider
 > = {
-  handlebars: () => container.resolve(HandlebarsMailTemplateProvider),
+  handlebars: () => container.resolve(HandlebarsProvider),
 };
 
 container.registerInstance<IMailTemplateProvider>(

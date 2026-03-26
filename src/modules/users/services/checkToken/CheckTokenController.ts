@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import type { IResponseDTO } from '@dtos/IResponseDTO';
 import type { ICheckTokenDTO } from '@modules/users/dtos/ICheckTokenDTO';
-import type { IJwtTokenDTO } from '@shared/container/providers/CryptoProvider/dtos/IJwtTokenDTO';
+import type { IJwtTokenDTO } from '@shared/container/providers/EncryptionProvider/dtos/IJwtTokenDTO';
 import { CheckTokenService } from './CheckTokenService';
 
 export class CheckTokenController {
