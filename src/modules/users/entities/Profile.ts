@@ -1,9 +1,10 @@
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
 import { File } from '@modules/system/entities/File';
 import { Base } from '@shared/container/modules/entities/Base';
 
 @Entity('profiles')
 export class Profile extends Base {
+  @Index('INDEX_profiles_avatar_id', ['avatarId'])
   @Column({ name: 'avatar_id', type: 'uuid', nullable: true })
   declare public avatarId: string;
 
@@ -13,8 +14,8 @@ export class Profile extends Base {
   @Column({ name: 'cpf', type: 'varchar', length: 11, nullable: true })
   declare public cpf: string;
 
-  @Column({ name: 'birthday', type: 'date', nullable: true })
-  declare public birthday: Date;
+  @Column({ name: 'birthdate', type: 'date', nullable: true })
+  declare public birthdate: Date;
 
   @Column({ name: 'phone', type: 'varchar', length: 11, nullable: true })
   declare public phone: string;

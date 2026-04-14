@@ -1,5 +1,5 @@
 import type { MigrationInterface, QueryRunner } from 'typeorm';
-import { Table } from 'typeorm';
+import { Table, TableIndex } from 'typeorm';
 import { PermissionMethod } from '@modules/users/enums/PermissionMethod';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
 
@@ -43,9 +43,19 @@ export class Permission1733404917051
       }),
       true,
     );
+
+    await queryRunner.createIndex(
+      'permissions',
+      new TableIndex({
+        name: 'UNIQUE_permissions_slug',
+        columnNames: ['slug'],
+        isUnique: true,
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropIndex('permissions', 'UNIQUE_permissions_slug');
     await queryRunner.dropTable('permissions', true);
   }
 }

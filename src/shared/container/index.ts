@@ -1,5 +1,9 @@
 import './providers';
 import { container } from 'tsyringe';
+import { CompaniesRepository } from '@modules/companies/repositories/CompaniesRepository';
+import type { ICompaniesRepository } from '@modules/companies/repositories/ICompaniesRepository';
+import type { IServicesRepository } from '@modules/companies/repositories/IServicesRepository';
+import { ServicesRepository } from '@modules/companies/repositories/ServicesRepository';
 import { FilesRepository } from '@modules/system/repositories/FilesRepository';
 import { FoldersRepository } from '@modules/system/repositories/FoldersRepository';
 import type { IFilesRepository } from '@modules/system/repositories/IFilesRepository';
@@ -69,4 +73,21 @@ container.registerSingleton<IPermissionsRepository>(
 container.registerSingleton<INotificationsRepository>(
   'NotificationsRepository',
   NotificationsRepository,
+);
+
+container.registerSingleton<ICompaniesRepository>(
+  'CompaniesRepository',
+  CompaniesRepository,
+);
+
+container.registerSingleton<IServicesRepository>(
+  'ServicesRepository',
+  ServicesRepository,
+);
+import type { IAppointmentsRepository } from '@modules/companies/repositories/IAppointmentsRepository';
+import { AppointmentsRepository } from '@modules/companies/repositories/AppointmentsRepository';
+
+container.registerSingleton<IAppointmentsRepository>(
+  'AppointmentsRepository',
+  AppointmentsRepository,
 );

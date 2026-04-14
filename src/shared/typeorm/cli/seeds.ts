@@ -1,11 +1,13 @@
 import type { QueryRunner } from 'typeorm';
 import { Connection } from '../index';
 import { seedAccessControl } from '../seeds/accessControl';
+import { seedDevelopment } from '../seeds/development';
 import { seedUser } from '../seeds/user';
 
 const available = {
-  accessControl: seedAccessControl,
-  user: seedUser,
+  // accessControl: seedAccessControl,
+  // user: seedUser,
+  development: seedDevelopment,
 } as const;
 
 const keys = Object.keys(available) as Array<keyof typeof available>;

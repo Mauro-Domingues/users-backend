@@ -1,5 +1,5 @@
 import type { MigrationInterface, QueryRunner } from 'typeorm';
-import { Table, TableForeignKey } from 'typeorm';
+import { Table, TableForeignKey, TableIndex } from 'typeorm';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
 
 export class Profile1733404917055
@@ -56,10 +56,29 @@ export class Profile1733404917055
         name: 'FK_profiles_avatar',
       }),
     );
+
+    await queryRunner.createIndex(
+      'profiles',
+      new TableIndex({
+        name: 'INDEX_profiles_avatar_id',
+        columnNames: ['avatar_id'],
+      }),
+    );
+
+    await queryRunner.createIndex(
+      'profiles',
+      new TableIndex({
+        name: 'UNIQUE_profiles_avatar_id',
+        columnNames: ['avatar_id'],
+        isUnique: true,
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropForeignKey('profiles', 'FK_profiles_avatar');
+    await queryRunner.dropIndex('users', 'INDEX_users_avatar_id');
+    await queryRunner.dropIndex('users', 'UNIQUE_users_avatar_id');
     await queryRunner.dropTable('profiles', true);
   }
 }

@@ -49,6 +49,14 @@ export class PasswordReset1733404917058
     await queryRunner.createIndex(
       'password_resets',
       new TableIndex({
+        name: 'INDEX_password_resets_user_id',
+        columnNames: ['user_id'],
+      }),
+    );
+
+    await queryRunner.createIndex(
+      'password_resets',
+      new TableIndex({
         name: 'UNIQUE_password_resets_user_id_recovery_code',
         columnNames: ['user_id', 'recovery_code'],
         isUnique: true,
@@ -60,6 +68,10 @@ export class PasswordReset1733404917058
     await queryRunner.dropIndex(
       'password_resets',
       'UNIQUE_password_resets_user_id_recovery_code',
+    );
+    await queryRunner.dropIndex(
+      'password_resets',
+      'INDEX_password_resets_user_id',
     );
     await queryRunner.dropForeignKey(
       'password_resets',

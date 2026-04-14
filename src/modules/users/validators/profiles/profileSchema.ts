@@ -7,7 +7,7 @@ export const profileSchema = baseSchema(Profile, (ctx, { id }) => {
 
   return {
     fullName: ctx.string().max(255),
-    birthday: ctx.date().iso(),
+    birthdate: ctx.date().iso(),
     avatar: fileValidationSchema,
     avatarId: id,
     phone: ctx.string().pattern(/^\d+$/).max(11),

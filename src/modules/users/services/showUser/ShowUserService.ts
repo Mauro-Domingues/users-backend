@@ -38,7 +38,7 @@ export class ShowUserService {
             profile: {
               avatar: { file: true },
               cpf: true,
-              birthday: true,
+              birthdate: true,
               fullName: true,
               phone: true,
               id: true,

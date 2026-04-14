@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { companyRouter } from './companyRouter';
 import { guardRouter } from './guardRouter';
 import { healthRouter } from './healthRouter';
 import { sessionRouter } from './sessionRouter';
@@ -12,5 +13,6 @@ routes.use(healthRouter);
 routes.use(sessionRouter);
 routes.use(systemRouter);
 routes.use(userRouter);
+routes.use(companyRouter);
 
 export { routes };

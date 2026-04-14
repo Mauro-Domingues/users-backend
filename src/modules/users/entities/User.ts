@@ -7,8 +7,11 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   OneToOne,
 } from 'typeorm';
+import { Appointment } from '@modules/companies/entities/Appointment';
+import { Company } from '@modules/companies/entities/Company';
 import { Base } from '@shared/container/modules/entities/Base';
 import { Address } from './Address';
 import { Permission } from './Permission';
@@ -68,6 +71,12 @@ export class User extends Base {
   })
   declare public role: Role;
 
+  @ManyToMany(() => Company, company => company.employees, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  declare public companies: Array<Company>;
+
   @ManyToMany(() => Permission, permission => permission.users, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
@@ -86,4 +95,16 @@ export class User extends Base {
     },
   })
   declare public permissions: Array<Permission>;
+
+  @OneToMany(() => Appointment, appointment => appointment.employee, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  declare public employeeAppointments: Array<Appointment>;
+
+  @OneToMany(() => Appointment, appointment => appointment.client, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  declare public clientAppointments: Array<Appointment>;
 }

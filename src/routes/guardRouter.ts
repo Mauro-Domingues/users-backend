@@ -39,6 +39,12 @@ const paths: Array<IExceptionDTO> = [
     url: '/auth/google',
     methods: ['GET'],
   },
+  {
+    url: '/companies',
+    allowRawRoute: true,
+    allowParams: true,
+    methods: ['GET'],
+  },
 ];
 
 guardRouter.use(passport.initialize());

@@ -43,7 +43,8 @@ export const ormConfig = Object.freeze<IOrmConfigDTO>({
     setDatabase: (database: string): string =>
       appConfig.config.apiMode === 'test' ? 'database_test' : database,
     default: {
-      synchronize: appConfig.config.apiMode === 'development',
+      // synchronize: appConfig.config.apiMode === 'development',
+      synchronize: false,
       entities: [`${__dirname}/../modules/**/entities/*.{js,ts}`],
       migrations: [`${__dirname}/../shared/typeorm/migrations/*.{js,ts}`],
     },

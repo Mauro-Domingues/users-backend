@@ -22,6 +22,7 @@ export type ICodeDTO =
   | 'GENERATED'
   | 'FORBIDDEN'
   | 'NOT_FOUND'
+  | 'CONFLICT'
   | 'CREATED'
   | 'UPDATED'
   | 'DELETED'
