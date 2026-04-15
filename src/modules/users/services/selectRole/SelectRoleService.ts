@@ -2,48 +2,43 @@ import { instanceToInstance } from 'class-transformer';
 import { Get, Inject, Route, Tags } from 'tsoa';
 import { inject, injectable } from 'tsyringe';
 import type { IResponseDTO } from '@dtos/IResponseDTO';
-import type { User } from '@modules/users/entities/User';
-import type { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
+import type { Role } from '@modules/users/entities/Role';
+import type { IRolesRepository } from '@modules/users/repositories/IRolesRepository';
 import type { ICacheProvider } from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import type { IConnection } from '@shared/typeorm';
 
-@Route('/select-users')
+@Route('/select-roles')
 @injectable()
-export class SelectUserService {
+export class SelectRoleService {
   public constructor(
-    @inject('UsersRepository')
-    private readonly usersRepository: IUsersRepository,
+    @inject('RolesRepository')
+    private readonly rolesRepository: IRolesRepository,
 
     @inject('CacheProvider')
     private readonly cacheProvider: ICacheProvider,
   ) {}
 
   @Get()
-  @Tags('User')
+  @Tags('Role')
   public async execute(
     @Inject() connection: IConnection,
-    @Inject() filters: Partial<User>,
-  ): Promise<IResponseDTO<Array<User>>> {
+    @Inject() filters: Partial<Role>,
+  ): Promise<IResponseDTO<Array<Role>>> {
     const trx = connection.mysql.createQueryRunner();
 
     await trx.startTransaction();
     try {
       const cacheKey = `${
         connection.client
-      }:users:select:${JSON.stringify(filters)}`;
+      }:roles:select:${JSON.stringify(filters)}`;
 
-      let cache = await this.cacheProvider.recovery<Array<User>>(cacheKey);
+      let cache = await this.cacheProvider.recovery<Array<Role>>(cacheKey);
 
       if (!cache) {
-        const { list } = await this.usersRepository.findAll(
+        const { list } = await this.rolesRepository.findAll(
           {
             where: filters,
-            relations: { profile: true },
-            select: {
-              id: true,
-              email: true,
-              profile: { fullName: true },
-            },
+            select: { id: true, name: true },
           },
           trx,
         );
@@ -56,7 +51,7 @@ export class SelectUserService {
       return {
         code: 200,
         messageCode: 'LISTED',
-        message: 'Successfully listed users',
+        message: 'Successfully listed roles',
         data: cache,
       };
     } catch (error: unknown) {

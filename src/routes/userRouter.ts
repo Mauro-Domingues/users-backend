@@ -9,6 +9,7 @@ import { DeleteUserController } from '@modules/users/services/deleteUser/DeleteU
 import { ListPermissionController } from '@modules/users/services/listPermission/ListPermissionController';
 import { ListRoleController } from '@modules/users/services/listRole/ListRoleController';
 import { ListUserController } from '@modules/users/services/listUser/ListUserController';
+import { SelectRoleController } from '@modules/users/services/selectRole/SelectRoleController';
 import { SelectUserController } from '@modules/users/services/selectUser/SelectUserController';
 import { ShowPermissionController } from '@modules/users/services/showPermission/ShowPermissionController';
 import { ShowRoleController } from '@modules/users/services/showRole/ShowRoleController';
@@ -25,6 +26,7 @@ import { updatePermission } from '@modules/users/validators/permissions/updatePe
 import { createRole } from '@modules/users/validators/roles/createRole';
 import { deleteRole } from '@modules/users/validators/roles/deleteRole';
 import { listRole } from '@modules/users/validators/roles/listRole';
+import { selectRole } from '@modules/users/validators/roles/selectRole';
 import { showRole } from '@modules/users/validators/roles/showRole';
 import { updateRole } from '@modules/users/validators/roles/updateRole';
 import { createUser } from '@modules/users/validators/users/createUser';
@@ -45,6 +47,7 @@ const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
 const createRoleController = new CreateRoleController();
 const listRoleController = new ListRoleController();
+const selectRoleController = new SelectRoleController();
 const showRoleController = new ShowRoleController();
 const updateRoleController = new UpdateRoleController();
 const deleteRoleController = new DeleteRoleController();
@@ -79,6 +82,13 @@ userRouter
   .route('/users/:id')
   .put(accessControl, updateUser, updateUserController.handle)
   .delete(accessControl, deleteUser, deleteUserController.handle);
+
+userRouter.get(
+  '/select-roles',
+  accessControl,
+  selectRole,
+  selectRoleController.handle,
+);
 
 userRouter
   .route('/roles')

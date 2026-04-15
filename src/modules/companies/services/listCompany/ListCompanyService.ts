@@ -47,6 +47,7 @@ export class ListCompanyService {
             relations: { address: true, banner: true },
             select: {
               id: true,
+              schedule: true,
               address: {
                 city: true,
                 complement: true,

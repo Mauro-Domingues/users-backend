@@ -20,6 +20,6 @@ export class ViewNotificationController {
       userId,
     );
 
-    response.status(notification.code).send(notification);
+    response.status(notification.code).json(notification);
   }
 }

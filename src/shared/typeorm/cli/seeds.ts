@@ -5,8 +5,8 @@ import { seedDevelopment } from '../seeds/development';
 import { seedUser } from '../seeds/user';
 
 const available = {
-  // accessControl: seedAccessControl,
-  // user: seedUser,
+  accessControl: seedAccessControl,
+  user: seedUser,
   development: seedDevelopment,
 } as const;
 

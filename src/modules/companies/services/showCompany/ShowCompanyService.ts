@@ -47,6 +47,7 @@ export class ShowCompanyService {
             select: {
               id: true,
               schedule: true,
+              tolerance: true,
               address: {
                 id: true,
                 city: true,

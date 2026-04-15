@@ -45,6 +45,10 @@ const paths: Array<IExceptionDTO> = [
     allowParams: true,
     methods: ['GET'],
   },
+  {
+    url: '/select-services',
+    methods: ['GET'],
+  },
 ];
 
 guardRouter.use(passport.initialize());

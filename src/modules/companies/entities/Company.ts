@@ -43,7 +43,7 @@ export class Company extends Base {
   @Column({ name: 'address_id', type: 'uuid', nullable: true })
   declare public addressId: string;
 
-  @Column({ name: 'tolerance', type: 'varchar', nullable: false })
+  @Column({ name: 'tolerance', type: 'varchar', length: 25, nullable: true })
   declare public tolerance: IIntervalDTO;
 
   @Column({ name: 'corporate_name', type: 'varchar', nullable: false })
@@ -125,12 +125,14 @@ export class Company extends Base {
   @AfterInsert()
   protected getWeeklySchedule(
     date?: Date,
+    employeeId?: string,
     serviceId?: string,
-    employeeId: string = '56912d93-2413-4490-b08b-f51963699e71',
   ): IWeeklyScheduleDTO {
     const baseDate = date ? new Date(date) : new Date();
 
-    const toleranceMinutes = convertToMilliseconds(this.tolerance) / 60000;
+    const toleranceMinutes = this.tolerance
+      ? convertToMilliseconds(this.tolerance) / 60000
+      : 0;
 
     const requiredMinutes = calculateRequiredMinutes({
       serviceId,
@@ -155,7 +157,7 @@ export class Company extends Base {
           return acc;
         }
 
-        const perEmployeeBlocks = employees.map(employee =>
+        const perEmployeeBlocks = employees?.map(employee =>
           computeEmployeeBlocks({
             appointments: this.appointments,
             toleranceMinutes,
@@ -165,18 +167,17 @@ export class Company extends Base {
           }),
         );
 
-        let companySlots = unionIntervals(perEmployeeBlocks.flat());
+        const companySlots = unionIntervals(perEmployeeBlocks?.flat())
+          .filter(
+            slot =>
+              requiredMinutes <= 0 || slot.end - slot.start >= requiredMinutes,
+          )
+          .map(slot => ({
+            start: minutesToTime(slot.start),
+            end: minutesToTime(slot.end),
+          }));
 
-        if (requiredMinutes > 0) {
-          companySlots = companySlots.filter(
-            slot => slot.end - slot.start >= requiredMinutes,
-          );
-        }
-
-        acc[dayIdx] = companySlots.map(slot => ({
-          start: minutesToTime(slot.start),
-          end: minutesToTime(slot.end),
-        }));
+        acc[dayIdx] = companySlots;
 
         return acc;
       },

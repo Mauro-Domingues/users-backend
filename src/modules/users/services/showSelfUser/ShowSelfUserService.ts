@@ -42,8 +42,55 @@ export class ShowSelfUserService {
                 avatar: true,
               },
               address: true,
+              clientAppointments: {
+                company: true,
+                service: true,
+                employee: {
+                  profile: {
+                    avatar: true,
+                  },
+                },
+              },
+              employeeAppointments: {
+                company: true,
+                service: true,
+                client: {
+                  profile: true,
+                },
+              },
+              companies: { banner: true },
             },
             select: {
+              companies: {
+                id: true,
+                banner: { file: true },
+                tradeName: true,
+                corporateName: true,
+                cnpj: true,
+                status: true,
+              },
+              employeeAppointments: {
+                id: true,
+                company: { tradeName: true },
+                service: { name: true },
+                durationInMinutes: true,
+                datetime: true,
+                client: {
+                  id: true,
+                  profile: { fullName: true, phone: true },
+                },
+              },
+              clientAppointments: {
+                id: true,
+                company: { tradeName: true },
+                service: { name: true },
+                durationInMinutes: true,
+                datetime: true,
+                employee: {
+                  id: true,
+                  profile: { fullName: true, avatar: { file: true } },
+                },
+              },
               profile: {
                 avatar: { file: true },
                 cpf: true,

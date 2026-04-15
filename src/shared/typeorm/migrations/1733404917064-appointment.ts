@@ -2,7 +2,7 @@ import type { MigrationInterface, QueryRunner } from 'typeorm';
 import { Table, TableForeignKey } from 'typeorm';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
 
-export class Appointment1776113289580
+export class Appointment1733404917065
   extends BaseMigration
   implements MigrationInterface
 {

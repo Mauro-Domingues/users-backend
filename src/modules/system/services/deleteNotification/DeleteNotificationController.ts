@@ -18,6 +18,6 @@ export class DeleteNotificationController {
       id,
     );
 
-    response.send(notification);
+    response.sendStatus(notification.code);
   }
 }

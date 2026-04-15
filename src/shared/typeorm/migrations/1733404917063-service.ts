@@ -3,7 +3,7 @@ import { Table, TableForeignKey } from 'typeorm';
 import { ServiceStatus } from '@modules/companies/enums/ServiceStatus';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
 
-export class Service1776089844284
+export class Service1733404917063
   extends BaseMigration
   implements MigrationInterface
 {

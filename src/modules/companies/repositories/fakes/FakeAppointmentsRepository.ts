@@ -26,8 +26,8 @@ export class FakeAppointmentsRepository
       entity =>
         entity.companyId === companyId &&
         entity.employeeId === employeeId &&
-        entity.datetime >= datetime &&
-        entity.datetime <= endDateTime &&
+        new Date(entity.datetime) >= new Date(datetime) &&
+        new Date(entity.datetime) <= endDateTime &&
         !entity.deletedAt,
     );
   }

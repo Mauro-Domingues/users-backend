@@ -1,5 +1,5 @@
 export function unionIntervals(
-  sourceIntervals: Array<{ start: number; end: number }>,
+  sourceIntervals: Array<{ start: number; end: number }> = [],
 ): Array<{ start: number; end: number }> {
   if (sourceIntervals.length === 0) return [];
   const sortedIntervals = [...sourceIntervals].sort(

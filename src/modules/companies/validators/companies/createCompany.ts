@@ -13,6 +13,8 @@ export const createCompany = baseValidator(ctx => {
       corporateName: companyValidationSchema
         .extract('corporateName')
         .required(),
+      schedule: companyValidationSchema.extract('schedule').required(),
+      tolerance: companyValidationSchema.extract('tolerance').required(),
     }),
   };
 });

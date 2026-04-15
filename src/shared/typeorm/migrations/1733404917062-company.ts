@@ -3,7 +3,7 @@ import { Table, TableForeignKey, TableIndex } from 'typeorm';
 import { CompanyStatus } from '@modules/companies/enums/CompanyStatus';
 import { BaseMigration } from '@shared/container/modules/migrations/BaseMigration';
 
-export class Company1775662110500
+export class Company1733404917062
   extends BaseMigration
   implements MigrationInterface
 {
@@ -40,6 +40,12 @@ export class Company1775662110500
             type: 'varchar',
             length: '14',
             isNullable: false,
+          },
+          {
+            name: 'tolerance',
+            type: 'varchar',
+            length: '25',
+            isNullable: true,
           },
           {
             name: 'schedule',

@@ -27,6 +27,6 @@ export class ListNotificationController {
       userId,
     );
 
-    response.status(notifications.code).send(notifications);
+    response.status(notifications.code).json(notifications);
   }
 }

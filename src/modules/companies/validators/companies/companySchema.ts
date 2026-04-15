@@ -38,7 +38,10 @@ export const companySchema = baseSchema(Company, (ctx, { id }) => {
     addressId: id,
     banner: fileValidationSchema,
     cnpj: ctx.string().pattern(/^\d+$/).max(14),
-    tolerance: ctx.string().pattern(/^(\d+)(d|h|min|s|ms)$/),
+    tolerance: ctx
+      .string()
+      .max(25)
+      .pattern(/^(\d+)(d|h|min|s|ms)$/),
     state: ctx.string().valid('open', 'closed'),
     status: ctx.string().valid(...Object.values(CompanyStatus)),
     services: ctx.array().items(serviceValidationSchema),

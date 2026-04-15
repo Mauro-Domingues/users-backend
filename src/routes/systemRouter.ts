@@ -11,6 +11,7 @@ import { GenerateKeyControllerController } from '@modules/system/services/genera
 import { ListFileController } from '@modules/system/services/listFile/ListFileController';
 import { ListFolderController } from '@modules/system/services/listFolder/ListFolderController';
 import { ListNotificationController } from '@modules/system/services/listNotification/ListNotificationController';
+import { SelectFolderController } from '@modules/system/services/selectFolder/SelectFolderController';
 import { ShowFileController } from '@modules/system/services/showFile/ShowFileController';
 import { ShowFolderController } from '@modules/system/services/showFolder/ShowFolderController';
 import { UpdateFileController } from '@modules/system/services/updateFile/UpdateFileController';
@@ -24,6 +25,7 @@ import { updateFile } from '@modules/system/validators/files/updateFile';
 import { createFolder } from '@modules/system/validators/folders/createFolder';
 import { deleteFolder } from '@modules/system/validators/folders/deleteFolder';
 import { listFolder } from '@modules/system/validators/folders/listFolder';
+import { selectFolder } from '@modules/system/validators/folders/selectFolder';
 import { showFolder } from '@modules/system/validators/folders/showFolder';
 import { updateFolder } from '@modules/system/validators/folders/updateFolder';
 import { generateKey } from '@modules/system/validators/keys/generateKey';
@@ -36,6 +38,7 @@ const upload = multer(storageConfig.config.multer);
 const generateKeyControllerController = new GenerateKeyControllerController();
 const createFolderController = new CreateFolderController();
 const listFolderController = new ListFolderController();
+const selectFolderController = new SelectFolderController();
 const showFolderController = new ShowFolderController();
 const updateFolderController = new UpdateFolderController();
 const deleteFolderController = new DeleteFolderController();
@@ -52,6 +55,13 @@ systemRouter.get(
   '/generate-keys',
   generateKey,
   generateKeyControllerController.handle,
+);
+
+systemRouter.get(
+  '/select-folders',
+  accessControl,
+  selectFolder,
+  selectFolderController.handle,
 );
 
 systemRouter
